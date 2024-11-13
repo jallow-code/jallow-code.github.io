@@ -5,11 +5,21 @@ project:
 website:
   title: "Abdoulie Jallow"
   navbar:
-    left:
+    right:
       - href: index.qmd
         text: Home
       - about.qmd
       - projects.qmd
+      - href: CV/AJallow_CV.pdf
+        text: CV
+        target: _blank # opens link (or page) in a new browser tab
+      - icon: github
+        href: https://github.com/jallow-code
+        target: _blank
+  page-footer:
+    background: dark
+    left: Copyright 2024, Abdoulie Jallow
+    right: This website is build with [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/jallow-code/jallow-code.github.io){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
 
 format:
   html:
