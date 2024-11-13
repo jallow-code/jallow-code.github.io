@@ -1,16 +1,16 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "jallow-code.github.io",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Abdoulie Jallow",
+    "section": "",
+    "text": "Hello! I’m Abdoulie—though most people call me by my last name, Jallow. I hold a bachelor’s degree in Biological Chemistry and am deeply fascinated by science, philosophy, and constantly learning new skills. I created this website to document and share my learning journey with others. Feel free to explore and see what I’m working on!"
   }
 ]
