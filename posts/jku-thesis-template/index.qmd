@@ -1,0 +1,16 @@
+---
+title: "Creating a Quarto Thesis Template for Bachelor and Diploma Projects at JKU"
+description: "I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it to meet JKU's requirements for Bachelor and Diploma theses"
+author:
+  - name: Abdoulie Jallow
+    url: https://jallow-code.github.io/
+    orcid: ""
+    affiliation: ""
+    affiliation-url: "" 
+date: 14-11-2024
+categories: [Resources] # self-defined categories
+citation: 
+  url: https://jallow-code.github.io/posts/jku-thesis-template/ 
+image: thesis_image.png
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+---

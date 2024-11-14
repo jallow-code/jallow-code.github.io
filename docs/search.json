@@ -4,14 +4,14 @@
     "href": "posts.html",
     "title": "Blog",
     "section": "",
-    "text": "Statistical Learning\n\n\n\nLearn\n\n\nR\n\n\n\nIn this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning\n\n\n\nAbdoulie Jallow\n\n\nFeb 11, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Statistical Learning\n\n\n\nLearn\n\n\nR\n\n\n\nIn this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning\n\n\n\nAbdoulie Jallow\n\n\nFeb 11, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating a Quarto Thesis Template for Bachelor and Diploma Projects at JKU\n\n\n\nResources\n\n\n\nI’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it…\n\n\n\nAbdoulie Jallow\n\n\nFeb 11, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Abdoulie Jallow",
+    "objectID": "posts/2024-11-14-statistical-learning/index.html",
+    "href": "posts/2024-11-14-statistical-learning/index.html",
+    "title": "Statistical Learning",
     "section": "",
-    "text": "Hello! I’m Abdoulie—though most people call me by my last name, Jallow. I hold a bachelor’s degree in Biological Chemistry and am deeply fascinated by science, philosophy, and constantly learning new skills. I created this website to document and share my learning journey with others. Feel free to explore and see what I’m working on!"
+    "text": "CitationBibTeX citation:@online{jallow2025,\n  author = {Jallow, Abdoulie},\n  title = {Statistical {Learning}},\n  date = {2025-02-11},\n  url = {https://jallow-code.github.io/posts/2024-11-14-statistical-learning/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nJallow, Abdoulie. 2025. “Statistical Learning.” February\n11, 2025. https://jallow-code.github.io/posts/2024-11-14-statistical-learning/."
   },
   {
     "objectID": "about.html",
@@ -21,10 +21,17 @@
     "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
-    "objectID": "posts/2024-11-14-statistical-learning/index.html",
-    "href": "posts/2024-11-14-statistical-learning/index.html",
-    "title": "Statistical Learning",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Abdoulie Jallow",
     "section": "",
-    "text": "CitationBibTeX citation:@online{jallow2025,\n  author = {Jallow, Abdoulie},\n  title = {Statistical {Learning}},\n  date = {2025-02-11},\n  url = {https://jallow-code.github.io/posts/2024-11-14-statistical-learning/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nJallow, Abdoulie. 2025. “Statistical Learning.” February\n11, 2025. https://jallow-code.github.io/posts/2024-11-14-statistical-learning/."
+    "text": "Hello! I’m Abdoulie—though most people call me by my last name, Jallow. I hold a bachelor’s degree in Biological Chemistry and am deeply fascinated by science, philosophy, and constantly learning new skills. I created this website to document and share my learning journey with others. Feel free to explore and see what I’m working on!"
+  },
+  {
+    "objectID": "posts/jku-thesis-template/index.html",
+    "href": "posts/jku-thesis-template/index.html",
+    "title": "Creating a Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
+    "section": "",
+    "text": "CitationBibTeX citation:@online{jallow2025,\n  author = {Jallow, Abdoulie},\n  title = {Creating a {Quarto} {Thesis} {Template} for {Bachelor} and\n    {Diploma} {Projects} at {JKU}},\n  date = {2025-02-11},\n  url = {https://jallow-code.github.io/posts/jku-thesis-template/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nJallow, Abdoulie. 2025. “Creating a Quarto Thesis Template for\nBachelor and Diploma Projects at JKU.” February 11, 2025. https://jallow-code.github.io/posts/jku-thesis-template/."
   }
 ]
