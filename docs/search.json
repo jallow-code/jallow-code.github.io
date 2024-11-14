@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Blog",
+    "section": "",
+    "text": "draft: false # setting this to true will prevent your post from appearing on your listing page until you’re ready!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Abdoulie Jallow",
@@ -12,5 +19,12 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/2024-11-14-statistical-learning/index.html",
+    "href": "posts/2024-11-14-statistical-learning/index.html",
+    "title": "Abdoulie Jallow",
+    "section": "",
+    "text": "title: “Statistical Learning” description: “In this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning” author: - name: Abdoulie Jallow url: https://jallow-code.github.io/ orcid: “” affiliation: “” affiliation-url: “” date: 14-11-2024 categories: [Learn, R] # self-defined categories citation: url: https://jallow-code.github.io/posts/2024-11-14-statistical-learning/ image: stat-image.jpg draft: false # setting this to true will prevent your post from appearing on your listing page until you’re ready! —"
   }
 ]
