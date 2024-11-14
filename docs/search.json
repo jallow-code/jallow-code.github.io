@@ -4,7 +4,7 @@
     "href": "posts.html",
     "title": "Blog",
     "section": "",
-    "text": "draft: false # setting this to true will prevent your post from appearing on your listing page until you’re ready!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Statistical Learning\n\n\n\nLearn\n\n\nR\n\n\n\nIn this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning\n\n\n\nAbdoulie Jallow\n\n\nFeb 11, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -23,8 +23,8 @@
   {
     "objectID": "posts/2024-11-14-statistical-learning/index.html",
     "href": "posts/2024-11-14-statistical-learning/index.html",
-    "title": "Abdoulie Jallow",
+    "title": "Statistical Learning",
     "section": "",
-    "text": "title: “Statistical Learning” description: “In this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning” author: - name: Abdoulie Jallow url: https://jallow-code.github.io/ orcid: “” affiliation: “” affiliation-url: “” date: 14-11-2024 categories: [Learn, R] # self-defined categories citation: url: https://jallow-code.github.io/posts/2024-11-14-statistical-learning/ image: stat-image.jpg draft: false # setting this to true will prevent your post from appearing on your listing page until you’re ready! —"
+    "text": "CitationBibTeX citation:@online{jallow2025,\n  author = {Jallow, Abdoulie},\n  title = {Statistical {Learning}},\n  date = {2025-02-11},\n  url = {https://jallow-code.github.io/posts/2024-11-14-statistical-learning/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nJallow, Abdoulie. 2025. “Statistical Learning.” February\n11, 2025. https://jallow-code.github.io/posts/2024-11-14-statistical-learning/."
   }
 ]
