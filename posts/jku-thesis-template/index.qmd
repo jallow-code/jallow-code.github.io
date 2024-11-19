@@ -1,16 +1,159 @@
 ---
-title: "Creating a Quarto Thesis Template for Bachelor and Diploma Projects at JKU"
+title: "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU"
 description: "I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it to meet JKU's requirements for Bachelor and Diploma theses"
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-    orcid: ""
-    affiliation: ""
-    affiliation-url: "" 
-date: 14-11-2024
+     
+date: last-modified
 categories: [Resources] # self-defined categories
 citation: 
   url: https://jallow-code.github.io/posts/jku-thesis-template/ 
 image: thesis_image.png
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+engine: knitr
 ---
+
+You will need to do this to get all the folders with tex files. Start in the directory where you will create the directory that will contain your thesis files. Run this from a terminal in that directory.
+
+```{bash}
+#| eval: false
+#| echo: true
+quarto use template jallow-code/jku-quarto-thesis
+
+```
+
+It will ask for an empty directory name where to put the files, give it a new directory name.
+
+Once you do that you can `cd` to the new directory and render from within the directory.
+
+```{bash}
+#| eval: false
+#| echo: true
+quarto render
+
+```
+
+You may encounter the following error message when you first render the document:
+
+```         
+ERROR: 
+compilation failed- missing packages (automatic installed disabled)      
+LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.872 \end{CSLReferences}
+
+```
+
+This have to do with your version of `Quarto` and `Tinytex` . To fix this issue you will have to update your [tinytex package](https://yihui.org/tinytex/) or the Quarto version you are using.
+
+## Installation or updating for an existing document
+
+You may also use this format with an existing Quarto project or document. But you will need to have all the tex folders already (see above).
+
+```{bash}
+#| eval: false
+#| echo: true
+quarto install extension jallow-code/jku-quarto-thesis
+```
+
+## Basic Usage and Customization
+
+This template have bachelor thesis as a default. Therefore, to change it to a master or Phd dissertation you will the have to edit the `_extensions/quarto-thesis/partials/before-body.tex` file. Scroll down to the title page of the file and edit the line that contain thesis type.
+
+``` latex
+%------------------------------------------------------------------------------
+%   TITLE PAGE
+%------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+
+% Add the logo at the top center
+$if(thesis.logo)$
+$if(thesis.logo-height)$
+\includegraphics[height=$thesis.logo-height$]{$thesis.logo$} % University/department logo
+$else$
+\includegraphics[width=0.1\textwidth]{$thesis.logo$} % Adjust the width to make the logo smaller
+$endif$
+$endif$
+
+\vspace*{.06\textheight}
+{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
+\textsc{\Large BACHELOR THESIS}\\[0.5cm] % Thesis type
+
+\HRule \\[0.4cm] % Horizontal line
+{\LARGE \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title, changed from \huge to \LARGE
+\HRule \\[1.5cm] % Horizontal line
+
+\begin{tabular}{@{}p{0.4\textwidth}p{0.55\textwidth}@{}}
+\begin{flushleft} \large
+\emph{Author:}\\
+$if(author.url)$
+\href{$author.url$}{\textbf{\authorname}} % Author name - remove the \href bracket to remove the link
+$else$
+\textbf{\authorname}
+$endif$
+\end{flushleft}
+&
+\begin{flushright} \large
+\begin{tabular}{@{}ll@{}}
+\emph{Supervisor:} & \textbf{$thesis.supervisor.primary$} \\
+$if(thesis.supervisor.co)$
+\emph{Co-Supervisor:} & \textbf{$thesis.supervisor.co$} \\
+$endif$
+\end{tabular}
+\end{flushright}
+\end{tabular}\\[3cm]  
+
+\vfill
+
+\large \textit{Bachelor's Thesis to confer the academic degree of\\ \degreename}\\[0.3cm] % University requirement text
+\textit{in}\\[0.4cm]
+\textbf{\groupname}\\
+\href{$thesis.supervisor.url$}{\deptname}\\[2cm] % Research group name and department name with link
+
+\vfill
+
+$if(book.date)$
+{\large $book.date$}\\[4cm] % Date
+$endif$
+
+\vfill
+\end{center}
+\end{titlepage}
+```
+
+Additionally, you may want to exclude some sections of the frontmatter (e.g dedication, constants etc..). This can be achieved simply by commenting out that section from the `_quarto.yml`. For example, the dedication page is left out as follows:
+
+``` yaml
+
+thesis:
+  supervisor:
+    primary: "Assoz. Univ.-Prof. Dr. Ian Teasdale"
+    co: "Dipl.-Ing. Michael Kneidinger"
+  degree-name: Bachelor of Science
+  university: Johannes Kepler Universität Linz
+  department: Institute of Polymer Chemistry
+  group: Biological Chemistry # program
+  faculty: Faculty of Engineering and Natural Sciences
+  declaration: "Frontmatter/declaration.tex"
+  quotation:
+    text: "We make our progress through explanatory conjectures and criticism. And, as Popper says, by letting our ideas 'die in our place'. "
+    attribution: David Deutsch
+  acknowledgements: "Frontmatter/acknowledgements.tex"
+  abbreviations: "Frontmatter/abbreviations.tex"
+  symbols: "Frontmatter/symbols.tex"
+  #dedication: "Frontmatter/dedication.tex"
+  logo: images/logo.png
+  logo-height: "3cm"
+  
+```
+
+Checkout the pdf file in the repo to learn more about the usage of the template. You may have to write some `Latex` code to further customize this template if you have other specific requirements. [Eli Holmes](https://github.com/nmfs-opensci/quarto-thesis) made excellent video tutorials that you may find useful.
+
+## Example

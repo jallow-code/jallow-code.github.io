@@ -5,3 +5,5 @@ freeze: auto
 
 # enable banner style title blocks ----
 title-block-banner: true
+
+highlight-style: github
