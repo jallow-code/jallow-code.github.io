@@ -18,17 +18,23 @@ website:
         href: https://github.com/jallow-code
         target: _blank
   page-footer:
-    left: Copyright 2024, Abdoulie Jallow
-    right: This website is build with {{< fa heart title="a heart" >}}, [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/jallow-code/jallow-code.github.io){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
+    left: © 2024 Abdoulie Jallow
+    right: This website is build with [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/jallow-code/jallow-code.github.io){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
 
 format:
   html:
     theme:
-      light: solar
-      dark: cosmo
-    css: styles.css
+      light: styles/light-theme.scss
+      dark: styles/dark-theme.scss
+    css: styles/ek-styles.css
+    highlight-style: gruvbox
+    smooth-scroll: true
+    link-external-newwindow: true  
     toc: true
     page-layout: full
+    code-block-bg: true
+code-block-border-left: "#31BAE9"
+  
 
 editor: visual
 
