@@ -4,7 +4,6 @@ description: "I’m sharing a Quarto template I customized for my bachelor’s t
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-     
 date: last-modified
 categories: [Resources] # self-defined categories
 citation: 
@@ -46,7 +45,6 @@ Type  H <return>  for immediate help.
  ...
 
 l.872 \end{CSLReferences}
-
 ```
 
 This have to do with your version of `Quarto` and `Tinytex` . To fix this issue you will have to update your [tinytex package](https://yihui.org/tinytex/) or the Quarto version you are using.
