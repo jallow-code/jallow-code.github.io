@@ -5,5 +5,11 @@ title: "About"
 About this site
 
 ```{r}
-1 + 1
+#| eval: false
+
+predict(lm.fit, data.frame(lstat = c(5, 10, 15)), interval = "confidence") #  This function can be used to produce confidence and prediction intervals. Here, the numeric values are for prediction
+predict(lm.fit, data.frame(lstat = c(5, 10, 15)), interval = "prediction")
+plot(lstat, medv)
+abline(lm.fit, lwd = 3) # lwd increases the width of the regression line by a factor of three (3). This works for plot() and lines() function too.
+abline(lm.fit, col = "red")
 ```

@@ -7,8 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abdoulie Jallow">
-<meta name="dcterms.date" content="2024-11-19">
-<meta name="description" content="I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it to meet JKU’s requirements for Bachelor and Diploma theses">
+<meta name="description" content="I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz.">
 
 <title>A Quarto Thesis Template for Bachelor and Diploma Projects at JKU – Abdoulie Jallow</title>
 <style>
@@ -76,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-05e257f7f0e0c37608978a94d3e630e0.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-305a7b281848521f37e4b79aa2824409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-720471ec75352653f50cab3a79aa2060.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-9d0163d01a38941c52539abebd8179ad.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
@@ -109,6 +108,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles/ek-styles.css">
 </head>
@@ -170,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">A Quarto Thesis Template for Bachelor and Diploma Projects at JKU</h1>
                   <div>
         <div class="description">
-          I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it to meet JKU’s requirements for Bachelor and Diploma theses
+          I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -192,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 19, 2024</p>
+        <p class="date">Nov 17, 2024</p>
       </div>
     </div>
     
@@ -208,9 +236,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installation-or-updating-for-an-existing-document" id="toc-installation-or-updating-for-an-existing-document" class="nav-link active" data-scroll-target="#installation-or-updating-for-an-existing-document">Installation or updating for an existing document</a></li>
-  <li><a href="#basic-usage-and-customization" id="toc-basic-usage-and-customization" class="nav-link" data-scroll-target="#basic-usage-and-customization">Basic Usage and Customization</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#installing-the-template" id="toc-installing-the-template" class="nav-link" data-scroll-target="#installing-the-template">Installing the Template</a>
+  <ul class="collapse">
+  <li><a href="#clone-the-template" id="toc-clone-the-template" class="nav-link" data-scroll-target="#clone-the-template">1. Clone the Template</a></li>
+  <li><a href="#render-the-template" id="toc-render-the-template" class="nav-link" data-scroll-target="#render-the-template">2. Render the Template</a>
+  <ul class="collapse">
+  <li><a href="#troubleshooting-errors" id="toc-troubleshooting-errors" class="nav-link" data-scroll-target="#troubleshooting-errors">Troubleshooting Errors</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#using-the-template-with-an-existing-document" id="toc-using-the-template-with-an-existing-document" class="nav-link" data-scroll-target="#using-the-template-with-an-existing-document">Using the Template with an Existing Document</a></li>
+  <li><a href="#basic-usage-and-customization" id="toc-basic-usage-and-customization" class="nav-link" data-scroll-target="#basic-usage-and-customization">Basic Usage and Customization</a>
+  <ul class="collapse">
+  <li><a href="#thesis-type-and-frontmatter" id="toc-thesis-type-and-frontmatter" class="nav-link" data-scroll-target="#thesis-type-and-frontmatter">Thesis Type and Frontmatter</a></li>
+  <li><a href="#adding-symbols-or-abbreviations" id="toc-adding-symbols-or-abbreviations" class="nav-link" data-scroll-target="#adding-symbols-or-abbreviations">Adding Symbols or Abbreviations</a></li>
+  </ul></li>
+  <li><a href="#citation-styling" id="toc-citation-styling" class="nav-link" data-scroll-target="#citation-styling">Citation Styling</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
+  <li><a href="#sample-document" id="toc-sample-document" class="nav-link" data-scroll-target="#sample-document">Sample Document</a></li>
   </ul>
 </nav>
     </div>
@@ -221,137 +264,145 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>You will need to do this to get all the folders with tex files. Start in the directory where you will create the directory that will contain your thesis files. Run this from a terminal in that directory.</p>
+<section id="background" class="level1">
+<h1>Background</h1>
+<p>This template is based on the <a href="https://www.latextemplates.com/template/masters-doctoral-thesis">Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)</a>, which <a href="https://github.com/nmfs-opensci/quarto-thesis">Eli Holmes</a> updated for Quarto. I further modified the Quarto template to fulfill JKU’s criteria for diploma theses and doctoral dissertations. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. These include ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto tackles these issues and also allows data analysis with <code>R</code> and documentation to be done on a single platform, hence improving reproducibility.</p>
+</section>
+<section id="installing-the-template" class="level1">
+<h1>Installing the Template</h1>
+<p>The GitHub repository for the Quarto thesis template can be found <a href="https://github.com/jallow-code/jku-quarto-thesis">here</a>. Follow these steps to install and use the template:</p>
+<section id="clone-the-template" class="level2">
+<h2 class="anchored" data-anchor-id="clone-the-template">1. Clone the Template</h2>
+<p>Navigate to the directory where you want to create your thesis files. Run the following command in a terminal to download the template and its associated folders:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> use template jallow-code/jku-quarto-thesis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>It will ask for an empty directory name where to put the files, give it a new directory name.</p>
-<p>Once you do that you can <code>cd</code> to the new directory and render from within the directory.</p>
+<p>You will be prompted to specify an empty directory name for the template files. Provide a name for the new directory, which will store your thesis files.</p>
+</section>
+<section id="render-the-template" class="level2">
+<h2 class="anchored" data-anchor-id="render-the-template">2. Render the Template</h2>
+<p>Once the template is installed, change into the new directory:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="op">&lt;</span>new-directory-name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You may encounter the following error message when you first render the document:</p>
-<pre><code>ERROR: 
-compilation failed- missing packages (automatic installed disabled)      
+<p>To generate the document, use the command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="troubleshooting-errors" class="level3">
+<h3 class="anchored" data-anchor-id="troubleshooting-errors">Troubleshooting Errors</h3>
+<p>If you encounter the following error during rendering:</p>
+<pre class="vbnet"><code>
+ERROR: 
+compilation failed - missing packages (automatic install disabled)
 LaTeX Error: Something's wrong--perhaps a missing \item.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H &lt;return&gt;  for immediate help.
  ...
-
 l.872 \end{CSLReferences}</code></pre>
-<p>This have to do with your version of <code>Quarto</code> and <code>Tinytex</code> . To fix this issue you will have to update your <a href="https://yihui.org/tinytex/">tinytex package</a> or the Quarto version you are using.</p>
-<section id="installation-or-updating-for-an-existing-document" class="level2">
-<h2 class="anchored" data-anchor-id="installation-or-updating-for-an-existing-document">Installation or updating for an existing document</h2>
-<p>You may also use this format with an existing Quarto project or document. But you will need to have all the tex folders already (see above).</p>
+<p>This error is likely due to outdated versions of Quarto or TinyTeX. To resolve it:</p>
+<ul>
+<li><p>Update your <a href="https://yihui.org/tinytex/">TinyTex installation</a>.</p></li>
+<li><p>Ensure you are using the latest version of Quarto.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="using-the-template-with-an-existing-document" class="level1">
+<h1>Using the Template with an Existing Document</h1>
+<p>To use this template with an existing Quarto project, make sure you have all the required LaTeX folders as described above. Then, run:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> install extension jallow-code/jku-quarto-thesis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> install extension jallow-code/jku-quarto-thesis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="basic-usage-and-customization" class="level2">
-<h2 class="anchored" data-anchor-id="basic-usage-and-customization">Basic Usage and Customization</h2>
-<p>This template have bachelor thesis as a default. Therefore, to change it to a master or Phd dissertation you will the have to edit the <code>_extensions/quarto-thesis/partials/before-body.tex</code> file. Scroll down to the title page of the file and edit the line that contain thesis type.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">%------------------------------------------------------------------------------</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">%   TITLE PAGE</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">%------------------------------------------------------------------------------</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">titlepage</span>}</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">center</span>}</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">% Add the logo at the top center</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ss">$if(thesis.logo)$</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ss">$if(thesis.logo-height)$</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">\includegraphics</span>[height=<span class="ss">$thesis.logo-height$</span>]{<span class="ss">$thesis.logo$</span>} <span class="co">% University/department logo</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ss">$else$</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">\includegraphics</span>[width=0.1<span class="fu">\textwidth</span>]{<span class="ss">$thesis.logo$</span>} <span class="co">% Adjust the width to make the logo smaller</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ss">$endif$</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ss">$endif$</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">\vspace*</span>{.06<span class="fu">\textheight</span>}</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>{<span class="fu">\scshape\LARGE</span> <span class="fu">\univname\par</span>}<span class="fu">\vspace</span>{1.5cm} <span class="co">% University name</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">\textsc</span>{<span class="fu">\Large</span> BACHELOR THESIS}<span class="fu">\\</span>[0.5cm] <span class="co">% Thesis type</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">\HRule</span> <span class="fu">\\</span>[0.4cm] <span class="co">% Horizontal line</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>{<span class="fu">\LARGE</span> <span class="fu">\bfseries</span> <span class="fu">\ttitle\par</span>}<span class="fu">\vspace</span>{0.4cm} <span class="co">% Thesis title, changed from \huge to \LARGE</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">\HRule</span> <span class="fu">\\</span>[1.5cm] <span class="co">% Horizontal line</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tabular</span>}{<span class="ch">@{}</span>p{0.4<span class="fu">\textwidth</span>}p{0.55<span class="fu">\textwidth</span>}<span class="ch">@{}</span>}</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">flushleft</span>} <span class="fu">\large</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">\emph</span>{Author:}<span class="fu">\\</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="ss">$if(author.url)$</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="fu">\href</span>{<span class="ss">$author.url$</span>}{<span class="fu">\textbf</span>{<span class="fu">\authorname</span>}} <span class="co">% Author name - remove the \href bracket to remove the link</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="ss">$else$</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">\textbf</span>{<span class="fu">\authorname</span>}</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ss">$endif$</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{flushleft}</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">flushright</span>} <span class="fu">\large</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tabular</span>}{<span class="ch">@{}</span>ll<span class="ch">@{}</span>}</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="fu">\emph</span>{Supervisor:} <span class="op">&amp;</span> <span class="fu">\textbf</span>{<span class="ss">$thesis.supervisor.primary$</span>} <span class="fu">\\</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="ss">$if(thesis.supervisor.co)$</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="fu">\emph</span>{Co-Supervisor:} <span class="op">&amp;</span> <span class="fu">\textbf</span>{<span class="ss">$thesis.supervisor.co$</span>} <span class="fu">\\</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="ss">$endif$</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tabular</span>}</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{flushright}</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tabular</span>}<span class="fu">\\</span>[3cm]  </span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="fu">\vfill</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="fu">\large</span> <span class="fu">\textit</span>{Bachelor's Thesis to confer the academic degree of<span class="fu">\\</span> <span class="fu">\degreename</span>}<span class="fu">\\</span>[0.3cm] <span class="co">% University requirement text</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="fu">\textit</span>{in}<span class="fu">\\</span>[0.4cm]</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="fu">\textbf</span>{<span class="fu">\groupname</span>}<span class="fu">\\</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="fu">\href</span>{<span class="ss">$thesis.supervisor.url$</span>}{<span class="fu">\deptname</span>}<span class="fu">\\</span>[2cm] <span class="co">% Research group name and department name with link</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="fu">\vfill</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="ss">$if(book.date)$</span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>{<span class="fu">\large</span> <span class="ss">$book.date$</span>}<span class="fu">\\</span>[4cm] <span class="co">% Date</span></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="ss">$endif$</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="fu">\vfill</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">center</span>}</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">titlepage</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Additionally, you may want to exclude some sections of the frontmatter (e.g dedication, constants etc..). This can be achieved simply by commenting out that section from the <code>_quarto.yml</code>. For example, the dedication page is left out as follows:</p>
+<section id="basic-usage-and-customization" class="level1">
+<h1>Basic Usage and Customization</h1>
+<section id="thesis-type-and-frontmatter" class="level2">
+<h2 class="anchored" data-anchor-id="thesis-type-and-frontmatter">Thesis Type and Frontmatter</h2>
+<p>The template is configured for a Bachelor’s thesis by default. To change this, edit the <code>_quarto.yml</code> file. For example:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">thesis</span><span class="kw">:</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">supervisor</span><span class="kw">:</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> </span><span class="st">"Assoz. Univ.-Prof. Dr. Ian Teasdale"</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">co</span><span class="kw">:</span><span class="at"> </span><span class="st">"Dipl.-Ing. Michael Kneidinger"</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">degree-name</span><span class="kw">:</span><span class="at"> Bachelor of Science</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">university</span><span class="kw">:</span><span class="at"> Johannes Kepler Universität Linz</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Institute of Polymer Chemistry</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Biological Chemistry</span><span class="co"> # program</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">faculty</span><span class="kw">:</span><span class="at"> Faculty of Engineering and Natural Sciences</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">declaration</span><span class="kw">:</span><span class="at"> </span><span class="st">"Frontmatter/declaration.tex"</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">quotation</span><span class="kw">:</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"We make our progress through explanatory conjectures and criticism. And, as Popper says, by letting our ideas 'die in our place'. "</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">attribution</span><span class="kw">:</span><span class="at"> David Deutsch</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">acknowledgements</span><span class="kw">:</span><span class="at"> </span><span class="st">"Frontmatter/acknowledgements.tex"</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">abbreviations</span><span class="kw">:</span><span class="at"> </span><span class="st">"Frontmatter/abbreviations.tex"</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">symbols</span><span class="kw">:</span><span class="at"> </span><span class="st">"Frontmatter/symbols.tex"</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">  #dedication: "Frontmatter/dedication.tex"</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">logo</span><span class="kw">:</span><span class="at"> images/logo.png</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">logo-height</span><span class="kw">:</span><span class="at"> </span><span class="st">"3cm"</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Checkout the pdf file in the repo to learn more about the usage of the template. You may have to write some <code>Latex</code> code to further customize this template if you have other specific requirements. <a href="https://github.com/nmfs-opensci/quarto-thesis">Eli Holmes</a> made excellent video tutorials that you may find useful.</p>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> Bachelor Thesis</span><span class="co"> # Or "Master Thesis", "Doctoral Dissertation", etc.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">degree-name</span><span class="kw">:</span><span class="at"> Bachelor Science</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Biological Chemistry</span><span class="co"> # name of your study program</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">supervisor</span><span class="kw">:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> </span><span class="st">"Assoz. Univ.-Prof. Dr. Ian Teasdale"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">co</span><span class="kw">:</span><span class="at"> </span><span class="st">"Dipl.-Ing. Michael Kneidinger"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">university</span><span class="kw">:</span><span class="at"> Johannes Kepler Universität Linz</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Institute of Polymer Chemistry</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">faculty</span><span class="kw">:</span><span class="at"> Faculty of Engineering and Natural Sciences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can also customize elements of the front matter (e.g., acknowledgments, dedication) by commenting out or modifying the respective sections in<code>_quarto.yml</code>. For instance, to exclude the dedication page:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dedication: "Frontmatter/dedication.tex"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
+<section id="adding-symbols-or-abbreviations" class="level2">
+<h2 class="anchored" data-anchor-id="adding-symbols-or-abbreviations">Adding Symbols or Abbreviations</h2>
+<p>The <code>Frontmatter</code> folder contains LaTeX files for abbreviations, symbols, and other sections. If needed, search online for LaTeX code examples to add symbols or format abbreviations.</p>
+</section>
+</section>
+<section id="citation-styling" class="level1">
+<h1>Citation Styling</h1>
+<p>The default citation style is <code>nature-chemistry.csl</code>. If you prefer another style, download it from the <a href="https://www.zotero.org/styles?fields=chemistry">Zotero Style Repository</a> and update the <code>_quarto.yml</code> file:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">example.bib</span><span class="kw">]</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> your-preferred-style.csl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="additional-resources" class="level1">
+<h1>Additional Resources</h1>
+<ul>
+<li><p>For detailed usage instructions, refer to the rendered sample PDF file below.</p></li>
+<li><p>Explore the <a href="https://quarto.org/docs/visual-editor/technical.html">Quarto technical writing documentation</a>, especially if you are new to Quarto.</p></li>
+<li><p>Watch Eli Holmes’s <a href="https://www.youtube.com/@eeholmes-datascience4849">Youtube channel</a> for insights into data science workflows and Quarto.</p></li>
+</ul>
+</section>
+<section id="sample-document" class="level1">
+<h1>Sample Document</h1>
+<div class="cell">
+<style type="text/css">
+.embed-container {
+    position: relative;
+    padding-bottom: 129%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+</div>
+<p class="text-center">
+  <a class="btn btn-primary btn-lg doc-download" href="" target="_blank">
+    <i class="fa-solid fa-file-arrow-down"></i> Download thesis sample
+  </a>
+</p>
+
+<div class="embed-container">
+  <iframe src="Synthesis-of-Hydrogels-using-Poly-organo-phosphazenes-and-$α$-cyclodextrin.pdf" style="border: 0.5px"></iframe>
+</div>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jallow2024,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jallow2025,
   author = {Jallow, Abdoulie},
   title = {A {Quarto} {Thesis} {Template} for {Bachelor} and {Diploma}
     {Projects} at {JKU}},
-  date = {2024-11-19},
+  date = {2025-05-11},
   url = {https://jallow-code.github.io/posts/jku-thesis-template/},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jallow2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Jallow, Abdoulie. 2024. <span>“A Quarto Thesis Template for Bachelor and
-Diploma Projects at JKU.”</span> November 19, 2024. <a href="https://jallow-code.github.io/posts/jku-thesis-template/">https://jallow-code.github.io/posts/jku-thesis-template/</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jallow2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Jallow, Abdoulie. 2025. <span>“A Quarto Thesis Template for Bachelor and
+Diploma Projects at JKU.”</span> May 11, 2025. <a href="https://jallow-code.github.io/posts/jku-thesis-template/">https://jallow-code.github.io/posts/jku-thesis-template/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

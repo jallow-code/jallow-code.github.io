@@ -42,7 +42,7 @@ $gray-900: #212129 !default;
 $black:    #000 !default;
 
 
-/*
+
 $blue:    #4582ec !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
@@ -53,7 +53,7 @@ $yellow:  #f0ad4e !default;
 $green:   #02b875 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
-*/
+
 
 //  my colors (comment out above)
 $pink: #D4006A;
@@ -95,12 +95,13 @@ $body-bg: $light;
 $body-color: $dark;
 $navbar-bg: $body-bg;
 $navbar-fg: $body-color;
-$code-bg: $light;
-$code-color: $second-color;
 $card-bg: $body-bg;
 $card-border-color: $gray-300;
-$code-block-bg: $cream;
 
+// color tweaks for code
+$code-bg: $gray-200;
+$code-color: $second-color;
+$code-block-bg: $cream;
 
 #fn1 > p > code {
   font-size: 0.8rem;
@@ -196,7 +197,7 @@ pre.sourceCode {
 
 // links
 a {
-  color: $body-color;
+  color: $third-color;
   text-decoration-thickness: 1px;
   //text-underline-offset: .1rem;
   //text-underline-position: under;

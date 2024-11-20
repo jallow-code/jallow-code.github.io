@@ -4,7 +4,7 @@
     "href": "posts.html",
     "title": "Blog",
     "section": "",
-    "text": "Statistical Learning\n\n\n\nLearn\n\n\nR\n\n\n\nIn this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning\n\n\n\nAbdoulie Jallow\n\n\nFeb 11, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA Quarto Thesis Template for Bachelor and Diploma Projects at JKU\n\n\n\nResources\n\n\n\nI’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it…\n\n\n\nAbdoulie Jallow\n\n\nNov 19, 2024\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Statistical Learning\n\n\n\nLearn\n\n\nR\n\n\n\nIn this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning\n\n\n\nAbdoulie Jallow\n\n\nFeb 11, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA Quarto Thesis Template for Bachelor and Diploma Projects at JKU\n\n\n\nResources\n\n\n\nI’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz.\n\n\n\nAbdoulie Jallow\n\n\nNov 17, 2024\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2024-11-14-statistical-learning/index.html",
@@ -18,7 +18,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "About this site\n\npredict(lm.fit, data.frame(lstat = c(5, 10, 15)), interval = \"confidence\") #  This function can be used to produce confidence and prediction intervals. Here, the numeric values are for prediction\npredict(lm.fit, data.frame(lstat = c(5, 10, 15)), interval = \"prediction\")\nplot(lstat, medv)\nabline(lm.fit, lwd = 3) # lwd increases the width of the regression line by a factor of three (3). This works for plot() and lines() function too.\nabline(lm.fit, col = \"red\")"
   },
   {
     "objectID": "index.html",
@@ -32,27 +32,34 @@
     "href": "posts/jku-thesis-template/index.html",
     "title": "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
     "section": "",
-    "text": "You will need to do this to get all the folders with tex files. Start in the directory where you will create the directory that will contain your thesis files. Run this from a terminal in that directory.\nquarto use template jallow-code/jku-quarto-thesis\nIt will ask for an empty directory name where to put the files, give it a new directory name.\nOnce you do that you can cd to the new directory and render from within the directory.\nquarto render\nYou may encounter the following error message when you first render the document:\nThis have to do with your version of Quarto and Tinytex . To fix this issue you will have to update your tinytex package or the Quarto version you are using."
+    "text": "This template is based on the Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017), which Eli Holmes updated for Quarto. I further modified the Quarto template to fulfill JKU’s criteria for diploma theses and doctoral dissertations. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. These include ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto tackles these issues and also allows data analysis with R and documentation to be done on a single platform, hence improving reproducibility."
   },
   {
-    "objectID": "posts/jku-thesis-template/index.html#installation-or-updating-for-an-existing-document",
-    "href": "posts/jku-thesis-template/index.html#installation-or-updating-for-an-existing-document",
+    "objectID": "posts/jku-thesis-template/index.html#clone-the-template",
+    "href": "posts/jku-thesis-template/index.html#clone-the-template",
     "title": "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
-    "section": "Installation or updating for an existing document",
-    "text": "Installation or updating for an existing document\nYou may also use this format with an existing Quarto project or document. But you will need to have all the tex folders already (see above).\n\nquarto install extension jallow-code/jku-quarto-thesis"
+    "section": "1. Clone the Template",
+    "text": "1. Clone the Template\nNavigate to the directory where you want to create your thesis files. Run the following command in a terminal to download the template and its associated folders:\n\nquarto use template jallow-code/jku-quarto-thesis\n\nYou will be prompted to specify an empty directory name for the template files. Provide a name for the new directory, which will store your thesis files."
   },
   {
-    "objectID": "posts/jku-thesis-template/index.html#basic-usage-and-customization",
-    "href": "posts/jku-thesis-template/index.html#basic-usage-and-customization",
+    "objectID": "posts/jku-thesis-template/index.html#render-the-template",
+    "href": "posts/jku-thesis-template/index.html#render-the-template",
     "title": "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
-    "section": "Basic Usage and Customization",
-    "text": "Basic Usage and Customization\nThis template have bachelor thesis as a default. Therefore, to change it to a master or Phd dissertation you will the have to edit the _extensions/quarto-thesis/partials/before-body.tex file. Scroll down to the title page of the file and edit the line that contain thesis type.\n%------------------------------------------------------------------------------\n%   TITLE PAGE\n%------------------------------------------------------------------------------\n\n\\begin{titlepage}\n\\begin{center}\n\n% Add the logo at the top center\n$if(thesis.logo)$\n$if(thesis.logo-height)$\n\\includegraphics[height=$thesis.logo-height$]{$thesis.logo$} % University/department logo\n$else$\n\\includegraphics[width=0.1\\textwidth]{$thesis.logo$} % Adjust the width to make the logo smaller\n$endif$\n$endif$\n\n\\vspace*{.06\\textheight}\n{\\scshape\\LARGE \\univname\\par}\\vspace{1.5cm} % University name\n\\textsc{\\Large BACHELOR THESIS}\\\\[0.5cm] % Thesis type\n\n\\HRule \\\\[0.4cm] % Horizontal line\n{\\LARGE \\bfseries \\ttitle\\par}\\vspace{0.4cm} % Thesis title, changed from \\huge to \\LARGE\n\\HRule \\\\[1.5cm] % Horizontal line\n\n\\begin{tabular}{@{}p{0.4\\textwidth}p{0.55\\textwidth}@{}}\n\\begin{flushleft} \\large\n\\emph{Author:}\\\\\n$if(author.url)$\n\\href{$author.url$}{\\textbf{\\authorname}} % Author name - remove the \\href bracket to remove the link\n$else$\n\\textbf{\\authorname}\n$endif$\n\\end{flushleft}\n&\n\\begin{flushright} \\large\n\\begin{tabular}{@{}ll@{}}\n\\emph{Supervisor:} & \\textbf{$thesis.supervisor.primary$} \\\\\n$if(thesis.supervisor.co)$\n\\emph{Co-Supervisor:} & \\textbf{$thesis.supervisor.co$} \\\\\n$endif$\n\\end{tabular}\n\\end{flushright}\n\\end{tabular}\\\\[3cm]  \n\n\\vfill\n\n\\large \\textit{Bachelor's Thesis to confer the academic degree of\\\\ \\degreename}\\\\[0.3cm] % University requirement text\n\\textit{in}\\\\[0.4cm]\n\\textbf{\\groupname}\\\\\n\\href{$thesis.supervisor.url$}{\\deptname}\\\\[2cm] % Research group name and department name with link\n\n\\vfill\n\n$if(book.date)$\n{\\large $book.date$}\\\\[4cm] % Date\n$endif$\n\n\\vfill\n\\end{center}\n\\end{titlepage}\nAdditionally, you may want to exclude some sections of the frontmatter (e.g dedication, constants etc..). This can be achieved simply by commenting out that section from the _quarto.yml. For example, the dedication page is left out as follows:\n\nthesis:\n  supervisor:\n    primary: \"Assoz. Univ.-Prof. Dr. Ian Teasdale\"\n    co: \"Dipl.-Ing. Michael Kneidinger\"\n  degree-name: Bachelor of Science\n  university: Johannes Kepler Universität Linz\n  department: Institute of Polymer Chemistry\n  group: Biological Chemistry # program\n  faculty: Faculty of Engineering and Natural Sciences\n  declaration: \"Frontmatter/declaration.tex\"\n  quotation:\n    text: \"We make our progress through explanatory conjectures and criticism. And, as Popper says, by letting our ideas 'die in our place'. \"\n    attribution: David Deutsch\n  acknowledgements: \"Frontmatter/acknowledgements.tex\"\n  abbreviations: \"Frontmatter/abbreviations.tex\"\n  symbols: \"Frontmatter/symbols.tex\"\n  #dedication: \"Frontmatter/dedication.tex\"\n  logo: images/logo.png\n  logo-height: \"3cm\"\n  \nCheckout the pdf file in the repo to learn more about the usage of the template. You may have to write some Latex code to further customize this template if you have other specific requirements. Eli Holmes made excellent video tutorials that you may find useful."
+    "section": "2. Render the Template",
+    "text": "2. Render the Template\nOnce the template is installed, change into the new directory:\n\ncd &lt;new-directory-name&gt;\n\nTo generate the document, use the command:\n\nquarto render\n\n\nTroubleshooting Errors\nIf you encounter the following error during rendering:\n\nERROR: \ncompilation failed - missing packages (automatic install disabled)\nLaTeX Error: Something's wrong--perhaps a missing \\item.\n\nSee the LaTeX manual or LaTeX Companion for explanation.\nType  H &lt;return&gt;  for immediate help.\n ...\nl.872 \\end{CSLReferences}\nThis error is likely due to outdated versions of Quarto or TinyTeX. To resolve it:\n\nUpdate your TinyTex installation.\nEnsure you are using the latest version of Quarto."
   },
   {
-    "objectID": "posts/jku-thesis-template/index.html#example",
-    "href": "posts/jku-thesis-template/index.html#example",
+    "objectID": "posts/jku-thesis-template/index.html#thesis-type-and-frontmatter",
+    "href": "posts/jku-thesis-template/index.html#thesis-type-and-frontmatter",
     "title": "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
-    "section": "Example",
-    "text": "Example"
+    "section": "Thesis Type and Frontmatter",
+    "text": "Thesis Type and Frontmatter\nThe template is configured for a Bachelor’s thesis by default. To change this, edit the _quarto.yml file. For example:\n\nthesis:\n  type: Bachelor Thesis # Or \"Master Thesis\", \"Doctoral Dissertation\", etc.\n  degree-name: Bachelor Science\n  group: Biological Chemistry # name of your study program\n  supervisor:\n    primary: \"Assoz. Univ.-Prof. Dr. Ian Teasdale\"\n    co: \"Dipl.-Ing. Michael Kneidinger\"\n  university: Johannes Kepler Universität Linz\n  department: Institute of Polymer Chemistry\n  faculty: Faculty of Engineering and Natural Sciences\nYou can also customize elements of the front matter (e.g., acknowledgments, dedication) by commenting out or modifying the respective sections in_quarto.yml. For instance, to exclude the dedication page:\n\n# dedication: \"Frontmatter/dedication.tex\""
+  },
+  {
+    "objectID": "posts/jku-thesis-template/index.html#adding-symbols-or-abbreviations",
+    "href": "posts/jku-thesis-template/index.html#adding-symbols-or-abbreviations",
+    "title": "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
+    "section": "Adding Symbols or Abbreviations",
+    "text": "Adding Symbols or Abbreviations\nThe Frontmatter folder contains LaTeX files for abbreviations, symbols, and other sections. If needed, search online for LaTeX code examples to add symbols or format abbreviations."
   }
 ]

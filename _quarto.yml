@@ -27,12 +27,11 @@ format:
       light: styles/light-theme.scss
       dark: styles/dark-theme.scss
     css: styles/ek-styles.css
-    highlight-style: gruvbox
     smooth-scroll: true
     link-external-newwindow: true  
     toc: true
     page-layout: full
-    code-block-bg: true
+highlight-style: gruvbox
 code-block-border-left: "#31BAE9"
 
 

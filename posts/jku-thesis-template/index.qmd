@@ -1,19 +1,34 @@
 ---
 title: "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU"
-description: "I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz. Originally adapted from a LaTeX template by Eli Holmes, I tailored it to meet JKU's requirements for Bachelor and Diploma theses"
+description: "I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz."
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-date: last-modified
+date: 17 11 2024
+date-format: medium
 categories: [Resources] # self-defined categories
 citation: 
   url: https://jallow-code.github.io/posts/jku-thesis-template/ 
 image: thesis_image.png
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+
+doc:
+  pdf: "Synthesis-of-Hydrogels-using-Poly-organo-phosphazenes-and-$α$-cyclodextrin.pdf"
+  
 engine: knitr
 ---
 
-You will need to do this to get all the folders with tex files. Start in the directory where you will create the directory that will contain your thesis files. Run this from a terminal in that directory.
+# Background
+
+This template is based on the [Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)](https://www.latextemplates.com/template/masters-doctoral-thesis), which [Eli Holmes](https://github.com/nmfs-opensci/quarto-thesis) updated for Quarto. I further modified the Quarto template to fulfill JKU's criteria for diploma theses and doctoral dissertations. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. These include ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto tackles these issues and also allows data analysis with `R` and documentation to be done on a single platform, hence improving reproducibility.
+
+# Installing the Template
+
+The GitHub repository for the Quarto thesis template can be found [here](https://github.com/jallow-code/jku-quarto-thesis). Follow these steps to install and use the template:
+
+## 1. Clone the Template
+
+Navigate to the directory where you want to create your thesis files. Run the following command in a terminal to download the template and its associated folders:
 
 ```{bash}
 #| eval: false
@@ -22,9 +37,20 @@ quarto use template jallow-code/jku-quarto-thesis
 
 ```
 
-It will ask for an empty directory name where to put the files, give it a new directory name.
+You will be prompted to specify an empty directory name for the template files. Provide a name for the new directory, which will store your thesis files.
 
-Once you do that you can `cd` to the new directory and render from within the directory.
+## 2. Render the Template
+
+Once the template is installed, change into the new directory:
+
+```{bash}
+#| eval: false
+#| echo: true
+cd <new-directory-name>
+
+```
+
+To generate the document, use the command:
 
 ```{bash}
 #| eval: false
@@ -33,25 +59,31 @@ quarto render
 
 ```
 
-You may encounter the following error message when you first render the document:
+### Troubleshooting Errors
 
-```         
+If you encounter the following error during rendering:
+
+``` vbnet
+
 ERROR: 
-compilation failed- missing packages (automatic installed disabled)      
+compilation failed - missing packages (automatic install disabled)
 LaTeX Error: Something's wrong--perhaps a missing \item.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...
-
 l.872 \end{CSLReferences}
 ```
 
-This have to do with your version of `Quarto` and `Tinytex` . To fix this issue you will have to update your [tinytex package](https://yihui.org/tinytex/) or the Quarto version you are using.
+This error is likely due to outdated versions of Quarto or TinyTeX. To resolve it:
 
-## Installation or updating for an existing document
+-   Update your [TinyTex installation](https://yihui.org/tinytex/).
 
-You may also use this format with an existing Quarto project or document. But you will need to have all the tex folders already (see above).
+-   Ensure you are using the latest version of Quarto.
+
+# Using the Template with an Existing Document
+
+To use this template with an existing Quarto project, make sure you have all the required LaTeX folders as described above. Then, run:
 
 ```{bash}
 #| eval: false
@@ -59,99 +91,85 @@ You may also use this format with an existing Quarto project or document. But yo
 quarto install extension jallow-code/jku-quarto-thesis
 ```
 
-## Basic Usage and Customization
+# Basic Usage and Customization
 
-This template have bachelor thesis as a default. Therefore, to change it to a master or Phd dissertation you will the have to edit the `_extensions/quarto-thesis/partials/before-body.tex` file. Scroll down to the title page of the file and edit the line that contain thesis type.
+## Thesis Type and Frontmatter
 
-``` latex
-%------------------------------------------------------------------------------
-%   TITLE PAGE
-%------------------------------------------------------------------------------
-
-\begin{titlepage}
-\begin{center}
-
-% Add the logo at the top center
-$if(thesis.logo)$
-$if(thesis.logo-height)$
-\includegraphics[height=$thesis.logo-height$]{$thesis.logo$} % University/department logo
-$else$
-\includegraphics[width=0.1\textwidth]{$thesis.logo$} % Adjust the width to make the logo smaller
-$endif$
-$endif$
-
-\vspace*{.06\textheight}
-{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
-\textsc{\Large BACHELOR THESIS}\\[0.5cm] % Thesis type
-
-\HRule \\[0.4cm] % Horizontal line
-{\LARGE \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title, changed from \huge to \LARGE
-\HRule \\[1.5cm] % Horizontal line
-
-\begin{tabular}{@{}p{0.4\textwidth}p{0.55\textwidth}@{}}
-\begin{flushleft} \large
-\emph{Author:}\\
-$if(author.url)$
-\href{$author.url$}{\textbf{\authorname}} % Author name - remove the \href bracket to remove the link
-$else$
-\textbf{\authorname}
-$endif$
-\end{flushleft}
-&
-\begin{flushright} \large
-\begin{tabular}{@{}ll@{}}
-\emph{Supervisor:} & \textbf{$thesis.supervisor.primary$} \\
-$if(thesis.supervisor.co)$
-\emph{Co-Supervisor:} & \textbf{$thesis.supervisor.co$} \\
-$endif$
-\end{tabular}
-\end{flushright}
-\end{tabular}\\[3cm]  
-
-\vfill
-
-\large \textit{Bachelor's Thesis to confer the academic degree of\\ \degreename}\\[0.3cm] % University requirement text
-\textit{in}\\[0.4cm]
-\textbf{\groupname}\\
-\href{$thesis.supervisor.url$}{\deptname}\\[2cm] % Research group name and department name with link
-
-\vfill
-
-$if(book.date)$
-{\large $book.date$}\\[4cm] % Date
-$endif$
-
-\vfill
-\end{center}
-\end{titlepage}
-```
-
-Additionally, you may want to exclude some sections of the frontmatter (e.g dedication, constants etc..). This can be achieved simply by commenting out that section from the `_quarto.yml`. For example, the dedication page is left out as follows:
+The template is configured for a Bachelor’s thesis by default. To change this, edit the `_quarto.yml` file. For example:
 
 ``` yaml
 
 thesis:
+  type: Bachelor Thesis # Or "Master Thesis", "Doctoral Dissertation", etc.
+  degree-name: Bachelor Science
+  group: Biological Chemistry # name of your study program
   supervisor:
     primary: "Assoz. Univ.-Prof. Dr. Ian Teasdale"
     co: "Dipl.-Ing. Michael Kneidinger"
-  degree-name: Bachelor of Science
   university: Johannes Kepler Universität Linz
   department: Institute of Polymer Chemistry
-  group: Biological Chemistry # program
   faculty: Faculty of Engineering and Natural Sciences
-  declaration: "Frontmatter/declaration.tex"
-  quotation:
-    text: "We make our progress through explanatory conjectures and criticism. And, as Popper says, by letting our ideas 'die in our place'. "
-    attribution: David Deutsch
-  acknowledgements: "Frontmatter/acknowledgements.tex"
-  abbreviations: "Frontmatter/abbreviations.tex"
-  symbols: "Frontmatter/symbols.tex"
-  #dedication: "Frontmatter/dedication.tex"
-  logo: images/logo.png
-  logo-height: "3cm"
-  
 ```
 
-Checkout the pdf file in the repo to learn more about the usage of the template. You may have to write some `Latex` code to further customize this template if you have other specific requirements. [Eli Holmes](https://github.com/nmfs-opensci/quarto-thesis) made excellent video tutorials that you may find useful.
+You can also customize elements of the front matter (e.g., acknowledgments, dedication) by commenting out or modifying the respective sections in`_quarto.yml`. For instance, to exclude the dedication page:
 
-## Example
+``` yaml
+
+# dedication: "Frontmatter/dedication.tex"
+```
+
+## Adding Symbols or Abbreviations
+
+The `Frontmatter` folder contains LaTeX files for abbreviations, symbols, and other sections. If needed, search online for LaTeX code examples to add symbols or format abbreviations.
+
+# Citation Styling
+
+The default citation style is `nature-chemistry.csl`. If you prefer another style, download it from the [Zotero Style Repository](https://www.zotero.org/styles?fields=chemistry) and update the `_quarto.yml` file:
+
+``` yml
+
+bibliography: [example.bib]
+csl: your-preferred-style.csl
+```
+
+# Additional Resources
+
+-   For detailed usage instructions, refer to the rendered sample PDF file below.
+
+-   Explore the [Quarto technical writing documentation](https://quarto.org/docs/visual-editor/technical.html), especially if you are new to Quarto.
+
+-   Watch Eli Holmes's [Youtube channel](https://www.youtube.com/@eeholmes-datascience4849) for insights into data science workflows and Quarto.
+
+# Sample Document
+
+```{css echo=FALSE}
+.embed-container {
+    position: relative;
+    padding-bottom: 129%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+```
+
+```{=html}
+<p class="text-center">
+  <a class="btn btn-primary btn-lg doc-download" href="`r rmarkdown::metadata$cv$pdf`" target="_blank">
+    <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download thesis sample
+  </a>
+</p>
+
+<div class="embed-container">
+  <iframe src="`r rmarkdown::metadata$doc$pdf`" style="border: 0.5px"></iframe>
+</div>
+```
