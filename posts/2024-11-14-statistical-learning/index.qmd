@@ -4,7 +4,7 @@ description: "In this blog post, I'll be working through and sharing my solution
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-date: 14-11-2024
+date: 14 11 2024
 categories: [Learn, R] # self-defined categories
 citation: 
   url: https://jallow-code.github.io/posts/2024-11-14-statistical-learning/ 
