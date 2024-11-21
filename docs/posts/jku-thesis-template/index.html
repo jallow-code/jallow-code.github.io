@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-05e257f7f0e0c37608978a94d3e630e0.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-720471ec75352653f50cab3a79aa2060.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0d7b066191b156dfccdd4e8e7d3c15f6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-9d0163d01a38941c52539abebd8179ad.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
@@ -108,35 +108,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles/ek-styles.css">
 </head>
@@ -324,7 +295,7 @@ l.872 \end{CSLReferences}</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">thesis</span><span class="kw">:</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> Bachelor Thesis</span><span class="co"> # Or "Master Thesis", "Doctoral Dissertation", etc.</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">degree-name</span><span class="kw">:</span><span class="at"> Bachelor Science</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">degree-name</span><span class="kw">:</span><span class="at"> Bachelor of Science</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Biological Chemistry</span><span class="co"> # name of your study program</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">supervisor</span><span class="kw">:</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> </span><span class="st">"Assoz. Univ.-Prof. Dr. Ian Teasdale"</span></span>
@@ -386,23 +357,23 @@ l.872 \end{CSLReferences}</code></pre>
 </p>
 
 <div class="embed-container">
-  <iframe src="Synthesis-of-Hydrogels-using-Poly-organo-phosphazenes-and-$α$-cyclodextrin.pdf" style="border: 0.5px"></iframe>
+  <iframe src="thesis_template.pdf" style="border: 0.5px"></iframe>
 </div>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jallow2025,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jallow2024,
   author = {Jallow, Abdoulie},
   title = {A {Quarto} {Thesis} {Template} for {Bachelor} and {Diploma}
     {Projects} at {JKU}},
-  date = {2025-05-11},
+  date = {2024-11-17},
   url = {https://jallow-code.github.io/posts/jku-thesis-template/},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jallow2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Jallow, Abdoulie. 2025. <span>“A Quarto Thesis Template for Bachelor and
-Diploma Projects at JKU.”</span> May 11, 2025. <a href="https://jallow-code.github.io/posts/jku-thesis-template/">https://jallow-code.github.io/posts/jku-thesis-template/</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jallow2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Jallow, Abdoulie. 2024. <span>“A Quarto Thesis Template for Bachelor and
+Diploma Projects at JKU.”</span> November 17, 2024. <a href="https://jallow-code.github.io/posts/jku-thesis-template/">https://jallow-code.github.io/posts/jku-thesis-template/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
