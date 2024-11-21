@@ -13,7 +13,7 @@ image: thesis_image.png
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 
 doc:
-  pdf: "Synthesis-of-Hydrogels-using-Poly-organo-phosphazenes-and-$α$-cyclodextrin.pdf"
+  pdf: "thesis_template.pdf"
   
 engine: knitr
 ---
@@ -101,7 +101,7 @@ The template is configured for a Bachelor’s thesis by default. To change this,
 
 thesis:
   type: Bachelor Thesis # Or "Master Thesis", "Doctoral Dissertation", etc.
-  degree-name: Bachelor Science
+  degree-name: Bachelor of Science
   group: Biological Chemistry # name of your study program
   supervisor:
     primary: "Assoz. Univ.-Prof. Dr. Ian Teasdale"
