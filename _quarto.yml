@@ -8,9 +8,8 @@ website:
     right:
       - href: index.qmd
         text: Home
-      - about.qmd
-      - projects.qmd
       - posts.qmd # Add listing page to the navbar
+      - projects.qmd
       - href: CV/AJallow_CV.pdf
         text: CV
         target: _blank # opens link (or page) in a new browser tab
