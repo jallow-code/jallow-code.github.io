@@ -8,9 +8,9 @@
 
 <meta name="author" content="Abdoulie Jallow">
 <meta name="dcterms.date" content="2024-11-14">
-<meta name="description" content="In this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning">
+<meta name="description" content="In this blog post, I’ll share my solutions to exercises from An Introduction to Statistical Learning by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani. Additionally, I’ll provide a brief summary of each chapter to help contextualize the exercises and key concepts covered in the book.">
 
-<title>Statistical Learning – Abdoulie Jallow</title>
+<title>An Introduction to Statistical Learning – Abdoulie Jallow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,6 +75,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles/ek-styles.css">
 </head>
@@ -128,11 +157,11 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">Statistical Learning</h1>
+    <div class="quarto-title column-page-left">
+      <h1 class="title">An Introduction to Statistical Learning</h1>
                   <div>
         <div class="description">
-          In this blog post, I’ll be working through and sharing my solutions to exercises from the book An Introduction to Statistical Learning
+          In this blog post, I’ll share my solutions to exercises from <em>An Introduction to Statistical Learning</em> by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani. Additionally, I’ll provide a brief summary of each chapter to help contextualize the exercises and key concepts covered in the book.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -143,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -159,6 +188,12 @@ ul.task-list li input[type="checkbox"] {
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">November 24, 2024</p>
+      </div>
+    </div>
       
     </div>
     
@@ -166,29 +201,61 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#statistical-learning" id="toc-statistical-learning" class="nav-link active" data-scroll-target="#statistical-learning">Statistical Learning</a>
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#conceptual" id="toc-conceptual" class="nav-link" data-scroll-target="#conceptual">Conceptual</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
+<section id="statistical-learning" class="level1">
+<h1>Statistical Learning</h1>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>The association between predictors (<span class="math inline">\(X = X_1, X_2,...,X_p\)</span>) and a quantitative response (Y) can be expressed as <span class="math inline">\(Y = f(X) + \epsilon\)</span>. Where <span class="math inline">\(f\)</span> is some fixed unknown function, and <span class="math inline">\(\epsilon\)</span> is a random error term with a zero mean. Statistical learning refers to a large collection of tools for estimating <span class="math inline">\(f\)</span>. These tools can be classified either supervised or unsupervised. Supervised learning involves estimating an output based on one or more inputs. In contrast, unsupervised learning involves inputs but no supervising outputs. There are two primary reasons for predicting <span class="math inline">\(f\)</span>:</p>
+<ul>
+<li><p><strong>Prediction</strong>: This applies to situations were inputs (X) are readily available, but the output (Y) can not be easily obtained. <span class="math inline">\(Y\)</span> can be estimated using <span class="math inline">\(\hat{Y} = \hat{f}(X)\)</span> where <span class="math inline">\(\hat{f}\)</span> is our estimate for the true function <span class="math inline">\(f\)</span>. In this setting, one is not typically concerned with the exact form of <span class="math inline">\(\hat{f}\)</span> given it yields accurate predictions for <span class="math inline">\(Y\)</span>. The accuracy of <span class="math inline">\(\hat{f}\)</span> depends on two quantities known as <em>reducible error</em> and <em>Irreducible error</em>. The reducible error can be improved by using an appropriate statistical learning method to estimate <span class="math inline">\(f\)</span>. The Irreducible error is the variability associated with the error term (<span class="math inline">\(Var(\epsilon)\)</span>). Since <span class="math inline">\(Y\)</span> also depends on <span class="math inline">\(\epsilon\)</span>, it is impossible to achieve a perfect estimate of <span class="math inline">\(Y\)</span>. The irreducible error will always be greater than zero, as it may include unmeasured variables or unmeasurable variations influencing <span class="math inline">\(Y\)</span>.</p></li>
+<li><p><strong>Inference:</strong> In this setting we’re interested in the association between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> hence the exact form of <span class="math inline">\(\hat{f}\)</span> is very important. One may be interested in answering the following questions: Which predictors are associated with the response? What is the relationship between the response and each predictor? Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated?</p></li>
+</ul>
+<p><span class="math inline">\(f\)</span> can be estimated using either <strong>parametric</strong> or <strong>non-parametric</strong> methods. parametric methods involve first assuming the shape of <span class="math inline">\(f\)</span> (e.g., linear) and then using training data to fit or train the model. These methods are less flexible but more interpretable. Non-parametric methods do not make assumptions about the shape of <span class="math inline">\(f\)</span>, allowing for a wider range of possible forms. However, they tend to be less interpretable. Variables can be characterized as either quantitative or qualitative (also known as categorical). Problems with a quantitative response are often referred to as regression problems, while those involving a qualitative response are often referred to as classification problems. In regression settings the measure for the accuracy of a model is given by the <strong>mean squared error</strong> (MSE) . We choose a statistical learning method that gives the lowest <em>test MSE</em>. The <em>test MSE</em> depends on <strong>variance</strong> of <span class="math inline">\(\hat{f}(x_0)\)</span>, the squared <strong>bias</strong> of <span class="math inline">\(\hat{f}(x_0)\)</span>, and var(<span class="math inline">\(\epsilon\)</span>). To achieve a low <em>test MSE</em>, one needs to choose a model that simultaneously results in <em>low variance</em> and <em>low bias</em>. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases.</p>
+<p>In classification settings, model accuracy is evaluated by the proportion of incorrect predictions made when applying the estimated function <span class="math inline">\(\hat{f}\)</span> to a set of test observations. This proportion is referred to as the <strong>test error rate</strong>. A good classifier minimizes the test error rate, achieving the highest possible accuracy on unseen data. The <strong>Bayes classifier</strong> is an approach in classification that minimizes the test error rate by assigning each observation to the class with the highest conditional probability, <span class="math inline">\(\Pr(Y = j | X = x_0)\)</span>. The decision boundary separating classes is called the <strong>Bayes decision boundary</strong>. This classifier achieves the lowest possible error rate, known as the <strong>Bayes error rate</strong>, which arises due to overlapping classes in the data. However, because the true conditional probabilities are generally unknown, the Bayes classifier serves as a theoretical benchmark. In practice, methods like <strong>k-Nearest Neighbors (k-NN)</strong> estimate these probabilities by considering the closest <span class="math inline">\(K\)</span> training points to a test observation. k-NN assigns the class with the majority vote among these neighbors. The flexibility of k-NN depends on <span class="math inline">\(K\)</span>; small <span class="math inline">\(K\)</span> values result in high variance but low bias, while large <span class="math inline">\(K\)</span> values lead to high bias but low variance. The right balance is important, as overly flexible models overfit the training data, and less flexible ones underfit. The tradeoff is illustrated by the characteristic U-shape of the test error as flexibility increases.</p>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="conceptual" class="level3">
+<h3 class="anchored" data-anchor-id="conceptual">Conceptual</h3>
 
 
+</section>
+</section>
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jallow2024,
   author = {Jallow, Abdoulie},
-  title = {Statistical {Learning}},
+  title = {An {Introduction} to {Statistical} {Learning}},
   date = {2024-11-14},
   url = {https://jallow-code.github.io/posts/2024-11-14-statistical-learning/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jallow2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Jallow, Abdoulie. 2024. <span>“Statistical Learning.”</span> November
-14, 2024. <a href="https://jallow-code.github.io/posts/2024-11-14-statistical-learning/">https://jallow-code.github.io/posts/2024-11-14-statistical-learning/</a>.
+Jallow, Abdoulie. 2024. <span>“An Introduction to Statistical
+Learning.”</span> November 14, 2024. <a href="https://jallow-code.github.io/posts/2024-11-14-statistical-learning/">https://jallow-code.github.io/posts/2024-11-14-statistical-learning/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
