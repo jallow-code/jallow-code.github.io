@@ -29,6 +29,7 @@ format:
     smooth-scroll: true
     link-external-newwindow: true  
     toc: true
+    toc-depth: 4
     page-layout: full
 highlight-style: gruvbox
 code-block-border-left: "#31BAE9"
