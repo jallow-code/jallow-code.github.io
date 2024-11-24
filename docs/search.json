@@ -39,7 +39,7 @@
     "href": "posts/jku-thesis-template/index.html",
     "title": "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU",
     "section": "",
-    "text": "This template is based on the Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017), which Eli Holmes updated for Quarto. I further modified the Quarto template to fulfill JKU’s criteria for diploma theses and doctoral dissertations. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. These include ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto tackles these issues and also allows data analysis with R and documentation to be done on a single platform, hence improving reproducibility."
+    "text": "This template is based on the Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017), which Eli Holmes updated for Quarto. I further modified the Quarto template to fulfill JKU’s criteria for diploma theses and doctoral dissertations. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. The main difficulties were ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto effectively addresses these challenges. Above all, it combines data analysis and documentation into one platform thereby improving reproducibility."
   },
   {
     "objectID": "posts/jku-thesis-template/index.html#clone-the-template",
