@@ -9,7 +9,7 @@ website:
       - href: index.qmd
         text: Home
       - posts.qmd # Add listing page to the navbar
-      - projects.qmd
+      # - projects.qmd
       - href: CV/AJallow_CV.pdf
         text: CV
         target: _blank # opens link (or page) in a new browser tab
@@ -31,7 +31,9 @@ format:
     toc: true
     toc-depth: 4
     page-layout: full
-highlight-style: gruvbox
+highlight-style: 
+  light: styles/syntax-light.theme
+  dark: styles/syntax-dark.theme
 code-block-border-left: "#31BAE9"
 
 
