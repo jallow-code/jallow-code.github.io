@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -134,10 +168,6 @@ window.Quarto = {
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../projects.html"> 
-<span class="menu-text">Projects</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../CV/AJallow_CV.pdf" target="_blank"> 
 <span class="menu-text">CV</span></a>
   </li>  
@@ -191,7 +221,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 24, 2024</p>
+        <p class="date-modified">November 25, 2024</p>
       </div>
     </div>
       
@@ -211,7 +241,38 @@ window.Quarto = {
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
   <ul class="collapse">
-  <li><a href="#conceptual" id="toc-conceptual" class="nav-link" data-scroll-target="#conceptual">Conceptual</a></li>
+  <li><a href="#conceptual" id="toc-conceptual" class="nav-link" data-scroll-target="#conceptual">Conceptual</a>
+  <ul class="collapse">
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
+  <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5">Question 5</a></li>
+  <li><a href="#question-6" id="toc-question-6" class="nav-link" data-scroll-target="#question-6">Question 6</a></li>
+  <li><a href="#question-7" id="toc-question-7" class="nav-link" data-scroll-target="#question-7">Question 7</a></li>
+  </ul></li>
+  <li><a href="#applied" id="toc-applied" class="nav-link" data-scroll-target="#applied">Applied</a>
+  <ul class="collapse">
+  <li><a href="#question-8" id="toc-question-8" class="nav-link" data-scroll-target="#question-8">Question 8</a></li>
+  <li><a href="#question-9" id="toc-question-9" class="nav-link" data-scroll-target="#question-9">Question 9</a></li>
+  <li><a href="#question-10" id="toc-question-10" class="nav-link" data-scroll-target="#question-10">Question 10</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear Regression</a>
+  <ul>
+  <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#conceptual-1" id="toc-conceptual-1" class="nav-link" data-scroll-target="#conceptual-1">Conceptual</a></li>
+  <li><a href="#applied-1" id="toc-applied-1" class="nav-link" data-scroll-target="#applied-1">Applied</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a>
+  <ul>
+  <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#conceptual-2" id="toc-conceptual-2" class="nav-link" data-scroll-target="#conceptual-2">Conceptual</a></li>
+  <li><a href="#applied-2" id="toc-applied-2" class="nav-link" data-scroll-target="#applied-2">Applied</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -234,12 +295,527 @@ window.Quarto = {
 <li><p><strong>Inference:</strong> In this setting we’re interested in the association between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> hence the exact form of <span class="math inline">\(\hat{f}\)</span> is very important. One may be interested in answering the following questions: Which predictors are associated with the response? What is the relationship between the response and each predictor? Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated?</p></li>
 </ul>
 <p><span class="math inline">\(f\)</span> can be estimated using either <strong>parametric</strong> or <strong>non-parametric</strong> methods. parametric methods involve first assuming the shape of <span class="math inline">\(f\)</span> (e.g., linear) and then using training data to fit or train the model. These methods are less flexible but more interpretable. Non-parametric methods do not make assumptions about the shape of <span class="math inline">\(f\)</span>, allowing for a wider range of possible forms. However, they tend to be less interpretable. Variables can be characterized as either quantitative or qualitative (also known as categorical). Problems with a quantitative response are often referred to as regression problems, while those involving a qualitative response are often referred to as classification problems. In regression settings the measure for the accuracy of a model is given by the <strong>mean squared error</strong> (MSE) . We choose a statistical learning method that gives the lowest <em>test MSE</em>. The <em>test MSE</em> depends on <strong>variance</strong> of <span class="math inline">\(\hat{f}(x_0)\)</span>, the squared <strong>bias</strong> of <span class="math inline">\(\hat{f}(x_0)\)</span>, and var(<span class="math inline">\(\epsilon\)</span>). To achieve a low <em>test MSE</em>, one needs to choose a model that simultaneously results in <em>low variance</em> and <em>low bias</em>. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases.</p>
-<p>In classification settings, model accuracy is evaluated by the proportion of incorrect predictions made when applying the estimated function <span class="math inline">\(\hat{f}\)</span> to a set of test observations. This proportion is referred to as the <strong>test error rate</strong>. A good classifier minimizes the test error rate, achieving the highest possible accuracy on unseen data. The <strong>Bayes classifier</strong> is an approach in classification that minimizes the test error rate by assigning each observation to the class with the highest conditional probability, <span class="math inline">\(\Pr(Y = j | X = x_0)\)</span>. The decision boundary separating classes is called the <strong>Bayes decision boundary</strong>. This classifier achieves the lowest possible error rate, known as the <strong>Bayes error rate</strong>, which arises due to overlapping classes in the data. However, because the true conditional probabilities are generally unknown, the Bayes classifier serves as a theoretical benchmark. In practice, methods like <strong>k-Nearest Neighbors (k-NN)</strong> estimate these probabilities by considering the closest <span class="math inline">\(K\)</span> training points to a test observation. k-NN assigns the class with the majority vote among these neighbors. The flexibility of k-NN depends on <span class="math inline">\(K\)</span>; small <span class="math inline">\(K\)</span> values result in high variance but low bias, while large <span class="math inline">\(K\)</span> values lead to high bias but low variance. The right balance is important, as overly flexible models overfit the training data, and less flexible ones underfit. The tradeoff is illustrated by the characteristic U-shape of the test error as flexibility increases.</p>
+<p>In classification settings, model accuracy is evaluated by the proportion of incorrect predictions made when applying the estimated function <span class="math inline">\(\hat{f}\)</span> to a set of test observations. This proportion is referred to as the <strong>test error rate</strong>. A good classifier minimizes the test error rate, achieving the highest possible accuracy on unseen data. The <strong>Bayes classifier</strong> is an approach in classification that minimizes the test error rate by assigning each observation to the class with the highest conditional probability, <span class="math inline">\(\Pr(Y = j | X = x_0)\)</span>. The decision boundary separating classes is called the <strong>Bayes decision boundary</strong>. This classifier achieves the lowest possible error rate, known as the <strong>Bayes error rate</strong>, which arises due to overlapping classes in the data. However, because the true conditional probabilities are generally unknown, the Bayes classifier serves as a theoretical benchmark. In practice, methods like <strong>k-Nearest Neighbors (KNN)</strong> estimate these probabilities by considering the closest <span class="math inline">\(K\)</span> training points to a test observation. KNN assigns the class with the majority vote among these neighbors. The flexibility of KNN depends on <span class="math inline">\(K\)</span>; small <span class="math inline">\(K\)</span> values result in high variance but low bias, while large <span class="math inline">\(K\)</span> values lead to high bias but low variance. The right balance is important, as overly flexible models overfit the training data, and less flexible ones underfit. The tradeoff is illustrated by the characteristic U-shape of the test error as flexibility increases.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <section id="conceptual" class="level3">
 <h3 class="anchored" data-anchor-id="conceptual">Conceptual</h3>
+<section id="question-1" class="level4">
+<h4 class="anchored" data-anchor-id="question-1">Question 1</h4>
+<p>For each of parts (a) through (d), indicate whether we would generally expect the performance of a flexible statistical learning method to be better or worse than an inflexible method. Justify your answer.</p>
+<ol type="a">
+<li>The sample size <span class="math inline">\(n\)</span> is extremely large, and the number of predictors <span class="math inline">\(p\)</span> is small.</li>
+</ol>
+<blockquote class="blockquote">
+<p>A flexible method will be better because the model does not need to work hard to find patterns in the data hence reducing the likelihood of overfitting. Additionally, a flexible method in this situation will results in a lower test mean squared error (MSE), as the reduction in bias compensates for the increased variance.</p>
+</blockquote>
+<ol start="2" type="a">
+<li>The number of predictors <span class="math inline">\(p\)</span> is extremely large, and the number of observations <span class="math inline">\(n\)</span> is small.</li>
+</ol>
+<blockquote class="blockquote">
+<p>In this situation an Inflexible method preferable because there is higher chance for the model to pickup patterns that may not exist in the test data.</p>
+</blockquote>
+<ol start="3" type="a">
+<li>The relationship between the predictors and response is highly non-linear.</li>
+</ol>
+<blockquote class="blockquote">
+<p>A flexible method is preferred because an inflexible method will lead to high bias.</p>
+</blockquote>
+<ol start="4" type="a">
+<li>The variance of the error terms, i.e.&nbsp;<span class="math inline">\(\sigma^2 = Var(\epsilon)\)</span>, is extremely high.</li>
+</ol>
+<blockquote class="blockquote">
+<p>In this case, an Inflexible method will perform better. With a flexible method, it may be difficult to differentiate the true pattern from the noise in the data. Flexible method have a higher variance because they fit more data.</p>
+</blockquote>
+</section>
+<section id="question-2" class="level4">
+<h4 class="anchored" data-anchor-id="question-2">Question 2</h4>
+<p>Explain whether each scenario is a classification or regression problem, and indicate whether we are most interested in inference or prediction. Finally, provide <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>.</p>
+<ol type="a">
+<li>We collect a set of data on the top 500 firms in the US. For each firm we record profit, number of employees, industry and the CEO salary. We are interested in understanding which factors affect CEO salary.</li>
+</ol>
+<blockquote class="blockquote">
+<ul>
+<li>sample size: 500</li>
+<li>predictors: profit, number of employees, and industry (3)</li>
+<li>regression problem because the response is quantitative</li>
+<li>We are most interested in making inference.</li>
+</ul>
+</blockquote>
+<ol start="2" type="a">
+<li>We are considering launching a new product and wish to know whether it will be a success or a failure. We collect data on 20 similar products that were previously launched. For each product we have recorded whether it was a success or failure, price charged for the product, marketing budget, competition price, and ten other variables.</li>
+</ol>
+<blockquote class="blockquote">
+<ul>
+<li>sample size: 20</li>
+<li>predictors: 13</li>
+<li>classification problem because the response is qualitative (success or failure)</li>
+<li>We are interested in making predictions.</li>
+</ul>
+</blockquote>
+<ol start="3" type="a">
+<li>We are interested in predicting the % change in the USD/Euro exchange rate in relation to the weekly changes in the world stock markets. Hence we collect weekly data for all of 2012. For each week we record the % change in the USD/Euro, the % change in the US market, the % change in the British market, and the % change in the German market.</li>
+</ol>
+<blockquote class="blockquote">
+<ul>
+<li>sample size: 52</li>
+<li>predictors: 3</li>
+<li>regression problem because the response is quantitative</li>
+<li>We are interested in making prediction.</li>
+</ul>
+</blockquote>
+</section>
+<section id="question-3" class="level4">
+<h4 class="anchored" data-anchor-id="question-3">Question 3</h4>
+<p>We now revisit the bias-variance decomposition.</p>
+<ol type="a">
+<li><p>Provide a sketch of typical (squared) bias, variance, training error, test error, and Bayes (or irreducible) error curves, on a single plot, as we go from less flexible statistical learning methods towards more flexible approaches. The x-axis should represent the amount of flexibility in the method, and the y-axis should represent the values for each curve. There should be five curves. Make sure to label each one.</p></li>
+<li><p>Explain why each of the five curves has the shape displayed in part (a).</p></li>
+</ol>
+<blockquote class="blockquote">
+<ul>
+<li>Squared Bias: Decreases as model flexibility increases since more flexible methods are better at capturing complex patterns in the data.</li>
+<li>Variance: Increases with greater flexibility, as flexible models are more sensitive to variations in the training data.</li>
+<li>Training Error: Decreases with increasing flexibility because more complex models can closely fit the training data.</li>
+<li>Test Error: Initially decreases with flexibility due to reduced bias but eventually increases as overfitting leads to higher variance.</li>
+<li>Bayes Error: Remains constant, as it is independent of the model’s complexity and reflects the inherent noise in the data.</li>
+</ul>
+</blockquote>
+</section>
+<section id="question-4" class="level4">
+<h4 class="anchored" data-anchor-id="question-4">Question 4</h4>
+<p>You will now think of some real-life applications for statistical learning.</p>
+<ol type="a">
+<li>Describe three real-life applications in which classification might be useful. Describe the response, as well as the predictors. Is the goal of each application inference or prediction? Explain your answer.</li>
+</ol>
+<blockquote class="blockquote">
+<p>Email Classification (Spam or Not Spam):<br>
+Variables (<span class="math inline">\(p\)</span>): Certain keywords, email structure, sender information<br>
+Aim: Prediction</p>
+<p>Factors Associated with Winning an Election:<br>
+Variables (<span class="math inline">\(p\)</span>): Campaign budget, market trends, poll results, etc.<br>
+Aim: Inference</p>
+<p>Food Spoilage (Healthy or Not Healthy for Consumption): Variables (<span class="math inline">\(p\)</span>): Color, texture, smell, etc.<br>
+Aim: Prediction</p>
+</blockquote>
+<ol start="2" type="a">
+<li>Describe three real-life applications in which regression might be useful. Describe the response, as well as the predictors. Is the goal of each application inference or prediction? Explain your answer.</li>
+</ol>
+<blockquote class="blockquote">
+<p>Analyzing the Effect of Marketing Budget on Sales Response: Total revenue Variables (<span class="math inline">\(p\)</span>): Marketing budget allocated to different channels (e.g., social media, TV ads, print media), time of year, and product price. Aim: Inference</p>
+<p>Predicting Housing Prices Response Variable: Sale price of a house. Predictors: Square footage, number of bedrooms, number of bathrooms, location etc Aim: Prediction</p>
+</blockquote>
+<ol start="3" type="a">
+<li>Describe three real-life applications in which cluster analysis might be useful.</li>
+</ol>
+<blockquote class="blockquote">
+<ul>
+<li>Genomic data analysis for example RNA seq.</li>
+<li>finding categories in illnesses, cells, or organisms</li>
+</ul>
+</blockquote>
+</section>
+<section id="question-5" class="level4">
+<h4 class="anchored" data-anchor-id="question-5">Question 5</h4>
+<p>What are the advantages and disadvantages of a very flexible (versus a less flexible) approach for regression or classification? Under what circumstances might a more flexible approach be preferred to a less flexible approach? When might a less flexible approach be preferred?</p>
+<blockquote class="blockquote">
+<p>Inflexible methods are more interpretable and are generally preferred in cases with small <span class="math inline">\(n\)</span> (sample size) and large <span class="math inline">\(p\)</span> (number of predictors). However, they may suffer from high bias when the true underlying function is non-linear. Flexible methods, while capable of capturing non-linear patterns, are prone to overfitting, leading to high variance in error. In situations with a large <span class="math inline">\(n\)</span> and small <span class="math inline">\(p\)</span>, flexible methods are preferred.</p>
+</blockquote>
+</section>
+<section id="question-6" class="level4">
+<h4 class="anchored" data-anchor-id="question-6">Question 6</h4>
+<p>Describe the differences between a parametric and a non-parametric statistical learning approach. What are the advantages of a parametric approach to regression or classification (as opposed to a non-parametric approach)? What are its disadvantages?</p>
+<blockquote class="blockquote">
+<p>Parametric methods are more interpretable because they rely on a predefined model to generate the response. They also tend to perform better than non-parametric methods in high-dimensional settings, as they require estimating fewer parameters. However, a key disadvantage is that the model may not accurately reflect reality. If the assumed model is far from the true underlying relationship, the resulting estimates can be poor.</p>
+<p>In contrast, non-parametric methods are highly flexible and can adapt to a wide range of underlying patterns. However, this flexibility comes at a cost: they require a larger number of observations to produce accurate estimates, as they do not rely on a small set of parameters and are more prone to overfitting when data is limited</p>
+</blockquote>
+</section>
+<section id="question-7" class="level4">
+<h4 class="anchored" data-anchor-id="question-7">Question 7</h4>
+<p>The table below provides a training data set containing six observations, three predictors, and one qualitative response variable.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Obs.</th>
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th><span class="math inline">\(X_3\)</span></th>
+<th><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>Red</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>Red</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>Red</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>Green</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>-1</td>
+<td>0</td>
+<td>1</td>
+<td>Green</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+</tbody>
+</table>
+<p>Suppose we wish to use this data set to make a prediction for <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span> using <span class="math inline">\(K\)</span>-nearest neighbors.</p>
+<ol type="a">
+<li>Compute the Euclidean distance between each observation and the test point, <span class="math inline">\(X_1 = X_2 = X_3 = 0\)</span>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x1"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x2"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x3"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"y"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Red"</span>, <span class="st">"Red"</span>, <span class="st">"Red"</span>, <span class="st">"Green"</span>, <span class="st">"Green"</span>, <span class="st">"Red"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Euclidean distance between points and c(0, 0, 0)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(dat[[<span class="st">"x1"</span>]]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> dat[[<span class="st">"x2"</span>]]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> dat[[<span class="st">"x3"</span>]]<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">signif</span>(dist, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.00 2.00 3.16 2.24 1.41 1.73</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>What is our prediction with <span class="math inline">\(K = 1\)</span>? Why?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>knn <span class="ot">&lt;-</span> <span class="cf">function</span>(k) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">which.max</span>(<span class="fu">table</span>(dat[[<span class="st">"y"</span>]][<span class="fu">order</span>(dist)[<span class="dv">1</span><span class="sc">:</span>k]])))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">knn</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Green"</code></pre>
+</div>
+</div>
+<p>Green (based on data point 5 only)</p>
+<ol start="3" type="a">
+<li>What is our prediction with <span class="math inline">\(K = 3\)</span>? Why?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">knn</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Red"</code></pre>
+</div>
+</div>
+<p>Red (based on data points 2, 5, 6)</p>
+<ol start="4" type="a">
+<li>If the Bayes decision boundary in this problem is highly non-linear, then would we expect the best value for <span class="math inline">\(K\)</span> to be large or small? Why?</li>
+</ol>
+<blockquote class="blockquote">
+<p>Small (high <span class="math inline">\(k\)</span> leads to linear boundaries due to averaging)</p>
+</blockquote>
+</section>
+</section>
+<section id="applied" class="level3">
+<h3 class="anchored" data-anchor-id="applied">Applied</h3>
+<section id="question-8" class="level4">
+<h4 class="anchored" data-anchor-id="question-8">Question 8</h4>
+<p>This exercise relates to the <code>College</code> data set, which can be found in the file <code>College.csv</code>. It contains a number of variables for 777 different universities and colleges in the US. The variables are</p>
+<ul>
+<li><code>Private</code> : Public/private indicator</li>
+<li><code>Apps</code> : Number of applications received</li>
+<li><code>Accept</code> : Number of applicants accepted</li>
+<li><code>Enroll</code> : Number of new students enrolled</li>
+<li><code>Top10perc</code> : New students from top 10% of high school class</li>
+<li><code>Top25perc</code> : New students from top 25% of high school class</li>
+<li><code>F.Undergrad</code> : Number of full-time undergraduates</li>
+<li><code>P.Undergrad</code> : Number of part-time undergraduates</li>
+<li><code>Outstate</code> : Out-of-state tuition</li>
+<li><code>Room.Board</code> : Room and board costs</li>
+<li><code>Books</code> : Estimated book costs</li>
+<li><code>Personal</code> : Estimated personal spending</li>
+<li><code>PhD</code> : Percent of faculty with Ph.D.’s</li>
+<li><code>Terminal</code> : Percent of faculty with terminal degree</li>
+<li><code>S.F.Ratio</code> : Student/faculty ratio</li>
+<li><code>perc.alumni</code> : Percent of alumni who donate</li>
+<li><code>Expend</code> : Instructional expenditure per student</li>
+<li><code>Grad.Rate</code> : Graduation rate</li>
+</ul>
+<p>Before reading the data into <code>R</code>, it can be viewed in Excel or a text editor.</p>
+<ol type="a">
+<li>Use the <code>read.csv()</code> function to read the data into <code>R</code>. Call the loaded data <code>college</code>. Make sure that you have the directory set to the correct location for the data.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/College.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="a">
+<li>Look at the data using the <code>View()</code> function. You should notice that the first column is just the name of each university. We don’t really want <code>R</code> to treat this as data. However, it may be handy to have these names for later. Try the following commands:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[, <span class="dv">1</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(college)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You should see that there is now a <code>row.names</code> column with the name of each university recorded. This means that R has given each row a name corresponding to the appropriate university. <code>R</code> will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college [, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(college)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now you should see that the first data column is <code>Private</code>. Note that another column labeled <code>row.names</code> now appears before the <code>Private</code> column. However, this is not a data column but rather the name that R is giving to each row.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[, <span class="dv">1</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college[, <span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="a">
+<li></li>
+<li>Use the <code>summary()</code> function to produce a numerical summary of the variables in the data set.</li>
+</ol>
+<ol start="2" type="i">
+<li><p>Use the <code>pairs()</code> function to produce a scatterplot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using <code>A[,1:10]</code>.</p></li>
+<li><p>Use the <code>plot()</code> function to produce side-by-side boxplots of <code>Outstate</code> versus <code>Private</code>.</p></li>
+<li><p>Create a new qualitative variable, called <code>Elite</code>, by <em>binning</em> the <code>Top10perc</code> variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="fu">nrow</span>(college))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Elite[college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Elite)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(college, Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use the <code>summary()</code> function to see how many elite universities there are. Now use the <code>plot()</code> function to produce side-by-side boxplots of <code>Outstate</code> versus <code>Elite</code>.</p>
+<ol start="22" type="a">
+<li>Use the <code>hist()</code> function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command <code>par(mfrow=c(2,2))</code> useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.</li>
+</ol>
+<ol start="6" type="i">
+<li>Continue exploring the data, and provide a brief summary of what you discover.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>college<span class="sc">$</span>Private <span class="ot">&lt;-</span> college<span class="sc">$</span>Private <span class="sc">==</span> <span class="st">"Yes"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(college[, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>], <span class="at">cex =</span> <span class="fl">0.2</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(college<span class="sc">$</span>Outstate <span class="sc">~</span> <span class="fu">factor</span>(college<span class="sc">$</span>Private), <span class="at">xlab =</span> <span class="st">"Private"</span>, <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>college<span class="sc">$</span>Elite <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college<span class="sc">$</span>Elite)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(college<span class="sc">$</span>Outstate <span class="sc">~</span> college<span class="sc">$</span>Elite, <span class="at">xlab =</span> <span class="st">"Elite"</span>, <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>)) {</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(college<span class="sc">$</span>Enroll, <span class="at">breaks =</span> n, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, n), <span class="at">xlab =</span> <span class="st">"Enroll"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(college<span class="sc">$</span>Private, college<span class="sc">$</span>Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Whether a college is Private and Elite is not random!</p>
+</section>
+<section id="question-9" class="level4">
+<h4 class="anchored" data-anchor-id="question-9">Question 9</h4>
+<p>This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/Auto.data"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">"?"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="a">
+<li>Which of the predictors are quantitative, and which are qualitative?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x, class)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>numeric <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">sapply</span>(x, class) <span class="sc">==</span> <span class="st">"numeric"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(numeric)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="a">
+<li>What is the range of each quantitative predictor? You can answer this using the <code>range()</code> function.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x[, numeric], <span class="cf">function</span>(x) <span class="fu">diff</span>(<span class="fu">range</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="a">
+<li>What is the mean and standard deviation of each quantitative predictor?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>x[, numeric] <span class="sc">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(value),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(value)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="a">
+<li>Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>), numeric] <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Range =</span> <span class="fu">diff</span>(<span class="fu">range</span>(value)),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(value),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(value)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="a">
+<li>Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(x[, numeric], <span class="at">cex =</span> <span class="fl">0.2</span>) </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x[, numeric]) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(<span class="fu">cor</span>(x[, numeric]), <span class="at">cexRow =</span> <span class="fl">1.1</span>, <span class="at">cexCol =</span> <span class="fl">1.1</span>, <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Many of the variables appear to be highly (positively or negatively) correlated with some relationships being non-linear.</p>
+<ol start="6" type="a">
+<li>Suppose that we wish to predict gas mileage (<code>mpg</code>) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting <code>mpg</code>? Justify your answer.</li>
+</ol>
+<p>Yes, since other variables are correlated. However, horsepower, weight and displacement are highly related.</p>
+</section>
+<section id="question-10" class="level4">
+<h4 class="anchored" data-anchor-id="question-10">Question 10</h4>
+<p>This exercise involves the <code>Boston</code> housing data set.</p>
+<ol type="a">
+<li>To begin, load in the <code>Boston</code> data set. The <code>Boston</code> data set is part of the <code>ISLR2</code> library in R.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now the data set is contained in the object <code>Boston</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Boston</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read about the data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>?Boston</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How many rows are in this data set? How many columns? What do the rows and columns represent?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="a">
+<li>Make some pairwise scatterplots of the predictors (columns) in this data set. Describe your findings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Boston, <span class="fu">aes</span>(nox, rm)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Boston, <span class="fu">aes</span>(ptratio, rm)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(<span class="fu">cor</span>(Boston, <span class="at">method =</span> <span class="st">"spearman"</span>), <span class="at">cexRow =</span> <span class="fl">1.1</span>, <span class="at">cexCol =</span> <span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="a">
+<li>Are any of the predictors associated with per capita crime rate? If so, explain the relationship.</li>
+</ol>
+<p>Yes</p>
+<ol start="4" type="a">
+<li>Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Boston <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"crim"</span>, <span class="st">"tax"</span>, <span class="st">"ptratio"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value)) <span class="sc">+</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales=</span><span class="st">"free"</span>, <span class="at">ncol=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yes, particularly crime and tax rates.</p>
+<ol start="5" type="a">
+<li>How many of the census tracts in this data set bound the Charles river?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Boston<span class="sc">$</span>chas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="a">
+<li>What is the median pupil-teacher ratio among the towns in this data set?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(Boston<span class="sc">$</span>ptratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="7" type="a">
+<li>Which census tract of Boston has lowest median value of owner-occupied homes? What are the values of the other predictors for that census tract, and how do those values compare to the overall ranges for those predictors? Comment on your findings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Boston[Boston<span class="sc">$</span>medv <span class="sc">==</span> <span class="fu">min</span>(Boston<span class="sc">$</span>medv), ] <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Boston, quantile) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="8" type="a">
+<li>In this data set, how many of the census tract average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the census tracts that average more than eight rooms per dwelling.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">7</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s compare median statistics for those census tracts with more than eight rooms per dwelling on average, with the statistics for those with fewer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Boston <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">log(crim)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">log</span>(crim),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">log(zn)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">log</span>(zn)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(crim, zn)) <span class="sc">|&gt;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>rm) <span class="sc">|&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"&gt;8 rooms"</span> <span class="ot">=</span> rm <span class="sc">&gt;</span> <span class="dv">8</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="st">`</span><span class="at">&gt;8 rooms</span><span class="st">`</span>, value)) <span class="sc">+</span> </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Census tracts with big average properties (more than eight rooms per dwelling) have higher median value (<code>medv</code>), a lower proportion of non-retail business acres (<code>indus</code>), a lower pupil-teacher ratio (<code>ptratio</code>), a lower status of the population (<code>lstat</code>) among other differences.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="linear-regression" class="level1">
+<h1>Linear Regression</h1>
+<section id="exercises-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-1">Exercises</h2>
+<section id="conceptual-1" class="level3">
+<h3 class="anchored" data-anchor-id="conceptual-1">Conceptual</h3>
+</section>
+<section id="applied-1" class="level3">
+<h3 class="anchored" data-anchor-id="applied-1">Applied</h3>
+</section>
+</section>
+</section>
+<section id="classification" class="level1">
+<h1>Classification</h1>
+<section id="exercises-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-2">Exercises</h2>
+<section id="conceptual-2" class="level3">
+<h3 class="anchored" data-anchor-id="conceptual-2">Conceptual</h3>
+</section>
+<section id="applied-2" class="level3">
+<h3 class="anchored" data-anchor-id="applied-2">Applied</h3>
 
 
 </section>
