@@ -5,6 +5,7 @@ project:
 website:
   google-analytics:
     tracking-id: "G-PHB4NVQ87D"
+    storage: none
   title: "Abdoulie Jallow"
   navbar:
     right:

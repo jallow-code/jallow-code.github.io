@@ -21,13 +21,13 @@ engine: knitr
 
 The association between predictors ($X = X_1, X_2,...,X_p$) and a quantitative response (Y) can be expressed as $Y = f(X) + \epsilon$. Where $f$ is some fixed unknown function, and $\epsilon$ is a random error term with a zero mean. Statistical learning refers to a large collection of tools for estimating $f$. These tools can be classified either supervised or unsupervised. Supervised learning involves estimating an output based on one or more inputs. In contrast, unsupervised learning involves inputs but no supervising outputs. There are two primary reasons for predicting $f$:
 
--   **Prediction**: This applies to situations were inputs (X) are readily available, but the output (Y) can not be easily obtained. $Y$ can be estimated using $\hat{Y} = \hat{f}(X)$ where $\hat{f}$ is our estimate for the true function $f$. In this setting, one is not typically concerned with the exact form of $\hat{f}$ given it yields accurate predictions for $Y$. The accuracy of $\hat{f}$ depends on two quantities known as *reducible error* and *Irreducible error*. The reducible error can be improved by using an appropriate statistical learning method to estimate $f$. The Irreducible error is the variability associated with the error term ($Var(\epsilon)$). Since $Y$ also depends on $\epsilon$, it is impossible to achieve a perfect estimate of $Y$. The irreducible error will always be greater than zero, as it may include unmeasured variables or unmeasurable variations influencing $Y$.
+-   *Prediction*: This applies to situations were inputs (X) are readily available, but the output (Y) can not be easily obtained. $Y$ can be estimated using $\hat{Y} = \hat{f}(X)$ where $\hat{f}$ is our estimate for the true function $f$. In this setting, one is not typically concerned with the exact form of $\hat{f}$ given it yields accurate predictions for $Y$. The accuracy of $\hat{f}$ depends on two quantities known as *reducible error* and *Irreducible error*. The reducible error can be improved by using an appropriate statistical learning method to estimate $f$. The Irreducible error is the variability associated with the error term ($Var(\epsilon)$). Since $Y$ also depends on $\epsilon$, it is impossible to achieve a perfect estimate of $Y$. The irreducible error will always be greater than zero, as it may include unmeasured variables or unmeasurable variations influencing $Y$.
 
--   **Inference:** In this setting we're interested in the association between $Y$ and $X$ hence the exact form of $\hat{f}$ is very important. One may be interested in answering the following questions: Which predictors are associated with the response? What is the relationship between the response and each predictor? Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated?
+-   *Inference:* In this setting we're interested in the association between $Y$ and $X$ hence the exact form of $\hat{f}$ is very important. One may be interested in answering the following questions: Which predictors are associated with the response? What is the relationship between the response and each predictor? Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated?
 
-$f$ can be estimated using either **parametric** or **non-parametric** methods. parametric methods involve first assuming the shape of $f$ (e.g., linear) and then using training data to fit or train the model. These methods are less flexible but more interpretable. Non-parametric methods do not make assumptions about the shape of $f$, allowing for a wider range of possible forms. However, they tend to be less interpretable. Variables can be characterized as either quantitative or qualitative (also known as categorical). Problems with a quantitative response are often referred to as regression problems, while those involving a qualitative response are often referred to as classification problems. In regression settings the measure for the accuracy of a model is given by the **mean squared error** (MSE) . We choose a statistical learning method that gives the lowest *test MSE*. The *test MSE* depends on **variance** of $\hat{f}(x_0)$, the squared **bias** of $\hat{f}(x_0)$, and var($\epsilon$). To achieve a low *test MSE*, one needs to choose a model that simultaneously results in *low variance* and *low bias*. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases.
+$f$ can be estimated using either *parametric* or *non-parametric* methods. parametric methods involve first assuming the shape of $f$ (e.g., linear) and then using training data to fit or train the model. These methods are less flexible but more interpretable. Non-parametric methods do not make assumptions about the shape of $f$, allowing for a wider range of possible forms. However, they tend to be less interpretable. Variables can be characterized as either quantitative or qualitative (also known as categorical). Problems with a quantitative response are often referred to as regression problems, while those involving a qualitative response are often referred to as classification problems. In regression settings the measure for the accuracy of a model is given by the *mean squared error* (MSE) . We choose a statistical learning method that gives the lowest *test MSE*. The *test MSE* depends on *variance* of $\hat{f}(x_0)$, the squared *bias* of $\hat{f}(x_0)$, and var($\epsilon$). To achieve a low *test MSE*, one needs to choose a model that simultaneously results in *low variance* and *low bias*. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases.
 
-In classification settings, model accuracy is evaluated by the proportion of incorrect predictions made when applying the estimated function $\hat{f}$ to a set of test observations. This proportion is referred to as the **test error rate**. A good classifier minimizes the test error rate, achieving the highest possible accuracy on unseen data. The **Bayes classifier** is an approach in classification that minimizes the test error rate by assigning each observation to the class with the highest conditional probability, $\Pr(Y = j | X = x_0)$. The decision boundary separating classes is called the **Bayes decision boundary**. This classifier achieves the lowest possible error rate, known as the **Bayes error rate**, which arises due to overlapping classes in the data. However, because the true conditional probabilities are generally unknown, the Bayes classifier serves as a theoretical benchmark. In practice, methods like **k-Nearest Neighbors (KNN)** estimate these probabilities by considering the closest $K$ training points to a test observation. KNN assigns the class with the majority vote among these neighbors. The flexibility of KNN depends on $K$; small $K$ values result in high variance but low bias, while large $K$ values lead to high bias but low variance. The right balance is important, as overly flexible models overfit the training data, and less flexible ones underfit. The tradeoff is illustrated by the characteristic U-shape of the test error as flexibility increases.
+In classification settings, model accuracy is evaluated by the proportion of incorrect predictions made when applying the estimated function $\hat{f}$ to a set of test observations. This proportion is referred to as the *test error rate*. A good classifier minimizes the test error rate, achieving the highest possible accuracy on unseen data. The *Bayes classifier* is an approach in classification that minimizes the test error rate by assigning each observation to the class with the highest conditional probability, $\Pr(Y = j | X = x_0)$. The decision boundary separating classes is called the *Bayes decision boundary*. This classifier achieves the lowest possible error rate, known as the *Bayes error rate*, which arises due to overlapping classes in the data. However, because the true conditional probabilities are generally unknown, the Bayes classifier serves as a theoretical benchmark. In practice, methods like *k-Nearest Neighbors (KNN)* estimate these probabilities by considering the closest $K$ training points to a test observation. KNN assigns the class with the majority vote among these neighbors. The flexibility of KNN depends on $K$; small $K$ values result in high variance but low bias, while large $K$ values lead to high bias but low variance. The right balance is important, as overly flexible models overfit the training data, and less flexible ones underfit. The tradeoff is illustrated by the characteristic U-shape of the test error as flexibility increases.
 
 ## Exercises
 
@@ -59,27 +59,24 @@ Explain whether each scenario is a classification or regression problem, and ind
 
 a.  We collect a set of data on the top 500 firms in the US. For each firm we record profit, number of employees, industry and the CEO salary. We are interested in understanding which factors affect CEO salary.
 
-> 
-- sample size: 500
-- predictors: profit, number of employees, and industry (3)
-- regression problem because the response is quantitative
-- We are most interested in making inference.
+> -   sample size: 500
+> -   predictors: profit, number of employees, and industry (3)
+> -   regression problem because the response is quantitative
+> -   We are most interested in making inference.
 
 b.  We are considering launching a new product and wish to know whether it will be a success or a failure. We collect data on 20 similar products that were previously launched. For each product we have recorded whether it was a success or failure, price charged for the product, marketing budget, competition price, and ten other variables.
 
-> 
-- sample size: 20
-- predictors: 13
-- classification problem because the response is qualitative (success or failure)
-- We are interested in making predictions.
+> -   sample size: 20
+> -   predictors: 13
+> -   classification problem because the response is qualitative (success or failure)
+> -   We are interested in making predictions.
 
 c.  We are interested in predicting the % change in the USD/Euro exchange rate in relation to the weekly changes in the world stock markets. Hence we collect weekly data for all of 2012. For each week we record the % change in the USD/Euro, the % change in the US market, the % change in the British market, and the % change in the German market.
 
->
-- sample size: 52
-- predictors: 3
-- regression problem because the response is quantitative
-- We are interested in making prediction.
+> -   sample size: 52
+> -   predictors: 3
+> -   regression problem because the response is quantitative
+> -   We are interested in making prediction.
 
 #### Question 3
 
@@ -89,12 +86,11 @@ a.  Provide a sketch of typical (squared) bias, variance, training error, test e
 
 b.  Explain why each of the five curves has the shape displayed in part (a).
 
->
--   Squared Bias: Decreases as model flexibility increases since more flexible methods are better at capturing complex patterns in the data.
--   Variance: Increases with greater flexibility, as flexible models are more sensitive to variations in the training data.
--   Training Error: Decreases with increasing flexibility because more complex models can closely fit the training data.
--   Test Error: Initially decreases with flexibility due to reduced bias but eventually increases as overfitting leads to higher variance.
--   Bayes Error: Remains constant, as it is independent of the model's complexity and reflects the inherent noise in the data.
+> -   Squared Bias: Decreases as model flexibility increases since more flexible methods are better at capturing complex patterns in the data.
+> -   Variance: Increases with greater flexibility, as flexible models are more sensitive to variations in the training data.
+> -   Training Error: Decreases with increasing flexibility because more complex models can closely fit the training data.
+> -   Test Error: Initially decreases with flexibility due to reduced bias but eventually increases as overfitting leads to higher variance.
+> -   Bayes Error: Remains constant, as it is independent of the model's complexity and reflects the inherent noise in the data.
 
 #### Question 4
 
@@ -102,145 +98,153 @@ You will now think of some real-life applications for statistical learning.
 
 a.  Describe three real-life applications in which classification might be useful. Describe the response, as well as the predictors. Is the goal of each application inference or prediction? Explain your answer.
 
+> Email Classification (Spam or Not Spam):\
+> Variables ($p$): Certain keywords, email structure, sender information\
+> Aim: Prediction
 >
-Email Classification (Spam or Not Spam):  
-  Variables ($p$): Certain keywords, email structure, sender information  
-  Aim: Prediction
+> Factors Associated with Winning an Election:\
+> Variables ($p$): Campaign budget, market trends, poll results, etc.\
+> Aim: Inference
 >
-Factors Associated with Winning an Election:  
-  Variables ($p$): Campaign budget, market trends, poll results, etc.  
-  Aim: Inference
->
-Food Spoilage (Healthy or Not Healthy for Consumption): 
-  Variables ($p$): Color, texture, smell, etc.  
-  Aim: Prediction  
+> Food Spoilage (Healthy or Not Healthy for Consumption): Variables ($p$): Color, texture, smell, etc.\
+> Aim: Prediction
 
 b.  Describe three real-life applications in which regression might be useful. Describe the response, as well as the predictors. Is the goal of each application inference or prediction? Explain your answer.
 
+> Analyzing the Effect of Marketing Budget on Sales Response: Total revenue Variables ($p$): Marketing budget allocated to different channels (e.g., social media, TV ads, print media), time of year, and product price. Aim: Inference
 >
-Analyzing the Effect of Marketing Budget on Sales
-  Response: Total revenue
-  Variables ($p$): Marketing budget allocated to different channels (e.g., social media, TV ads, print media), time of year, and product price.
-  Aim: Inference
->
-Predicting Housing Prices
-  Response Variable: Sale price of a house.
-  Predictors: Square footage, number of bedrooms, number of bathrooms, location etc
-  Aim: Prediction
+> Predicting Housing Prices Response Variable: Sale price of a house. Predictors: Square footage, number of bedrooms, number of bathrooms, location etc Aim: Prediction
 
 c.  Describe three real-life applications in which cluster analysis might be useful.
 
->
--   Genomic data analysis for example RNA seq.
--   finding categories in illnesses, cells, or organisms 
+> -   Genomic data analysis for example RNA seq.
+> -   finding categories in illnesses, cells, or organisms
 
 #### Question 5
 
 What are the advantages and disadvantages of a very flexible (versus a less flexible) approach for regression or classification? Under what circumstances might a more flexible approach be preferred to a less flexible approach? When might a less flexible approach be preferred?
 
-> 
-Inflexible methods are more interpretable and are generally preferred in cases with small $n$ (sample size) and large $p$ (number of predictors). However, they may suffer from high bias when the true underlying function is non-linear. Flexible methods, while capable of capturing non-linear patterns, are prone to overfitting, leading to high variance in error. In situations with a large $n$ and small $p$, flexible methods are preferred.
+> Inflexible methods are more interpretable and are generally preferred in cases with small $n$ (sample size) and large $p$ (number of predictors). However, they may suffer from high bias when the true underlying function is non-linear. Flexible methods, while capable of capturing non-linear patterns, are prone to overfitting, leading to high variance in error. In situations with a large $n$ and small $p$, flexible methods are preferred.
 
 #### Question 6
 
 Describe the differences between a parametric and a non-parametric statistical learning approach. What are the advantages of a parametric approach to regression or classification (as opposed to a non-parametric approach)? What are its disadvantages?
 
+> Parametric methods are more interpretable because they rely on a predefined model to generate the response. They also tend to perform better than non-parametric methods in high-dimensional settings, as they require estimating fewer parameters. However, a key disadvantage is that the model may not accurately reflect reality. If the assumed model is far from the true underlying relationship, the resulting estimates can be poor.
 >
-Parametric methods are more interpretable because they rely on a predefined model to generate the response. They also tend to perform better than non-parametric methods in high-dimensional settings, as they require estimating fewer parameters. However, a key disadvantage is that the model may not accurately reflect reality. If the assumed model is far from the true underlying relationship, the resulting estimates can be poor.
->
-In contrast, non-parametric methods are highly flexible and can adapt to a wide range of underlying patterns. However, this flexibility comes at a cost: they require a larger number of observations to produce accurate estimates, as they do not rely on a small set of parameters and are more prone to overfitting when data is limited
+> In contrast, non-parametric methods are highly flexible and can adapt to a wide range of underlying patterns. However, this flexibility comes at a cost: they require a larger number of observations to produce accurate estimates, as they do not rely on a small set of parameters and are more prone to overfitting when data is limited
 
 #### Question 7
 
 The table below provides a training data set containing six observations, three predictors, and one qualitative response variable.
 
- | Obs. | $X_1$ | $X_2$ | $X_3$ | $Y$   |
- |------|-------|-------|-------|-------|
- | 1    | 0     | 3     | 0     | Red   |
- | 2    | 2     | 0     | 0     | Red   |
- | 3    | 0     | 1     | 3     | Red   |
- | 4    | 0     | 1     | 2     | Green |
- | 5    | -1    | 0     | 1     | Green |
- | 6    | 1     | 1     | 1     | Red   |
+| Obs. | $X_1$ | $X_2$ | $X_3$ | $Y$   |
+|------|-------|-------|-------|-------|
+| 1    | 0     | 3     | 0     | Red   |
+| 2    | 2     | 0     | 0     | Red   |
+| 3    | 0     | 1     | 3     | Red   |
+| 4    | 0     | 1     | 2     | Green |
+| 5    | -1    | 0     | 1     | Green |
+| 6    | 1     | 1     | 1     | Red   |
 
 Suppose we wish to use this data set to make a prediction for $Y$ when $X_1 = X_2 = X_3 = 0$ using $K$-nearest neighbors.
 
- a.  Compute the Euclidean distance between each observation and the test point, $X_1 = X_2 = X_3 = 0$.
+a.  Compute the Euclidean distance between each observation and the test point, $X_1 = X_2 = X_3 = 0$.
 
 ```{r}
-dat <- data.frame(
-  "x1" = c(0, 2, 0, 0, -1, 1),
-  "x2" = c(3, 0, 1, 1, 0, 1),
-  "x3" = c(0, 0, 3, 2, 1, 1),
-  "y" = c("Red", "Red", "Red", "Green", "Green", "Red")
+# Define the data
+data <- data.frame(
+  Obs = 1:6,
+  X1 = c(0, 2, 0, 0, -1, 1),
+  X2 = c(3, 0, 1, 1, 0, 1),
+  X3 = c(0, 0, 3, 2, 1, 1),
+  Y = c("Red", "Red", "Red", "Green", "Green", "Red")
 )
 
-# Euclidean distance between points and c(0, 0, 0)
-dist <- sqrt(dat[["x1"]]^2 + dat[["x2"]]^2 + dat[["x3"]]^2)
-signif(dist, 3)
+# Test point
+test_point <- c(0, 0, 0)
+
+# Compute Euclidean distances
+data$Distance <- sqrt((data$X1 - test_point[1])^2 + 
+                      (data$X2 - test_point[2])^2 + 
+                      (data$X3 - test_point[3])^2)
+
+#Sort data by distance
+sorted_data <- data[order(data$Distance), ]
+
+# Display distances
+print(sorted_data[, c("Obs", "Distance", "Y")])
+
 ```
 
- b.  What is our prediction with $K = 1$? Why?
+b.  What is our prediction with $K = 1$? Why?
 
 ```{r}
-knn <- function(k) {
-  names(which.max(table(dat[["y"]][order(dist)[1:k]])))
-}
-knn(1)
+# Prediction for K = 1
+k1_prediction <- sorted_data$Y[1]
+cat("Prediction for K = 1:", k1_prediction, "\n")
 ```
 
-Green (based on data point 5 only)
+Green have the smallest distance (obs. 5)
 
- c.  What is our prediction with $K = 3$? Why?
+c.  What is our prediction with $K = 3$? Why?
 
 ```{r}
-knn(3)
+# Prediction for K = 3
+k3_neighbors <- sorted_data$Y[1:3]
+k3_prediction <- names(which.max(table(k3_neighbors))) # table() returns counts 
+cat("Prediction for K = 3:", k3_prediction, "\n")
 ```
 
-Red (based on data points 2, 5, 6)
+d.  If the Bayes decision boundary in this problem is highly non-linear, then would we expect the best value for $K$ to be large or small? Why?
 
- d.  If the Bayes decision boundary in this problem is highly non-linear, then would we expect the best value for $K$ to be large or small? Why?
-
-> Small (high $k$ leads to linear boundaries due to averaging)
+> If the Bayes decision boundary is highly non-linear, a smaller $k$ is better. This is because smaller $k$ will capture the non-linear patterns in data. A large $k$ may lead to underfiting since the true boundary is highly non-linear.
 
 ### Applied
 
-#### Question 8
-
- This exercise relates to the `College` data set, which can be found in the file `College.csv`. It contains a number of variables for 777 different universities and colleges in the US. The variables are
-
- -   `Private` : Public/private indicator
- -   `Apps` : Number of applications received
- -   `Accept` : Number of applicants accepted
- -   `Enroll` : Number of new students enrolled
- -   `Top10perc` : New students from top 10% of high school class
- -   `Top25perc` : New students from top 25% of high school class
- -   `F.Undergrad` : Number of full-time undergraduates
- -   `P.Undergrad` : Number of part-time undergraduates
- -   `Outstate` : Out-of-state tuition
- -   `Room.Board` : Room and board costs
- -   `Books` : Estimated book costs
- -   `Personal` : Estimated personal spending
- -   `PhD` : Percent of faculty with Ph.D.'s
- -   `Terminal` : Percent of faculty with terminal degree
- -   `S.F.Ratio` : Student/faculty ratio
- -   `perc.alumni` : Percent of alumni who donate
- -   `Expend` : Instructional expenditure per student
- -   `Grad.Rate` : Graduation rate
-
- Before reading the data into `R`, it can be viewed in Excel or a text editor.
-
- a.  Use the `read.csv()` function to read the data into `R`. Call the loaded data `college`. Make sure that you have the directory set to the correct location for the data.
-
 ```{r}
-#| eval: false
-college <- read.csv("data/College.csv")
+#| message: false
+#| warning: false
+library(tidyverse)
+library(knitr)
+library(GGally) # ggpairs function
+library(ISLR2) # Boston data set
 ```
 
- b.  Look at the data using the `View()` function. You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
+#### Question 8
+
+This exercise relates to the `College` data set, which can be found in the file `College.csv`. It contains a number of variables for 777 different universities and colleges in the US. The variables are
+
+-   `Private` : Public/private indicator
+-   `Apps` : Number of applications received
+-   `Accept` : Number of applicants accepted
+-   `Enroll` : Number of new students enrolled
+-   `Top10perc` : New students from top 10% of high school class
+-   `Top25perc` : New students from top 25% of high school class
+-   `F.Undergrad` : Number of full-time undergraduates
+-   `P.Undergrad` : Number of part-time undergraduates
+-   `Outstate` : Out-of-state tuition
+-   `Room.Board` : Room and board costs
+-   `Books` : Estimated book costs
+-   `Personal` : Estimated personal spending
+-   `PhD` : Percent of faculty with Ph.D.'s
+-   `Terminal` : Percent of faculty with terminal degree
+-   `S.F.Ratio` : Student/faculty ratio
+-   `perc.alumni` : Percent of alumni who donate
+-   `Expend` : Instructional expenditure per student
+-   `Grad.Rate` : Graduation rate
+
+Before reading the data into `R`, it can be viewed in Excel or a text editor.
+
+a.  Use the `read.csv()` function to read the data into `R`. Call the loaded data `college`. Make sure that you have the directory set to the correct location for the data.
 
 ```{r}
-#| eval: false
+college <- read.csv("College.csv")
+```
+
+b.  Look at the data using the `View()` function. You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
+
+```{r}
 rownames(college) <- college[, 1]
 View(college)
 ```
@@ -248,21 +252,17 @@ View(college)
 You should see that there is now a `row.names` column with the name of each university recorded. This means that R has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try
 
 ```{r}
-#| eval: false
 college <- college [, -1]
 View(college)
 ```
 
 Now you should see that the first data column is `Private`. Note that another column labeled `row.names` now appears before the `Private` column. However, this is not a data column but rather the name that R is giving to each row.
 
-```{r}
-#| eval: false
-rownames(college) <- college[, 1]
-college <- college[, -1]
-```
-
 c.  
-i.  Use the `summary()` function to produce a numerical summary of the variables in the data set.
+
+i.    Use the `summary()` function to produce a numerical summary of the variables in the data set.
+
+<!-- -->
 
 ii. Use the `pairs()` function to produce a scatterplot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using `A[,1:10]`.
 
@@ -271,21 +271,22 @@ iii. Use the `plot()` function to produce side-by-side boxplots of `Outstate` ve
 iv. Create a new qualitative variable, called `Elite`, by *binning* the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
 
 ```{r}
-#| eval: false
 Elite <- rep("No", nrow(college))
 Elite[college$Top10perc > 50] <- "Yes"
 Elite <- as.factor(Elite)
 college <- data.frame(college, Elite)
 ```
+
 Use the `summary()` function to see how many elite universities there are. Now use the `plot()` function to produce side-by-side boxplots of `Outstate` versus `Elite`.
 
 v.  Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
 
+<!-- -->
+
 vi. Continue exploring the data, and provide a brief summary of what you discover.
 
 ```{r}
-#| eval: false
-summary(college)
+#| warning: false
 
 college$Private <- college$Private == "Yes"
 pairs(college[, 1:10], cex = 0.2)
@@ -296,11 +297,10 @@ summary(college$Elite)
 plot(college$Outstate ~ college$Elite, xlab = "Elite", ylab = "Outstate")
 
 par(mfrow = c(2,2))
-for (n in c(5, 10, 20, 50)) {
+for (n in c(10, 20, 30, 40)) {
   hist(college$Enroll, breaks = n, main = paste("n =", n), xlab = "Enroll")
 }
 
-chisq.test(college$Private, college$Elite)
 ```
 
 Whether a college is Private and Elite is not random!
@@ -310,49 +310,37 @@ Whether a college is Private and Elite is not random!
 This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.
 
 ```{r}
-#| eval: false
-x <- read.table("data/Auto.data", header = TRUE, na.strings = "?")
-x <- na.omit(x)
+data <- read.table("Auto.data", header = TRUE, na.strings = "?")
+data <- na.omit(data)
 ```
 
 a.  Which of the predictors are quantitative, and which are qualitative?
 
-```{r}
-#| eval: false
-sapply(x, class)
-numeric <- which(sapply(x, class) == "numeric")
-names(numeric)
-```
+> Quantitative: mpg,cylinders,displacement,horsepower, weight, acceleration, year. Qualitative: name, origin.
 
 b.  What is the range of each quantitative predictor? You can answer this using the `range()` function.
 
 ```{r}
-#| eval: false
-sapply(x[, numeric], function(x) diff(range(x)))
+sapply(data[ ,1:7], range)
 ```
 
 c.  What is the mean and standard deviation of each quantitative predictor?
 
 ```{r}
-#| eval: false
-library(tidyverse)
-library(knitr)
-
-x[, numeric] |>
+data[, 1:7] |>
   pivot_longer(everything()) |>
   group_by(name) |>
   summarise(
     Mean = mean(value),
     SD = sd(value)
   ) |>
-  kable()
+  knitr::kable()
 ```
 
 d.  Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
 
 ```{r}
-#| eval: false
-x[-(10:85), numeric] |>
+data[-(10:85), 1:7] |>
   pivot_longer(everything()) |>
   group_by(name) |>
   summarise(
@@ -360,41 +348,31 @@ x[-(10:85), numeric] |>
     Mean = mean(value),
     SD = sd(value)
   ) |>
-  kable()
+  knitr::kable()
 ```
 
 e.  Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
 
 ```{r}
-#| eval: false
-pairs(x[, numeric], cex = 0.2) 
-cor(x[, numeric]) |>
-  kable()
-
-heatmap(cor(x[, numeric]), cexRow = 1.1, cexCol = 1.1, margins = c(8, 8))
+ggpairs(data[, 1:7])
 ```
 
-Many of the variables appear to be highly (positively or negatively) correlated with some relationships being non-linear.
+> From the above plot, many of the variables appear to be very correlated.
 
-f.  Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
+f. Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
 
-Yes, since other variables are correlated. However, horsepower, weight and displacement are highly related.
+> Yes, since other variables are correlated. However, horsepower, weight and displacement are highly related.
 
 #### Question 10
 
 This exercise involves the `Boston` housing data set.
 
-a.  To begin, load in the `Boston` data set. The `Boston` data set is part of the `ISLR2` library in R.
+a. To begin, load in the `Boston` data set. The `Boston` data set is part of the `ISLR2` library in R.
 
-```{r}
-#| eval: false
-library(ISLR2)
-```
 Now the data set is contained in the object `Boston`.
 
 ```{r}
-#| eval: false
-Boston
+View(Boston)
 ```
 
 Read about the data set:
@@ -407,95 +385,98 @@ Read about the data set:
 How many rows are in this data set? How many columns? What do the rows and columns represent?
 
 ```{r}
-#| eval: false
-library(ISLR2)
 dim(Boston)
 ```
 
 b.  Make some pairwise scatterplots of the predictors (columns) in this data set. Describe your findings.
 
-```{r, message = FALSE, warning = FALSE}
-#| eval: false
-library(ggplot2)
-library(tidyverse)
-```
-
 ```{r}
-#| eval: false
-ggplot(Boston, aes(nox, rm)) + geom_point()
-ggplot(Boston, aes(ptratio, rm)) + geom_point()
-heatmap(cor(Boston, method = "spearman"), cexRow = 1.1, cexCol = 1.1)
+#| message: false
+ggpairs(Boston[, 1:6])
 ```
+> There are no significant correlations associated with capita crime
 
 c.  Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
 
-Yes
+> Yes
+
+```{r}
+cor(Boston)
+```
+
 
 d.  Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
 
 ```{r}
-#| eval: false
-Boston |> 
-  pivot_longer(cols = 1:13) |> 
-  filter(name %in% c("crim", "tax", "ptratio")) |> 
-  ggplot(aes(value)) + 
-    geom_histogram(bins = 20) + 
-    facet_wrap(~name, scales="free", ncol= 1)
-```
+# top 5% of crime,tax,and pupil-teacher ratios
+cat("High crime:", sum(Boston$crim > quantile(Boston$crim, 0.95)), "\n") 
 
-Yes, particularly crime and tax rates.
+cat("High tax:", sum(Boston$tax > quantile(Boston$tax, 0.95)), "\n")
+
+cat("Pupil-teacher ratio:", sum(Boston$ptratio > quantile(Boston$ptratio, 0.95)),"\n")
+```
 
 e.  How many of the census tracts in this data set bound the Charles river?
 
 ```{r}
-#| eval: false
-sum(Boston$chas)
+sum(Boston$chas==1)
 ```
 
 f.  What is the median pupil-teacher ratio among the towns in this data set?
 
 ```{r}
-#| eval: false
-median(Boston$ptratio)
+median_ptratio <- median(Boston$ptratio)
+cat("Median pupil-teacher ratio:", median_ptratio, "\n")
 ```
 
 g.  Which census tract of Boston has lowest median value of owner-occupied homes? What are the values of the other predictors for that census tract, and how do those values compare to the overall ranges for those predictors? Comment on your findings.
 
 ```{r}
 #| eval: false
-Boston[Boston$medv == min(Boston$medv), ] |>
-  kable()
+# whichsuburbs that have the lowest median property values.
+which(Boston$medv == min(Boston$medv))
 
-sapply(Boston, quantile) |>
-  kable()
+# Values of other predictors for suburb 406
+Boston[406,]
+
+range(Boston$crim)
+
 ```
+
+> There are two suburbs that have the lowest median property values. crime is negatively correlated with median property value.
 
 h.  In this data set, how many of the census tract average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the census tracts that average more than eight rooms per dwelling.
 
 ```{r}
-#| eval: false
-sum(Boston$rm > 7)
-sum(Boston$rm > 8)
+cat("More than 7 rooms:",sum(Boston$rm > 7),"\n")
+
+
+cat("More than 8 rooms:", sum(Boston$rm > 8), "\n")
+
 ```
 
-Let's compare median statistics for those census tracts with more than eight rooms per dwelling on average, with the statistics for those with fewer.
+Making summaries:
 
 ```{r}
-#| eval: false
-Boston |>
-  mutate(
-    `log(crim)` = log(crim),
-    `log(zn)` = log(zn)
-  ) |>
-  select(-c(crim, zn)) |>
-  pivot_longer(!rm) |>
-  mutate(">8 rooms" = rm > 8) |>
-  ggplot(aes(`>8 rooms`, value)) + 
-    geom_boxplot() + 
-    facet_wrap(~name, scales = "free")
-```
 
-Census tracts with big average properties (more than eight rooms per dwelling) have higher median value (`medv`), a lower proportion of non-retail business acres (`indus`), a lower pupil-teacher ratio (`ptratio`), a lower status of the population (`lstat`) among other differences.
+tracts_more_than_8 <- Boston[Boston$rm > 8, ]
+# Reshape data to long format using pivot_longer()
+data_long <- tracts_more_than_8 |>
+  pivot_longer(cols = -rm, names_to = "Predictor", values_to = "Value")
+
+# Create boxplots with facet_wrap
+ggplot(data_long, aes(x = Predictor, y = Value, fill = Predictor)) +
+  geom_boxplot(outlier.color = "red", outlier.size = 1.5) +
+  facet_wrap(~ Predictor, scales = "free", ncol = 4) +  # Each plot gets its own scale
+  theme_minimal() +
+  labs(title = "Boxplots for Predictors with More Than 8 Rooms",
+       x = "Predictors",
+       y = "Values") +
+  theme(axis.text.x = element_blank(),  # Remove x-axis text (not meaningful here)
+        axis.ticks.x = element_blank(),
+        strip.text = element_text(size = 10, face = "bold"))
+
+```
 
 # Linear Regression
 
@@ -512,4 +493,3 @@ Census tracts with big average properties (more than eight rooms per dwelling) h
 ### Conceptual
 
 ### Applied
-
