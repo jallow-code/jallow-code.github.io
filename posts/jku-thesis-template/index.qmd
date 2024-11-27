@@ -20,7 +20,7 @@ engine: knitr
 
 # Background
 
-This template is based on the [Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)](https://www.latextemplates.com/template/masters-doctoral-thesis), which [Eli Holmes](https://github.com/nmfs-opensci/quarto-thesis) updated for Quarto. I further modified the Quarto template to fulfill JKU's criteria for diploma theses and doctoral dissertations. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. The main difficulties were ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto effectively addresses these challenges. Above all, it combines data analysis and documentation into one platform thereby improving reproducibility.
+This template is based on the [Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)](https://www.latextemplates.com/template/masters-doctoral-thesis), which [Eli Holmes](https://github.com/nmfs-opensci/quarto-thesis) updated for Quarto. I further modified the Quarto template to fulfill JKU's formal criteria for diploma theses. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. The main difficulties were ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto effectively addresses these challenges. Above all, it combines data analysis and documentation into one platform thereby improving reproducibility.
 
 # Installing the Template
 
