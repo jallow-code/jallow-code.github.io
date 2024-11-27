@@ -303,7 +303,7 @@ for (n in c(10, 20, 30, 40)) {
 
 ```
 
-Whether a college is Private and Elite is not random!
+
 
 #### Question 9
 
@@ -354,10 +354,12 @@ data[-(10:85), 1:7] |>
 e.  Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
 
 ```{r}
+#| message: false
 ggpairs(data[, 1:7])
 ```
 
-> From the above plot, many of the variables appear to be very correlated.
+> Yes, there are both positive and negative correlation between the variables.
+
 
 f. Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
 
@@ -398,10 +400,16 @@ ggpairs(Boston[, 1:6])
 
 c.  Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
 
-> Yes
+> Yes, there is mild positive correlation with `rad` and `tax`
 
 ```{r}
-cor(Boston)
+cor_boston <- cor(Boston)
+cor_col <- hcl.colors(33, "Purple-Green")
+p <- heatmap(cor_boston, col = cor_col, zlim = c(-1, 1), symm = TRUE, margins = c(8, 8), Rowv = NA)
+legend("right", c(1, rep("", 15), 0, rep("", 15), -1), fill = rev(cor_col), 
+  bty = "n", border = "transparent", y.intersp = 0.5)
+
+
 ```
 
 
