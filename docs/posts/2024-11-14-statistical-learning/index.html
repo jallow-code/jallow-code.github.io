@@ -235,7 +235,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 27, 2024</p>
+        <p class="date-modified">November 28, 2024</p>
       </div>
     </div>
       
@@ -1040,6 +1040,62 @@ Aim: Prediction</p>
 <h2 class="anchored" data-anchor-id="exercises-2">Exercises</h2>
 <section id="conceptual-2" class="level3">
 <h3 class="anchored" data-anchor-id="conceptual-2">Conceptual</h3>
+<blockquote class="blockquote">
+<ol type="1">
+<li>Using a little bit of algebra, prove that (4.2) is equivalent to (4.3). In other words, the logistic function representation and logit representation for the logistic regression model are equivalent.</li>
+</ol>
+</blockquote>
+<p>The logistic function is define as</p>
+<p><span id="eq-4.2"><span class="math display">\[
+p(X) = \frac{e^{\beta_o + \beta_1X}}{1\;+ e^{\beta_o + \beta_1X}}\\
+\tag{1}\]</span></span></p>
+<p>Rearranging terms,</p>
+<p><span class="math display">\[\begin{gather*}
+e^{\beta_o + \beta_1X} = p(X) + p(X)\cdot{ e^{\beta_o + \beta_1X}}\\
+
+p(X) = e^{\beta_o + \beta_1X} - p(X) \cdot e^{\beta_o + \beta_1X}\\
+
+e^{\beta_o + \beta_1X} \cdot [1 - p(X)] = p(X)\\
+
+\end{gather*}\]</span></p>
+<p>Therefore the logit is representated as</p>
+<p><span id="eq-4.3"><span class="math display">\[
+\frac{p(X)}{1 - p(X)} = e^{\beta_o + \beta_1X}
+\tag{2}\]</span></span></p>
+<blockquote class="blockquote">
+<ol start="2" type="1">
+<li>It was stated in the text that classifying an observation to the class for which (4.17) is largest is equivalent to classifying an observation to the class for which (4.18) is largest. Prove that this is the case. In other words, under the assumption that the observations in the kth class are drawn from a N(µk,σ2) distribution, the Bayes classifier assigns an observation to the class for which the discriminant function is maximized.</li>
+</ol>
+</blockquote>
+<p><span id="eq-4.17"><span class="math display">\[
+p_k(x) = \frac{\pi_k\frac{1}{\sqrt{2\pi\sigma}} \cdot \exp(-\frac{1}{2\sigma^2}(x - \mu_k)^2)}
+              {\sum_{l=1}^k \pi_l\frac{1}{\sqrt{2\pi\sigma}} \cdot \exp(-\frac{1}{2\sigma^2}(x - \mu_l)^2)}
+\tag{3}\]</span></span></p>
+<p>The discriminant function is</p>
+<p><span id="eq-4.18"><span class="math display">\[
+\delta_k(x) = x.\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma_2} + \log(\pi_k)
+\tag{4}\]</span></span></p>
+<p>To show <a href="#eq-4.17" class="quarto-xref">Equation&nbsp;3</a> is equals to <a href="#eq-4.18" class="quarto-xref">Equation&nbsp;4</a>, we first assume <span class="math inline">\(\sigma_1^2\;=\;...\;=\sigma_k^2\)</span>. Hence,</p>
+<p><span class="math display">\[
+p_k(x) = \frac{\pi_k \exp\left(-\frac{1}{2\sigma^2}(x - \mu_k)^2\right)}
+              {\sum_{l=1}^k \pi_l \exp\left(-\frac{1}{2\sigma^2}(x - \mu_l)^2\right)}
+\]</span></p>
+<p>Next, we take the <span class="math inline">\(\log(p_K(X))\)</span> to linearized the function. <span class="math display">\[
+\log(p_k(x)) = \log(\frac{\pi_k \exp\left(-\frac{1}{2\sigma^2}(x - \mu_k)^2\right)}{\sum_{l=1}^k \pi_l \exp\left(-\frac{1}{2\sigma^2}(x - \mu_l)^2\right)})
+\]</span> Rearranging terms</p>
+<p><span class="math display">\[
+\log(p_k(x)) = \log(\pi_k) - \frac{1}{2\sigma^2}(x - \mu_k)^2 -
+              \log\left(\sum_{l=1}^k \pi_l \exp\left(-\frac{1}{2\sigma^2}(x - \mu_l)^2\right)\right)
+\]</span></p>
+<p>To maximize over <span class="math inline">\(k\)</span>, any term that’s independent of <span class="math inline">\(k\)</span> is ignored</p>
+<p><span class="math display">\[\begin{align}
+f &amp;= \log(\pi_k) - \frac{1}{2\sigma^2} (x^2 - 2x\mu_k + \mu_k^2) \\
+  &amp;= \log(\pi_k) - \frac{x^2}{2\sigma^2} + \frac{x\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} \\
+\end{align}\]</span></p>
+<p>Since <span class="math inline">\(\frac{x^2}{2\sigma^2}\)</span> is also independent of <span class="math inline">\(k\)</span>, it is ignored in order to maximize over <span class="math inline">\(k\)</span></p>
+<p><span class="math display">\[
+\log(\pi_k) + \frac{x\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}
+\]</span></p>
 </section>
 <section id="applied-2" class="level3">
 <h3 class="anchored" data-anchor-id="applied-2">Applied</h3>
