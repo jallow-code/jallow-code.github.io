@@ -13,9 +13,9 @@ website:
         text: Home
       - posts.qmd # Add listing page to the navbar
       # - projects.qmd
-      - href: CV/AJallow_CV.pdf
-        text: CV
-        target: _blank # opens link (or page) in a new browser tab
+      #- href: CV/AJallow_CV.pdf
+       # text: CV
+       # target: _blank # opens link (or page) in a new browser tab
       - icon: github
         href: https://github.com/jallow-code
         target: _blank

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.36">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,12 +72,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-50ce76a698d11d5c8ce8d2d3eb8c52e4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-05e257f7f0e0c37608978a94d3e630e0.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3571f22a76bf7c577fb55215f2de131.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-834babbefdc2d918b1dee9ee1f645638.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0d7b066191b156dfccdd4e8e7d3c15f6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-9d0163d01a38941c52539abebd8179ad.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-c6ec59bef4b572ccb986375e1767f4a0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-49b2a0bf4db22b4c837db32aeac5bcdb.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -181,10 +181,6 @@ window.Quarto = {
     <a class="nav-link" href="../../posts.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../CV/AJallow_CV.pdf" target="_blank"> 
-<span class="menu-text">CV</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/jallow-code" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
@@ -235,7 +231,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 28, 2024</p>
+        <p class="date-modified">December 11, 2024</p>
       </div>
     </div>
       
@@ -1096,6 +1092,82 @@ f &amp;= \log(\pi_k) - \frac{1}{2\sigma^2} (x^2 - 2x\mu_k + \mu_k^2) \\
 <p><span class="math display">\[
 \log(\pi_k) + \frac{x\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}
 \]</span></p>
+<blockquote class="blockquote">
+<ol start="4" type="1">
+<li>To Do</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<ol start="5" type="1">
+<li><p>We now examine the differences between LDA and QDA.</p>
+<p>(a). If the bayes decision boundary is linear, do we expect LDA or QDA to perform better on the training set? On the test set?</p></li>
+</ol>
+</blockquote>
+<p>QDA been the more flexible model will perform better on the training set, but worse on the test set. On the test set, QDA will overfit the data because the true decision boundary is linear.</p>
+<blockquote class="blockquote">
+<p>(b). If the Bayes decision boundary is non-linear, do we expect LDA or QDA to perform better on the training set? On the test set?</p>
+</blockquote>
+<p>In this situation since the decision boundary is non-linear, QDA will perform better in both data sets. A linear model will underfit in this case.</p>
+<blockquote class="blockquote">
+<p>(c). In general, as the sample size <span class="math inline">\(n\)</span> increases, do we expect the test prediction accuracy of QDA relative to LDA to improve, decline, or be unchanged? Why?</p>
+</blockquote>
+<p>As sample size increase, QDA will improve because there is more data to fit and the low bias will offset increase in variance.</p>
+<blockquote class="blockquote">
+<p>(d). True or False: Even if the Bayes decision boundary for a given problem is linear, we will probably achieve a superior test error rate using QDA rather than LDA because QDA is flexible enough to model a linear decision boundary. Justify your answer.</p>
+</blockquote>
+<p>False. In this case, QDA will overfit the data.</p>
+<blockquote class="blockquote">
+<ol start="6" type="1">
+<li>Suppose we collect data for a group of students in a statistics class with variables <span class="math inline">\(X_1 =\)</span> hours studied, <span class="math inline">\(X_2 =\)</span> undergrad GPA, and <span class="math inline">\(Y =\)</span> receive an A. We fit a logistic regression and produce estimated coefficient, <span class="math inline">\(\hat\beta_0 = -6\)</span>, <span class="math inline">\(\hat\beta_1 = 0.05\)</span>, <span class="math inline">\(\hat\beta_2 = 1\)</span>.</li>
+</ol>
+<p>(a). Estimate the probability that a student who studies for 40h and has an undergrad GPA of 3.5 gets an A in the class.</p>
+</blockquote>
+<p><span class="math display">\[
+p(X) = \frac{e^{-6 + 0.05X_1 + X_2}}{1 + e^{-6 + 0.05X_1 + X_2}}
+\]</span></p>
+<p>when <span class="math inline">\(X_1 = 40\)</span> and <span class="math inline">\(X_2 = 3.5\)</span>, <span class="math inline">\(p(X) = 0.38\)</span></p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>How many hours would the student in part (a) need to study to have a 50% chance of getting an A in the class?</li>
+</ol>
+</blockquote>
+<p><span class="math display">\[\begin{gather}
+
+\log\left(\frac{p(X)}{1-p(x)}\right) = -6 + 0.05X_1 + X_2 \\
+
+\log\left(\frac{0.5}{1-0.5}\right) = -6 + 0.05X_1 + 3.5 \\
+
+\end{gather}\]</span></p>
+<p>Therefore, solving the equation <span class="math inline">\(0 = −6 + 0.05X_1 + 3.5\)</span>, <span class="math inline">\(X_1 = 50\)</span> hours.</p>
+<blockquote class="blockquote">
+<ol start="7" type="1">
+<li>Suppose that we wish to predict whether a given stock will issue a dividend this year (“Yes” or “No”) based on <span class="math inline">\(X\)</span>, last year’s percent profit. We examine a large number of companies and discover that the mean value of <span class="math inline">\(X\)</span> for companies that issued a dividend was <span class="math inline">\(\bar{X} = 10\)</span>, while the mean for those that didn’t was <span class="math inline">\(\bar{X} = 0\)</span>. In addition, the variance of <span class="math inline">\(X\)</span> for these two sets of companies was <span class="math inline">\(\hat{\sigma}^2 = 36\)</span>. Finally, 80% of companies issued dividends. Assuming that <span class="math inline">\(X\)</span> follows a normal distribution, predict the probability that a company will issue a dividend this year given that its percentage profit was <span class="math inline">\(X = 4\)</span> last year.</li>
+</ol>
+<p><em>Hint: Recall that the density function for a normal random variable is</em> <span class="math inline">\(f(x) =\frac{1}{\sqrt{2\pi\sigma^2}}e^{-(x-\mu)^2/2\sigma^2}\)</span>. <em>You will need to use Bayes’ theorem.</em></p>
+</blockquote>
+<p>Value of companies issuing a dividend (D) = <span class="math inline">\(D \sim \mathcal{N}(10, 36)\)</span>.</p>
+<p>Value <span class="math inline">\(v\)</span> for companies not issuing a dividend <span class="math inline">\((D^c)\)</span> = <span class="math inline">\(D^c \sim \mathcal{N}(0, 36)\)</span> and <span class="math inline">\(p(D) = 0.8\)</span>.</p>
+<p>Bayes theorem:</p>
+<p><span class="math display">\[\begin{align}
+P(D|X) &amp;= \frac{P(D) \cdot{} P(X|D)}{P(D) \cdot{} P(X|D) + P(D^c) \cdot{} P(x|D^c)} \\
+\end{align}\]</span></p>
+<p>We can proceed to add the values to the equation above:</p>
+<p><span class="math display">\[\begin{align}
+
+P(D|X) &amp;= \frac{P(D) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_D)^2/2\sigma^2}}
+               {P(D) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_D)^2/2\sigma^2} +
+                P(D^c) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
+                
+       &amp;= \frac{P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2}}
+               {P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2} +
+                \pi_N \cdot{} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
+                
+       &amp;= \frac{0.8 \times e^{-(4-10)^2/(2 \times 36)}}
+               {0.8 \times e^{-(4-10)^2/(2 \times 36)} + 0.2 \times e^{-(4-0)^2/(2 \times 36)}} \\
+       &amp;= \frac{0.8 e^{-1/2}}{0.8 e^{-1/2} + 0.2 e^{-2/9}}
+       
+
+\end{align}\]</span></p>
 </section>
 <section id="applied-2" class="level3">
 <h3 class="anchored" data-anchor-id="applied-2">Applied</h3>

@@ -260,7 +260,7 @@ Now you should see that the first data column is `Private`. Note that another co
 
 c.  
 
-i.    Use the `summary()` function to produce a numerical summary of the variables in the data set.
+d.  Use the `summary()` function to produce a numerical summary of the variables in the data set.
 
 <!-- -->
 
@@ -302,8 +302,6 @@ for (n in c(10, 20, 30, 40)) {
 }
 
 ```
-
-
 
 #### Question 9
 
@@ -360,8 +358,7 @@ ggpairs(data[, 1:7])
 
 > Yes, there are both positive and negative correlation between the variables.
 
-
-f. Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
+f.  Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
 
 > Yes, since other variables are correlated. However, horsepower, weight and displacement are highly related.
 
@@ -369,7 +366,7 @@ f. Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other
 
 This exercise involves the `Boston` housing data set.
 
-a. To begin, load in the `Boston` data set. The `Boston` data set is part of the `ISLR2` library in R.
+a.  To begin, load in the `Boston` data set. The `Boston` data set is part of the `ISLR2` library in R.
 
 Now the data set is contained in the object `Boston`.
 
@@ -396,6 +393,7 @@ b.  Make some pairwise scatterplots of the predictors (columns) in this data set
 #| message: false
 ggpairs(Boston[, 1:6])
 ```
+
 > There are no significant correlations associated with capita crime
 
 c.  Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
@@ -411,7 +409,6 @@ legend("right", c(1, rep("", 15), 0, rep("", 15), -1), fill = rev(cor_col),
 
 
 ```
-
 
 d.  Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
 
@@ -538,18 +535,16 @@ $$
 \delta_k(x) = x.\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma_2} + \log(\pi_k)
 $$ {#eq-4.18}
 
- To show @eq-4.17 is equals to @eq-4.18, we first assume $\sigma_1^2\;=\;...\;=\sigma_k^2$. Hence, 
+To show @eq-4.17 is equals to @eq-4.18, we first assume $\sigma_1^2\;=\;...\;=\sigma_k^2$. Hence,
 
 $$
 p_k(x) = \frac{\pi_k \exp\left(-\frac{1}{2\sigma^2}(x - \mu_k)^2\right)}
               {\sum_{l=1}^k \pi_l \exp\left(-\frac{1}{2\sigma^2}(x - \mu_l)^2\right)}
 $$
 
-Next, we take the $\log(p_K(X))$ to linearized the function. 
-$$
+Next, we take the $\log(p_K(X))$ to linearized the function. $$
 \log(p_k(x)) = \log(\frac{\pi_k \exp\left(-\frac{1}{2\sigma^2}(x - \mu_k)^2\right)}{\sum_{l=1}^k \pi_l \exp\left(-\frac{1}{2\sigma^2}(x - \mu_l)^2\right)})
-$$
-Rearranging terms
+$$ Rearranging terms
 
 $$
 \log(p_k(x)) = \log(\pi_k) - \frac{1}{2\sigma^2}(x - \mu_k)^2 -
@@ -568,5 +563,80 @@ Since $\frac{x^2}{2\sigma^2}$ is also independent of $k$, it is ignored in order
 $$
 \log(\pi_k) + \frac{x\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}
 $$
+
+> 4.  To Do
+
+> 5.  We now examine the differences between LDA and QDA.
+>
+>     (a). If the bayes decision boundary is linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+
+QDA been the more flexible model will perform better on the training set, but worse on the test set. On the test set, QDA will overfit the data because the true decision boundary is linear.
+
+> (b). If the Bayes decision boundary is non-linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+
+In this situation since the decision boundary is non-linear, QDA will perform better in both data sets. A linear model will underfit in this case.
+
+> (c). In general, as the sample size $n$ increases, do we expect the test prediction accuracy of QDA relative to LDA to improve, decline, or be unchanged? Why?
+
+As sample size increase, QDA will improve because there is more data to fit and the low bias will offset increase in variance.
+
+> (d). True or False: Even if the Bayes decision boundary for a given problem is linear, we will probably achieve a superior test error rate using QDA rather than LDA because QDA is flexible enough to model a linear decision boundary. Justify your answer.
+
+False. In this case, QDA will overfit the data.
+
+> 6.  Suppose we collect data for a group of students in a statistics class with variables $X_1 =$ hours studied, $X_2 =$ undergrad GPA, and $Y =$ receive an A. We fit a logistic regression and produce estimated coefficient, $\hat\beta_0 = -6$, $\hat\beta_1 = 0.05$, $\hat\beta_2 = 1$.
+>
+> (a). Estimate the probability that a student who studies for 40h and has an undergrad GPA of 3.5 gets an A in the class.
+
+$$
+p(X) = \frac{e^{-6 + 0.05X_1 + X_2}}{1 + e^{-6 + 0.05X_1 + X_2}}
+$$
+
+when $X_1 = 40$ and $X_2 = 3.5$, $p(X) = 0.38$
+
+> b.  How many hours would the student in part (a) need to study to have a 50% chance of getting an A in the class?
+
+\begin{gather}
+
+\log\left(\frac{p(X)}{1-p(x)}\right) = -6 + 0.05X_1 + X_2 \\
+
+\log\left(\frac{0.5}{1-0.5}\right) = -6 + 0.05X_1 + 3.5 \\
+
+\end{gather}
+
+Therefore, solving the equation $0 = −6 + 0.05X_1 + 3.5$, $X_1 = 50$ hours.
+
+> 7.  Suppose that we wish to predict whether a given stock will issue a dividend this year ("Yes" or "No") based on $X$, last year's percent profit. We examine a large number of companies and discover that the mean value of $X$ for companies that issued a dividend was $\bar{X} = 10$, while the mean for those that didn't was $\bar{X} = 0$. In addition, the variance of $X$ for these two sets of companies was $\hat{\sigma}^2 = 36$. Finally, 80% of companies issued dividends. Assuming that $X$ follows a normal distribution, predict the probability that a company will issue a dividend this year given that its percentage profit was $X = 4$ last year.
+>
+> *Hint: Recall that the density function for a normal random variable is* $f(x) =\frac{1}{\sqrt{2\pi\sigma^2}}e^{-(x-\mu)^2/2\sigma^2}$. *You will need to use Bayes' theorem.*
+
+Value of companies issuing a dividend (D) = $D \sim \mathcal{N}(10, 36)$.
+
+Value $v$ for companies not issuing a dividend $(D^c)$ = $D^c \sim \mathcal{N}(0, 36)$ and $p(D) = 0.8$.
+
+Bayes theorem:
+
+\begin{align}
+P(D|X) &= \frac{P(D) \cdot{} P(X|D)}{P(D) \cdot{} P(X|D) + P(D^c) \cdot{} P(x|D^c)} \\
+\end{align}
+
+We can proceed to add the values to the equation above:
+
+\begin{align}
+
+P(D|X) &= \frac{P(D) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_D)^2/2\sigma^2}}
+               {P(D) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_D)^2/2\sigma^2} +
+                P(D^c) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
+                
+       &= \frac{P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2}}
+               {P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2} +
+                \pi_N \cdot{} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
+                
+       &= \frac{0.8 \times e^{-(4-10)^2/(2 \times 36)}}
+               {0.8 \times e^{-(4-10)^2/(2 \times 36)} + 0.2 \times e^{-(4-0)^2/(2 \times 36)}} \\
+       &= \frac{0.8 e^{-1/2}}{0.8 e^{-1/2} + 0.2 e^{-2/9}}
+       
+
+\end{align}
 
 ### Applied
