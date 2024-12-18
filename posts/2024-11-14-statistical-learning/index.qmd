@@ -98,22 +98,37 @@ You will now think of some real-life applications for statistical learning.
 
 a.  Describe three real-life applications in which classification might be useful. Describe the response, as well as the predictors. Is the goal of each application inference or prediction? Explain your answer.
 
-> Email Classification (Spam or Not Spam):\
-> Variables ($p$): Certain keywords, email structure, sender information\
-> Aim: Prediction
+> Email Classification (Spam or Not Spam):
 >
-> Factors Associated with Winning an Election:\
-> Variables ($p$): Campaign budget, market trends, poll results, etc.\
-> Aim: Inference
+> -   Variables ($p$): Certain keywords, email structure, sender information
 >
-> Food Spoilage (Healthy or Not Healthy for Consumption): Variables ($p$): Color, texture, smell, etc.\
-> Aim: Prediction
+> -   Aim: Prediction
+>
+> Factors Associated with Winning an Election:
+>
+> -   Variables ($p$): Campaign budget, market trends, poll results, etc.
+>
+> -   Aim: Inference
+>
+> Food Spoilage (Healthy or Not Healthy for Consumption)
+>
+> -   Variables ($p$): Color, texture, smell, etc.
+>
+> -   Aim: Prediction
 
 b.  Describe three real-life applications in which regression might be useful. Describe the response, as well as the predictors. Is the goal of each application inference or prediction? Explain your answer.
 
-> Analyzing the Effect of Marketing Budget on Sales Response: Total revenue Variables ($p$): Marketing budget allocated to different channels (e.g., social media, TV ads, print media), time of year, and product price. Aim: Inference
+> Analyzing the Effect of Marketing Budget on Sales Response: Total revenue
 >
-> Predicting Housing Prices Response Variable: Sale price of a house. Predictors: Square footage, number of bedrooms, number of bathrooms, location etc Aim: Prediction
+> -   Variables ($p$): Marketing budget allocated to different channels (e.g., social media, TV ads, print media), time of year, and product price.
+>
+> -   Aim: Inference
+>
+> Predicting Housing Prices Response Variable: Sale price of a house.
+>
+> -   Predictors: Square footage, number of bedrooms, number of bathrooms, location etc
+>
+> -   Aim: Prediction
 
 c.  Describe three real-life applications in which cluster analysis might be useful.
 
@@ -150,8 +165,12 @@ The table below provides a training data set containing six observations, three 
 Suppose we wish to use this data set to make a prediction for $Y$ when $X_1 = X_2 = X_3 = 0$ using $K$-nearest neighbors.
 
 a.  Compute the Euclidean distance between each observation and the test point, $X_1 = X_2 = X_3 = 0$.
+$$
+\text{Distance} = \sqrt{(X_{1_{\text{obs}}} - 0)^2 + (X_{2_{\text{obs}}} - 0)^2 + (X_{3_{\text{obs}}} - 0)^2}
+$$
 
 ```{r}
+#| echo: false
 # Define the data
 data <- data.frame(
   Obs = 1:6,
@@ -171,7 +190,6 @@ data$Distance <- sqrt((data$X1 - test_point[1])^2 +
 
 #Sort data by distance
 sorted_data <- data[order(data$Distance), ]
-
 # Display distances
 print(sorted_data[, c("Obs", "Distance", "Y")])
 
@@ -179,13 +197,7 @@ print(sorted_data[, c("Obs", "Distance", "Y")])
 
 b.  What is our prediction with $K = 1$? Why?
 
-```{r}
-# Prediction for K = 1
-k1_prediction <- sorted_data$Y[1]
-cat("Prediction for K = 1:", k1_prediction, "\n")
-```
-
-Green have the smallest distance (obs. 5)
+Our prediction will be green because it have the smallest distance (obs. 5)
 
 c.  What is our prediction with $K = 3$? Why?
 
@@ -617,26 +629,121 @@ Value $v$ for companies not issuing a dividend $(D^c)$ = $D^c \sim \mathcal{N}(0
 Bayes theorem:
 
 \begin{align}
-P(D|X) &= \frac{P(D) \cdot{} P(X|D)}{P(D) \cdot{} P(X|D) + P(D^c) \cdot{} P(x|D^c)} \\
+P(D|X) &= \frac{P(D) \cdot{} P(X|D)}{P(D) \cdot{} P(X|D) + P(D^c) \cdot{} P(X|D^c)} \\
 \end{align}
 
-We can proceed to add the values to the equation above:
+Substitute the Gaussian likelihoods into Bayes theorem
 
 \begin{align}
-
 P(D|X) &= \frac{P(D) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_D)^2/2\sigma^2}}
                {P(D) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_D)^2/2\sigma^2} +
                 P(D^c) \cdot{} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
-                
-       &= \frac{P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2}}
-               {P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2} +
-                \pi_N \cdot{} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
-                
-       &= \frac{0.8 \times e^{-(4-10)^2/(2 \times 36)}}
-               {0.8 \times e^{-(4-10)^2/(2 \times 36)} + 0.2 \times e^{-(4-0)^2/(2 \times 36)}} \\
-       &= \frac{0.8 e^{-1/2}}{0.8 e^{-1/2} + 0.2 e^{-2/9}}
-       
-
 \end{align}
 
+Factor out $\frac{1}{\sqrt{2\pi\sigma^2}}$ from the numerator and denominator, which cancels out:
+
+\begin{align}
+P(D|X)  &= \frac{P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2}}
+               {P(D) \cdot{} e^{-(x-\mu_D)^2/2\sigma^2} +
+                P(D^c) \cdot{} e^{-(x-\mu_{D^c})^2/2\sigma^2}} \\
+\end{align}
+
+Substitute the given probabilities and means:
+
+\begin{align}
+P(D|X)  &= \frac{0.8 \times e^{-(4-10)^2/(2 \times 36)}}
+               {0.8 \times e^{-(4-10)^2/(2 \times 36)} + 0.2 \times e^{-(4-0)^2/(2 \times 36)}} \\
+       &= \frac{0.8 \cdot e^{-1/2}}{0.8 \cdot e^{-1/2} + 0.2 \cdot e^{-2/9}} \\
+\end{align}
+
+```{r}
+exp(-0.5) * 0.8 / (exp(-0.5) * 0.8 + exp(-2/9) * 0.2)
+```
+
+> 8.  Suppose that we take a data set, divide it into equally-sized training and test sets, and then try out two different classification procedures. First we use logistic regression and get an error rate of 20% on the training data and 30% on the test data. Next we use 1-nearest neighbors (i.e. $K = 1$) and get an average error rate (averaged over both test and training data sets) of 18%. Based on these results, which method should we prefer to use for classification of new observations? Why?
+
+Logistic regression will perform better because it has a lower test error rate. For $K = 1$, the training error rate is always zero because the closest point is always the training point itself, so the model will never make a mistake on the training set. Given that the average error rate for 1-NN is 18%, this implies a test error rate of 36%. Logistic regression, with a test error rate of 30%, is therefore the better choice.
+
+> 9.  This problem has to do with *odds*.
+>
+> <!-- -->
+>
+> a.  On average, what fraction of people with an odds of 0.37 of defaulting on their credit card payment will in fact default?
+
+$$
+\frac{p(x)}{1 - P(x)} = odd\\
+$$ 
+\begin{equation}
+p(x) = \frac{odd}{1 + odd}\\
+\end{equation}
+
+\begin{equation}
+p(x)  = \frac{0.37}{1 + 0.37} = 0.27
+\end{equation}
+
+> b. Suppose that an individual has a 16% chance of defaulting on her credit
+>    card payment. What are the odds that she will default?
+
+$$0.16 / (1 - 0.16)  = 0.19$$
+
+> 10.  To Do
+
+> 11.  To Do
+
+> 12. Suppose that you wish to classify an observation $X \in \mathbb{R}$ into 
+> `apples` and `oranges`. You fit a logistic regression model and find that
+>
+> $$
+> \hat{Pr}(Y=orange|X=x) = 
+> \frac{\exp(\hat\beta_0 + \hat\beta_1x)}{1 + \exp(\hat\beta_0 + \hat\beta_1x)}
+> $$
+>
+> Your friend fits a logistic regression model to the same data using the
+> _softmax_ formulation in (4.13), and finds that
+>
+> $$
+> \hat{Pr}(Y=orange|X=x) = 
+> \frac{\exp(\hat\alpha_{orange0} + \hat\alpha_{orange1}x)}
+> {\exp(\hat\alpha_{orange0} + \hat\alpha_{orange1}x) + \exp(\hat\alpha_{apple0} + \hat\alpha_{apple1}x)}
+> $$
+> 
+> a. What is the log odds of `orange` versus `apple` in your model?
+
+The log odds ($\frac{p(x)}{1 - P(x)}$) in my model will be $\hat\beta_0 + \hat\beta_1x$
+
+> b. What is the log odds of `orange` versus `apple` in your friend's model?
+
+Log odds of our friend model:
+
+$$
+(\hat\alpha_{orange0} - \hat\alpha_{apple0}) + (\hat\alpha_{orange1} - \hat\alpha_{apple1})x
+$$
+
+> c. Suppose that in your model, $\hat\beta_0 = 2$ and $\hat\beta = −1$. What
+>    are the coefficient estimates in your friend's model? Be as specific as
+>    possible.
+
+The coefficient estimate in my friend's model:
+
+-   $\hat\alpha_{orange0} -\hat\alpha_{apple0} = 2$ 
+-   $\hat\alpha_{orange1} - \hat\alpha_{apple1} = -1$.
+
+> d. Now suppose that you and your friend fit the same two models on a different
+>    data set. This time, your friend gets the coefficient estimates 
+>    $\hat\alpha_{orange0} = 1.2$, $\hat\alpha_{orange1} = −2$, 
+>    $\hat\alpha_{apple0} = 3$, $\hat\alpha_{apple1} = 0.6$. What are the 
+>    coefficient estimates in your model?
+
+The coefficients in my model would be $\hat\beta_0 = 1.2 - 3 = -1.8$ and
+$\hat\beta_1 = -2 - 0.6 = -2.6$
+
+> e. Finally, suppose you apply both models from (d) to a data set with 2,000
+>    test observations. What fraction of the time do you expect the predicted 
+>    class labels from your model to agree with those from your friend's model?
+>    Explain your answer.
+
+They should agree everytime (i.e, pridictions and log odd between any pair of classes will remain the same, regardless of coding). The cofficient will be different because of the choice of baseline.
+
+
 ### Applied
+
