@@ -164,13 +164,16 @@ The table below provides a training data set containing six observations, three 
 
 Suppose we wish to use this data set to make a prediction for $Y$ when $X_1 = X_2 = X_3 = 0$ using $K$-nearest neighbors.
 
-a.  Compute the Euclidean distance between each observation and the test point, $X_1 = X_2 = X_3 = 0$.
-$$
-\text{Distance} = \sqrt{(X_{1_{\text{obs}}} - 0)^2 + (X_{2_{\text{obs}}} - 0)^2 + (X_{3_{\text{obs}}} - 0)^2}
-$$
+a.  Compute the Euclidean distance between each observation and the test point, $X_1 = X_2 = X_3 = 0$. $$
+    \text{Distance} = \sqrt{(X_{1_{\text{obs}}} - 0)^2 + (X_{2_{\text{obs}}} - 0)^2 + (X_{3_{\text{obs}}} - 0)^2}
+    $$
 
 ```{r}
 #| echo: false
+#| warning: false
+
+library(tidyverse)
+
 # Define the data
 data <- data.frame(
   Obs = 1:6,
@@ -187,26 +190,20 @@ test_point <- c(0, 0, 0)
 data$Distance <- sqrt((data$X1 - test_point[1])^2 + 
                       (data$X2 - test_point[2])^2 + 
                       (data$X3 - test_point[3])^2)
+```
 
-#Sort data by distance
-sorted_data <- data[order(data$Distance), ]
-# Display distances
-print(sorted_data[, c("Obs", "Distance", "Y")])
+```{r}
+data[, c("Obs","Distance", "Y")] |> arrange(Distance)
 
 ```
 
 b.  What is our prediction with $K = 1$? Why?
 
-Our prediction will be green because it have the smallest distance (obs. 5)
+    > Our prediction will be `Green` because it have the smallest distance (obs. 5)
 
 c.  What is our prediction with $K = 3$? Why?
 
-```{r}
-# Prediction for K = 3
-k3_neighbors <- sorted_data$Y[1:3]
-k3_prediction <- names(which.max(table(k3_neighbors))) # table() returns counts 
-cat("Prediction for K = 3:", k3_prediction, "\n")
-```
+    > When $K = 3$ our prediction will be `Red` because it is the majority (i.e, 2 Red and 1 Green).
 
 d.  If the Bayes decision boundary in this problem is highly non-linear, then would we expect the best value for $K$ to be large or small? Why?
 
@@ -217,7 +214,6 @@ d.  If the Bayes decision boundary in this problem is highly non-linear, then wo
 ```{r}
 #| message: false
 #| warning: false
-library(tidyverse)
 library(knitr)
 library(GGally) # ggpairs function
 library(ISLR2) # Boston data set
@@ -272,11 +268,11 @@ Now you should see that the first data column is `Private`. Note that another co
 
 c.  
 
-d.  Use the `summary()` function to produce a numerical summary of the variables in the data set.
-
 <!-- -->
 
-ii. Use the `pairs()` function to produce a scatterplot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using `A[,1:10]`.
+i.  Use the `summary()` function to produce a numerical summary of the variables in the data set.
+
+ii. Use the `pairs()` function to produce a scatter plot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using `A[,1:10]`.
 
 iii. Use the `plot()` function to produce side-by-side boxplots of `Outstate` versus `Private`.
 
@@ -293,24 +289,40 @@ Use the `summary()` function to see how many elite universities there are. Now u
 
 v.  Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
 
-<!-- -->
-
-vi. Continue exploring the data, and provide a brief summary of what you discover.
+w.  Continue exploring the data, and provide a brief summary of what you discover.
 
 ```{r}
 #| warning: false
 
-college$Private <- college$Private == "Yes"
-pairs(college[, 1:10], cex = 0.2)
-plot(college$Outstate ~ factor(college$Private), xlab = "Private", ylab = "Outstate")
+# First column(i.e, Private) is excluded since it is qualitative
+pairs(college[, 2:11],
+      cex = 0.2,
+      col = 4,
+      cex.labels = 0.6,  # Size of diagonal texts
+      font.labels = 2)   # Font style of diagonal texts
 
-college$Elite <- factor(ifelse(college$Top10perc > 50, "Yes", "No"))
-summary(college$Elite)
-plot(college$Outstate ~ college$Elite, xlab = "Elite", ylab = "Outstate")
+
+school_type <- ifelse(college$Private == "Yes", "Private", "Public")
+
+plot(college$Outstate ~ factor(school_type),
+     col = "white",
+     ylab = "Outstate")
+
+stripchart(college$Outstate ~ factor(school_type),
+           method = "jitter",
+           pch = 19,
+           col = 2:4,
+           vertical = TRUE,
+           add = TRUE)
+
 
 par(mfrow = c(2,2))
-for (n in c(10, 20, 30, 40)) {
-  hist(college$Enroll, breaks = n, main = paste("n =", n), xlab = "Enroll")
+
+for (n in c(10, 30, 40, 50)) {
+  hist(college$Enroll, breaks = n,
+       col = 4,
+       main = paste("n =", n),
+       xlab = "Enroll",)
 }
 
 ```
@@ -672,8 +684,7 @@ Logistic regression will perform better because it has a lower test error rate. 
 
 $$
 \frac{p(x)}{1 - P(x)} = odd\\
-$$ 
-\begin{equation}
+$$ \begin{equation}
 p(x) = \frac{odd}{1 + odd}\\
 \end{equation}
 
@@ -681,37 +692,34 @@ p(x) = \frac{odd}{1 + odd}\\
 p(x)  = \frac{0.37}{1 + 0.37} = 0.27
 \end{equation}
 
-> b. Suppose that an individual has a 16% chance of defaulting on her credit
->    card payment. What are the odds that she will default?
+> b.  Suppose that an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?
 
 $$0.16 / (1 - 0.16)  = 0.19$$
 
-> 10.  To Do
+> 10. To Do
 
-> 11.  To Do
+> 11. To Do
 
-> 12. Suppose that you wish to classify an observation $X \in \mathbb{R}$ into 
-> `apples` and `oranges`. You fit a logistic regression model and find that
+> 12. Suppose that you wish to classify an observation $X \in \mathbb{R}$ into `apples` and `oranges`. You fit a logistic regression model and find that
 >
 > $$
 > \hat{Pr}(Y=orange|X=x) = 
 > \frac{\exp(\hat\beta_0 + \hat\beta_1x)}{1 + \exp(\hat\beta_0 + \hat\beta_1x)}
 > $$
 >
-> Your friend fits a logistic regression model to the same data using the
-> _softmax_ formulation in (4.13), and finds that
+> Your friend fits a logistic regression model to the same data using the *softmax* formulation in (4.13), and finds that
 >
 > $$
 > \hat{Pr}(Y=orange|X=x) = 
 > \frac{\exp(\hat\alpha_{orange0} + \hat\alpha_{orange1}x)}
 > {\exp(\hat\alpha_{orange0} + \hat\alpha_{orange1}x) + \exp(\hat\alpha_{apple0} + \hat\alpha_{apple1}x)}
 > $$
-> 
-> a. What is the log odds of `orange` versus `apple` in your model?
+>
+> a.  What is the log odds of `orange` versus `apple` in your model?
 
 The log odds ($\frac{p(x)}{1 - P(x)}$) in my model will be $\hat\beta_0 + \hat\beta_1x$
 
-> b. What is the log odds of `orange` versus `apple` in your friend's model?
+> b.  What is the log odds of `orange` versus `apple` in your friend's model?
 
 Log odds of our friend model:
 
@@ -719,31 +727,19 @@ $$
 (\hat\alpha_{orange0} - \hat\alpha_{apple0}) + (\hat\alpha_{orange1} - \hat\alpha_{apple1})x
 $$
 
-> c. Suppose that in your model, $\hat\beta_0 = 2$ and $\hat\beta = −1$. What
->    are the coefficient estimates in your friend's model? Be as specific as
->    possible.
+> c.  Suppose that in your model, $\hat\beta_0 = 2$ and $\hat\beta = −1$. What are the coefficient estimates in your friend's model? Be as specific as possible.
 
 The coefficient estimate in my friend's model:
 
--   $\hat\alpha_{orange0} -\hat\alpha_{apple0} = 2$ 
+-   $\hat\alpha_{orange0} -\hat\alpha_{apple0} = 2$
 -   $\hat\alpha_{orange1} - \hat\alpha_{apple1} = -1$.
 
-> d. Now suppose that you and your friend fit the same two models on a different
->    data set. This time, your friend gets the coefficient estimates 
->    $\hat\alpha_{orange0} = 1.2$, $\hat\alpha_{orange1} = −2$, 
->    $\hat\alpha_{apple0} = 3$, $\hat\alpha_{apple1} = 0.6$. What are the 
->    coefficient estimates in your model?
+> d.  Now suppose that you and your friend fit the same two models on a different data set. This time, your friend gets the coefficient estimates $\hat\alpha_{orange0} = 1.2$, $\hat\alpha_{orange1} = −2$, $\hat\alpha_{apple0} = 3$, $\hat\alpha_{apple1} = 0.6$. What are the coefficient estimates in your model?
 
-The coefficients in my model would be $\hat\beta_0 = 1.2 - 3 = -1.8$ and
-$\hat\beta_1 = -2 - 0.6 = -2.6$
+The coefficients in my model would be $\hat\beta_0 = 1.2 - 3 = -1.8$ and $\hat\beta_1 = -2 - 0.6 = -2.6$
 
-> e. Finally, suppose you apply both models from (d) to a data set with 2,000
->    test observations. What fraction of the time do you expect the predicted 
->    class labels from your model to agree with those from your friend's model?
->    Explain your answer.
+> e.  Finally, suppose you apply both models from (d) to a data set with 2,000 test observations. What fraction of the time do you expect the predicted class labels from your model to agree with those from your friend's model? Explain your answer.
 
 They should agree everytime (i.e, pridictions and log odd between any pair of classes will remain the same, regardless of coding). The cofficient will be different because of the choice of baseline.
 
-
 ### Applied
-
