@@ -190,11 +190,8 @@ test_point <- c(0, 0, 0)
 data$Distance <- sqrt((data$X1 - test_point[1])^2 + 
                       (data$X2 - test_point[2])^2 + 
                       (data$X3 - test_point[3])^2)
-```
 
-```{r}
 data[, c("Obs","Distance", "Y")] |> arrange(Distance)
-
 ```
 
 b.  What is our prediction with $K = 1$? Why?
@@ -293,6 +290,8 @@ w.  Continue exploring the data, and provide a brief summary of what you discove
 
 ```{r}
 #| warning: false
+#| results: false
+
 
 # First column(i.e, Private) is excluded since it is qualitative
 pairs(college[, 2:11],
@@ -303,9 +302,11 @@ pairs(college[, 2:11],
 
 
 school_type <- ifelse(college$Private == "Yes", "Private", "Public")
+school_type <- as.factor(school_type)
 
 plot(college$Outstate ~ factor(school_type),
      col = "white",
+     xlab = "",
      ylab = "Outstate")
 
 stripchart(college$Outstate ~ factor(school_type),
@@ -318,12 +319,15 @@ stripchart(college$Outstate ~ factor(school_type),
 
 par(mfrow = c(2,2))
 
-for (n in c(10, 30, 40, 50)) {
-  hist(college$Enroll, breaks = n,
+bin_values <- c(10, 20, 30, 50)
+lapply(bin_values, function(n) {
+  hist(log10(college$Enroll), 
+       breaks = n,
        col = 4,
-       main = paste("n =", n),
-       xlab = "Enroll",)
-}
+       main = paste("Bins =", n),
+       xlab = "log(Enroll)")
+})
+
 
 ```
 
@@ -743,3 +747,73 @@ The coefficients in my model would be $\hat\beta_0 = 1.2 - 3 = -1.8$ and $\hat\b
 They should agree everytime (i.e, pridictions and log odd between any pair of classes will remain the same, regardless of coding). The cofficient will be different because of the choice of baseline.
 
 ### Applied
+
+> 13. This question should be answered using the `Weekly` data set, which is part of the `ISLR2` package. This data is similar in nature to the `Smarket` data from this chapter's lab, except that it contains 1,089 weekly returns for 21 years, from the beginning of 1990 to the end of 2010.
+>
+> <!-- -->
+>
+> a.  Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
+
+```{r, message = FALSE, warning = FALSE}
+library(ISLR2)
+library(tidyverse)
+library(GGally)
+data("Weekly")
+```
+
+```{r}
+head(Weekly)
+ggpairs(Weekly, columns = 1:8)
+
+plot(Weekly$Year, Weekly$Volume)
+```
+
+> b.  Use the full data set to perform a logistic regression with `Direction` as the response and the five lag variables plus `Volume` as predictors. Use the summary function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
+
+```{r}
+
+```
+
+> c.  Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
+
+```{r}
+
+```
+
+> d.  Now fit the logistic regression model using a training data period from 1990 to 2008, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).
+
+```{r}
+
+```
+
+> e.  Repeat (d) using LDA.
+
+```{r}
+
+```
+
+> f.  Repeat (d) using QDA.
+
+```{r}
+
+```
+
+> g.  Repeat (d) using KNN with $K = 1$.
+
+```{r}
+
+```
+
+> h.  Repeat (d) using naive Bayes.
+
+```{r}
+
+```
+
+> i.  Which of these methods appears to provide the best results on this data?
+
+> j.  Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
+
+```{r}
+
+```
