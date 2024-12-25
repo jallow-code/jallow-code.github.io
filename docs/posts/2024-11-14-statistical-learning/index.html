@@ -231,7 +231,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">December 23, 2024</p>
+        <p class="date-modified">December 25, 2024</p>
       </div>
     </div>
       
@@ -551,8 +551,9 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="applied">Applied</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally) <span class="co"># ggpairs function</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2) <span class="co"># Boston data set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="question-8" class="level4">
 <h4 class="anchored" data-anchor-id="question-8">Question 8</h4>
@@ -677,7 +678,26 @@ window.Quarto = {
 <p>This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Auto.data"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">"?"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>cylinders <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>cylinders)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>origin <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>origin)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>year)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   392 obs. of  9 variables:
+ $ mpg         : num  18 15 18 16 17 15 14 14 14 15 ...
+ $ cylinders   : Factor w/ 5 levels "3","4","5","6",..: 5 5 5 5 5 5 5 5 5 5 ...
+ $ displacement: num  307 350 318 304 302 429 454 440 455 390 ...
+ $ horsepower  : num  130 165 150 150 140 198 220 215 225 190 ...
+ $ weight      : num  3504 3693 3436 3433 3449 ...
+ $ acceleration: num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
+ $ year        : Factor w/ 13 levels "70","71","72",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ origin      : Factor w/ 3 levels "1","2","3": 1 1 1 1 1 1 1 1 1 1 ...
+ $ name        : chr  "chevrolet chevelle malibu" "buick skylark 320" "plymouth satellite" "amc rebel sst" ...
+ - attr(*, "na.action")= 'omit' Named int [1:5] 33 127 331 337 355
+  ..- attr(*, "names")= chr [1:5] "33" "127" "331" "337" ...</code></pre>
+</div>
 </div>
 <ol type="a">
 <li>Which of the predictors are quantitative, and which are qualitative?</li>
@@ -689,25 +709,25 @@ window.Quarto = {
 <li>What is the range of each quantitative predictor? You can answer this using the <code>range()</code> function.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(data[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(data[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)], range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      mpg cylinders displacement horsepower weight acceleration year
-[1,]  9.0         3           68         46   1613          8.0   70
-[2,] 46.6         8          455        230   5140         24.8   82</code></pre>
+<pre><code>      mpg displacement horsepower weight acceleration
+[1,]  9.0           68         46   1613          8.0
+[2,] 46.6          455        230   5140         24.8</code></pre>
 </div>
 </div>
 <ol start="3" type="a">
 <li>What is the mean and standard deviation of each quantitative predictor?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(value),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(value)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)] <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(value),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(value)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -720,38 +740,28 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">acceleration</td>
-<td style="text-align: right;">15.541327</td>
+<td style="text-align: right;">15.54133</td>
 <td style="text-align: right;">2.758864</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">cylinders</td>
-<td style="text-align: right;">5.471939</td>
-<td style="text-align: right;">1.705783</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">displacement</td>
-<td style="text-align: right;">194.411990</td>
+<td style="text-align: right;">194.41199</td>
 <td style="text-align: right;">104.644004</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">horsepower</td>
-<td style="text-align: right;">104.469388</td>
+<td style="text-align: right;">104.46939</td>
 <td style="text-align: right;">38.491160</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">mpg</td>
-<td style="text-align: right;">23.445918</td>
+<td style="text-align: right;">23.44592</td>
 <td style="text-align: right;">7.805008</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">weight</td>
-<td style="text-align: right;">2977.584184</td>
-<td style="text-align: right;">849.402560</td>
-</tr>
 <tr class="odd">
-<td style="text-align: left;">year</td>
-<td style="text-align: right;">75.979592</td>
-<td style="text-align: right;">3.683737</td>
+<td style="text-align: left;">weight</td>
+<td style="text-align: right;">2977.58418</td>
+<td style="text-align: right;">849.402560</td>
 </tr>
 </tbody>
 </table>
@@ -761,15 +771,15 @@ window.Quarto = {
 <li>Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Range =</span> <span class="fu">diff</span>(<span class="fu">range</span>(value)),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(value),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(value)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)] <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Range =</span> <span class="fu">diff</span>(<span class="fu">range</span>(value)),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(value),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(value)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -784,44 +794,32 @@ window.Quarto = {
 <tr class="odd">
 <td style="text-align: left;">acceleration</td>
 <td style="text-align: right;">16.3</td>
-<td style="text-align: right;">15.726899</td>
+<td style="text-align: right;">15.72690</td>
 <td style="text-align: right;">2.693721</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">cylinders</td>
-<td style="text-align: right;">5.0</td>
-<td style="text-align: right;">5.373418</td>
-<td style="text-align: right;">1.654179</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">displacement</td>
 <td style="text-align: right;">387.0</td>
-<td style="text-align: right;">187.240506</td>
+<td style="text-align: right;">187.24051</td>
 <td style="text-align: right;">99.678367</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">horsepower</td>
 <td style="text-align: right;">184.0</td>
-<td style="text-align: right;">100.721519</td>
+<td style="text-align: right;">100.72152</td>
 <td style="text-align: right;">35.708853</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">mpg</td>
 <td style="text-align: right;">35.6</td>
-<td style="text-align: right;">24.404430</td>
+<td style="text-align: right;">24.40443</td>
 <td style="text-align: right;">7.867283</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">weight</td>
 <td style="text-align: right;">3348.0</td>
-<td style="text-align: right;">2935.971519</td>
+<td style="text-align: right;">2935.97152</td>
 <td style="text-align: right;">811.300208</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">year</td>
-<td style="text-align: right;">12.0</td>
-<td style="text-align: right;">77.145570</td>
-<td style="text-align: right;">3.106217</td>
 </tr>
 </tbody>
 </table>
@@ -831,7 +829,7 @@ window.Quarto = {
 <li>Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(data[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="at">ellipses =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -841,7 +839,7 @@ window.Quarto = {
 </div>
 </div>
 <blockquote class="blockquote">
-<p>Yes, there are both positive and negative correlation between the variables.</p>
+<p>There are both positive and negative correlation between the variables.</p>
 </blockquote>
 <ol start="6" type="a">
 <li>Suppose that we wish to predict gas mileage (<code>mpg</code>) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting <code>mpg</code>? Justify your answer.</li>
@@ -858,15 +856,15 @@ window.Quarto = {
 </ol>
 <p>Now the data set is contained in the object <code>Boston</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Read about the data set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>?Boston</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>?Boston</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>How many rows are in this data set? How many columns? What do the rows and columns represent?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 506  13</code></pre>
 </div>
@@ -875,7 +873,7 @@ window.Quarto = {
 <li>Make some pairwise scatterplots of the predictors (columns) in this data set. Describe your findings.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(Boston[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(Boston[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], <span class="at">ellipses =</span> <span class="cn">FALSE</span>, <span class="at">cex.labels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -884,21 +882,11 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<blockquote class="blockquote">
-<p>There are no significant correlations associated with capita crime</p>
-</blockquote>
 <ol start="3" type="a">
 <li>Are any of the predictors associated with per capita crime rate? If so, explain the relationship.</li>
 </ol>
-<blockquote class="blockquote">
-<p>Yes, there is mild positive correlation with <code>rad</code> and <code>tax</code></p>
-</blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cor_boston <span class="ot">&lt;-</span> <span class="fu">cor</span>(Boston)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>cor_col <span class="ot">&lt;-</span> <span class="fu">hcl.colors</span>(<span class="dv">33</span>, <span class="st">"Purple-Green"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">heatmap</span>(cor_boston, <span class="at">col =</span> cor_col, <span class="at">zlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">symm =</span> <span class="cn">TRUE</span>, <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">8</span>), <span class="at">Rowv =</span> <span class="cn">NA</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"right"</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">15</span>), <span class="dv">0</span>, <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">15</span>), <span class="sc">-</span><span class="dv">1</span>), <span class="at">fill =</span> <span class="fu">rev</span>(cor_col), </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">bty =</span> <span class="st">"n"</span>, <span class="at">border =</span> <span class="st">"transparent"</span>, <span class="at">y.intersp =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.plot</span>(Boston, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Correlation plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -907,20 +895,23 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>Per capita crime shows a moderately positive correlation with both <code>rad</code> and <code>tax</code>.</p>
+</blockquote>
 <ol start="4" type="a">
 <li>Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># top 5% of crime,tax,and pupil-teacher ratios</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"High crime:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>crim <span class="sc">&gt;</span> <span class="fu">quantile</span>(Boston<span class="sc">$</span>crim, <span class="fl">0.95</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># top 5% of crime,tax,and pupil-teacher ratios</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"High crime:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>crim <span class="sc">&gt;</span> <span class="fu">quantile</span>(Boston<span class="sc">$</span>crim, <span class="fl">0.95</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>High crime: 26 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"High tax:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>tax <span class="sc">&gt;</span> <span class="fu">quantile</span>(Boston<span class="sc">$</span>tax, <span class="fl">0.95</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"High tax:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>tax <span class="sc">&gt;</span> <span class="fu">quantile</span>(Boston<span class="sc">$</span>tax, <span class="fl">0.95</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>High tax: 5 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Pupil-teacher ratio:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>ptratio <span class="sc">&gt;</span> <span class="fu">quantile</span>(Boston<span class="sc">$</span>ptratio, <span class="fl">0.95</span>)),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Pupil-teacher ratio:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>ptratio <span class="sc">&gt;</span> <span class="fu">quantile</span>(Boston<span class="sc">$</span>ptratio, <span class="fl">0.95</span>)),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Pupil-teacher ratio: 18 </code></pre>
 </div>
@@ -929,7 +920,7 @@ window.Quarto = {
 <li>How many of the census tracts in this data set bound the Charles river?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Boston<span class="sc">$</span>chas<span class="sc">==</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Boston<span class="sc">$</span>chas<span class="sc">==</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 35</code></pre>
 </div>
@@ -938,8 +929,8 @@ window.Quarto = {
 <li>What is the median pupil-teacher ratio among the towns in this data set?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>median_ptratio <span class="ot">&lt;-</span> <span class="fu">median</span>(Boston<span class="sc">$</span>ptratio)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Median pupil-teacher ratio:"</span>, median_ptratio, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>median_ptratio <span class="ot">&lt;-</span> <span class="fu">median</span>(Boston<span class="sc">$</span>ptratio)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Median pupil-teacher ratio:"</span>, median_ptratio, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Median pupil-teacher ratio: 19.05 </code></pre>
 </div>
@@ -948,13 +939,13 @@ window.Quarto = {
 <li>Which census tract of Boston has lowest median value of owner-occupied homes? What are the values of the other predictors for that census tract, and how do those values compare to the overall ranges for those predictors? Comment on your findings.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># whichsuburbs that have the lowest median property values.</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(Boston<span class="sc">$</span>medv <span class="sc">==</span> <span class="fu">min</span>(Boston<span class="sc">$</span>medv))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Values of other predictors for suburb 406</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>Boston[<span class="dv">406</span>,]</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>crim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># whichsuburbs that have the lowest median property values.</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(Boston<span class="sc">$</span>medv <span class="sc">==</span> <span class="fu">min</span>(Boston<span class="sc">$</span>medv))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Values of other predictors for suburb 406</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>Boston[<span class="dv">406</span>,]</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>crim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>There are two suburbs that have the lowest median property values. crime is negatively correlated with median property value.</p>
@@ -963,33 +954,33 @@ window.Quarto = {
 <li>In this data set, how many of the census tract average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the census tracts that average more than eight rooms per dwelling.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"More than 7 rooms:"</span>,<span class="fu">sum</span>(Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">7</span>),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"More than 7 rooms:"</span>,<span class="fu">sum</span>(Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">7</span>),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>More than 7 rooms: 64 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"More than 8 rooms:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">8</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"More than 8 rooms:"</span>, <span class="fu">sum</span>(Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">8</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>More than 8 rooms: 13 </code></pre>
 </div>
 </div>
 <p>Making summaries:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tracts_more_than_8 <span class="ot">&lt;-</span> Boston[Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">8</span>, ]</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to long format using pivot_longer()</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> tracts_more_than_8 <span class="sc">|&gt;</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>rm, <span class="at">names_to =</span> <span class="st">"Predictor"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boxplots with facet_wrap</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_long, <span class="fu">aes</span>(<span class="at">x =</span> Predictor, <span class="at">y =</span> Value, <span class="at">fill =</span> Predictor)) <span class="sc">+</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.color =</span> <span class="st">"red"</span>, <span class="at">outlier.size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Predictor, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span>  <span class="co"># Each plot gets its own scale</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplots for Predictors with More Than 8 Rooms"</span>,</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Predictors"</span>,</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Values"</span>) <span class="sc">+</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),  <span class="co"># Remove x-axis text (not meaningful here)</span></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tracts_more_than_8 <span class="ot">&lt;-</span> Boston[Boston<span class="sc">$</span>rm <span class="sc">&gt;</span> <span class="dv">8</span>, ]</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to long format using pivot_longer()</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> tracts_more_than_8 <span class="sc">|&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>rm, <span class="at">names_to =</span> <span class="st">"Predictor"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boxplots with facet_wrap</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_long, <span class="fu">aes</span>(<span class="at">x =</span> Predictor, <span class="at">y =</span> Value, <span class="at">fill =</span> Predictor)) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.color =</span> <span class="st">"red"</span>, <span class="at">outlier.size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Predictor, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span>  <span class="co"># Each plot gets its own scale</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplots for Predictors with More Than 8 Rooms"</span>,</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Predictors"</span>,</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Values"</span>) <span class="sc">+</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),  <span class="co"># Remove x-axis text (not meaningful here)</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1154,7 +1145,7 @@ P(D|X)  &amp;= \frac{0.8 \times e^{-(4-10)^2/(2 \times 36)}}
        &amp;= \frac{0.8 \cdot e^{-1/2}}{0.8 \cdot e^{-1/2} + 0.2 \cdot e^{-2/9}} \\
 \end{align}\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">*</span> <span class="fl">0.8</span> <span class="sc">/</span> (<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">*</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">*</span> <span class="fl">0.8</span> <span class="sc">/</span> (<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">*</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7518525</code></pre>
 </div>
@@ -1261,23 +1252,29 @@ p(x)  = \frac{0.37}{1 + 0.37} = 0.27
 </ol>
 </blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Weekly"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Weekly"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Weekly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Weekly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Weekly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Year   Lag1   Lag2   Lag3   Lag4   Lag5    Volume  Today Direction
-1 1990  0.816  1.572 -3.936 -0.229 -3.484 0.1549760 -0.270      Down
-2 1990 -0.270  0.816  1.572 -3.936 -0.229 0.1485740 -2.576      Down
-3 1990 -2.576 -0.270  0.816  1.572 -3.936 0.1598375  3.514        Up
-4 1990  3.514 -2.576 -0.270  0.816  1.572 0.1616300  0.712        Up
-5 1990  0.712  3.514 -2.576 -0.270  0.816 0.1537280  1.178        Up
-6 1990  1.178  0.712  3.514 -2.576 -0.270 0.1544440 -1.372      Down</code></pre>
+<pre><code>'data.frame':   1089 obs. of  9 variables:
+ $ Year     : num  1990 1990 1990 1990 1990 1990 1990 1990 1990 1990 ...
+ $ Lag1     : num  0.816 -0.27 -2.576 3.514 0.712 ...
+ $ Lag2     : num  1.572 0.816 -0.27 -2.576 3.514 ...
+ $ Lag3     : num  -3.936 1.572 0.816 -0.27 -2.576 ...
+ $ Lag4     : num  -0.229 -3.936 1.572 0.816 -0.27 ...
+ $ Lag5     : num  -3.484 -0.229 -3.936 1.572 0.816 ...
+ $ Volume   : num  0.155 0.149 0.16 0.162 0.154 ...
+ $ Today    : num  -0.27 -2.576 3.514 0.712 1.178 ...
+ $ Direction: Factor w/ 2 levels "Down","Up": 1 1 2 2 2 1 2 2 2 1 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(Weekly, <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Weekly<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Weekly<span class="sc">$</span>Year)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(Weekly[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="at">cex.labels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1285,25 +1282,54 @@ p(x)  = \frac{0.37}{1 + 0.37} = 0.27
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Weekly<span class="sc">$</span>Year, Weekly<span class="sc">$</span>Volume)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total number of times the market had a positive or negative return</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Weekly<span class="sc">$</span>Direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Down   Up 
+ 484  605 </code></pre>
 </div>
 </div>
-</div>
+<p>There is a strong positive correlation between the volume of shares traded and the year. From 2005 to 2010, the volume of shares began increasing exponentially. Additionally, between 1990 and 2010, the market had a total of 605 positive returns and 484 negative returns, respectively.</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>Use the full data set to perform a logistic regression with <code>Direction</code> as the response and the five lag variables plus <code>Volume</code> as predictors. Use the summary function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?</li>
 </ol>
 </blockquote>
-<blockquote class="blockquote">
-<ol start="3" type="a">
-<li>Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.</li>
-</ol>
-</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>glm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Direction <span class="sc">~</span> Lag1 <span class="sc">+</span> Lag2 <span class="sc">+</span> Lag3 <span class="sc">+</span> Lag4 <span class="sc">+</span> Lag5 <span class="sc">+</span> Volume,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> data,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> binomial)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + 
+    Volume, family = binomial, data = data)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)  0.26686    0.08593   3.106   0.0019 **
+Lag1        -0.04127    0.02641  -1.563   0.1181   
+Lag2         0.05844    0.02686   2.175   0.0296 * 
+Lag3        -0.01606    0.02666  -0.602   0.5469   
+Lag4        -0.02779    0.02646  -1.050   0.2937   
+Lag5        -0.01447    0.02638  -0.549   0.5833   
+Volume      -0.02274    0.03690  -0.616   0.5377   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1496.2  on 1088  degrees of freedom
+Residual deviance: 1486.4  on 1082  degrees of freedom
+AIC: 1500.4
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>Among all the predictors, only <code>Lag2</code> is statistically significant. &gt; c.&nbsp;Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.</p>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Now fit the logistic regression model using a training data period from 1990 to 2008, with <code>Lag2</code> as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).</li>

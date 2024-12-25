@@ -212,8 +212,9 @@ d.  If the Bayes decision boundary in this problem is highly non-linear, then wo
 #| message: false
 #| warning: false
 library(knitr)
-library(GGally) # ggpairs function
-library(ISLR2) # Boston data set
+library(tidyverse)
+library(psych)
+library(ISLR2) 
 ```
 
 #### Question 8
@@ -338,6 +339,11 @@ This exercise involves the Auto data set studied in the lab. Make sure that the 
 ```{r}
 data <- read.table("Auto.data", header = TRUE, na.strings = "?")
 data <- na.omit(data)
+
+data$cylinders <- as.factor(data$cylinders)
+data$origin <- as.factor(data$origin)
+data$year <- as.factor(data$year)
+str(data)
 ```
 
 a.  Which of the predictors are quantitative, and which are qualitative?
@@ -347,13 +353,13 @@ a.  Which of the predictors are quantitative, and which are qualitative?
 b.  What is the range of each quantitative predictor? You can answer this using the `range()` function.
 
 ```{r}
-sapply(data[ ,1:7], range)
+sapply(data[, c(1,3,4,5,6)], range)
 ```
 
 c.  What is the mean and standard deviation of each quantitative predictor?
 
 ```{r}
-data[, 1:7] |>
+data[, c(1,3,4,5,6)] |>
   pivot_longer(everything()) |>
   group_by(name) |>
   summarise(
@@ -361,12 +367,13 @@ data[, 1:7] |>
     SD = sd(value)
   ) |>
   knitr::kable()
+
 ```
 
 d.  Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
 
 ```{r}
-data[-(10:85), 1:7] |>
+data[-(10:85), c(1,3,4,5,6)] |>
   pivot_longer(everything()) |>
   group_by(name) |>
   summarise(
@@ -381,10 +388,10 @@ e.  Using the full data set, investigate the predictors graphically, using scatt
 
 ```{r}
 #| message: false
-ggpairs(data[, 1:7])
+pairs.panels(data[1:8], ellipses = FALSE)
 ```
 
-> Yes, there are both positive and negative correlation between the variables.
+> There are both positive and negative correlation between the variables.
 
 f.  Suppose that we wish to predict gas mileage (`mpg`) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting `mpg`? Justify your answer.
 
@@ -419,24 +426,16 @@ b.  Make some pairwise scatterplots of the predictors (columns) in this data set
 
 ```{r}
 #| message: false
-ggpairs(Boston[, 1:6])
+pairs.panels(Boston[1:7], ellipses = FALSE, cex.labels = 1)
 ```
-
-> There are no significant correlations associated with capita crime
 
 c.  Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
 
-> Yes, there is mild positive correlation with `rad` and `tax`
-
 ```{r}
-cor_boston <- cor(Boston)
-cor_col <- hcl.colors(33, "Purple-Green")
-p <- heatmap(cor_boston, col = cor_col, zlim = c(-1, 1), symm = TRUE, margins = c(8, 8), Rowv = NA)
-legend("right", c(1, rep("", 15), 0, rep("", 15), -1), fill = rev(cor_col), 
-  bty = "n", border = "transparent", y.intersp = 0.5)
-
-
+cor.plot(Boston, xlas = 2, main = "Correlation plot")
 ```
+
+> Per capita crime shows a moderately positive correlation with both `rad` and `tax`.
 
 d.  Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
 
@@ -757,24 +756,37 @@ They should agree everytime (i.e, pridictions and log odd between any pair of cl
 ```{r, message = FALSE, warning = FALSE}
 library(ISLR2)
 library(tidyverse)
-library(GGally)
+library(psych)
 data("Weekly")
+attach(Weekly)
+
 ```
 
 ```{r}
-head(Weekly)
-ggpairs(Weekly, columns = 1:8)
+str(Weekly)
+Weekly$Year <- as.factor(Weekly$Year)
 
-plot(Weekly$Year, Weekly$Volume)
+pairs.panels(Weekly[1:8], cex.labels = 1)
+
+# total number of times the market had a positive or negative return
+table(Weekly$Direction)
+
+
 ```
+
+There is a strong positive correlation between the volume of shares traded and the year. From 2005 to 2010, the volume of shares began increasing exponentially. Additionally, between 1990 and 2010, the market had a total of 605 positive returns and 484 negative returns, respectively.
 
 > b.  Use the full data set to perform a logistic regression with `Direction` as the response and the five lag variables plus `Volume` as predictors. Use the summary function to print the results. Do any of the predictors appear to be statistically significant? If so, which ones?
 
 ```{r}
+glm.fit <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+               data = data,
+               family = binomial)
 
+summary(glm.fit)
 ```
 
-> c.  Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
+Among all the predictors, only `Lag2` is statistically significant. \> c. Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
 
 ```{r}
 
