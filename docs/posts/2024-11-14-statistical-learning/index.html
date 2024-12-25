@@ -1318,35 +1318,22 @@ Down   Up
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> data,</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> binomial)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm.fit)<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + 
-    Volume, family = binomial, data = data)
-
-Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)   
-(Intercept)  0.26686    0.08593   3.106   0.0019 **
-Lag1        -0.04127    0.02641  -1.563   0.1181   
-Lag2         0.05844    0.02686   2.175   0.0296 * 
-Lag3        -0.01606    0.02666  -0.602   0.5469   
-Lag4        -0.02779    0.02646  -1.050   0.2937   
-Lag5        -0.01447    0.02638  -0.549   0.5833   
-Volume      -0.02274    0.03690  -0.616   0.5377   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1496.2  on 1088  degrees of freedom
-Residual deviance: 1486.4  on 1082  degrees of freedom
-AIC: 1500.4
-
-Number of Fisher Scoring iterations: 4</code></pre>
+<pre><code>               Estimate Std. Error    z value    Pr(&gt;|z|)
+(Intercept)  0.26686414 0.08592961  3.1056134 0.001898848
+Lag1        -0.04126894 0.02641026 -1.5626099 0.118144368
+Lag2         0.05844168 0.02686499  2.1753839 0.029601361
+Lag3        -0.01606114 0.02666299 -0.6023760 0.546923890
+Lag4        -0.02779021 0.02646332 -1.0501409 0.293653342
+Lag5        -0.01447206 0.02638478 -0.5485006 0.583348244
+Volume      -0.02274153 0.03689812 -0.6163330 0.537674762</code></pre>
 </div>
 </div>
-<p>Among all the predictors, only <code>Lag2</code> is statistically significant. &gt; c.&nbsp;Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.</p>
+<p>Among all the predictors, only <code>Lag2</code> is statistically significant.</p>
+<ol start="3" type="a">
+<li>Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.</li>
+</ol>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Now fit the logistic regression model using a training data period from 1990 to 2008, with <code>Lag2</code> as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).</li>
