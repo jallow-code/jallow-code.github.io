@@ -771,7 +771,16 @@ pairs.panels(Weekly[1:8], cex.labels = 1)
 # total number of times the market had a positive or negative return
 table(Weekly$Direction)
 
+# Distribution of the 'Lag' variables
+Weekly_long <- Weekly |>
+  select("Lag1","Lag2","Lag3","Lag4","Lag5") |>
+  pivot_longer(cols = everything(), names_to = "Lag", values_to = "Value")
 
+ggplot(Weekly_long, aes(x = Value)) +
+  geom_histogram(fill = "blue", color = "black", bins = 30) +
+  facet_wrap(~Lag, scales = "free_x") +
+  theme_minimal() +
+  labs(x = "Value", y = "Frequency")
 ```
 
 There is a strong positive correlation between the volume of shares traded and the year. From 2005 to 2010, the volume of shares began increasing exponentially. Additionally, between 1990 and 2010, the market had a total of 605 positive returns and 484 negative returns, respectively.
