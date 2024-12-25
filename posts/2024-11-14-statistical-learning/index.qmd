@@ -1,6 +1,6 @@
 ---
 title: "An Introduction to Statistical Learning"
-description: "In this blog post, I’ll share my solutions to exercises from *An Introduction to Statistical Learning* by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani. Additionally, I’ll provide a brief summary of each chapter to help contextualize the exercises and key concepts covered in the book."
+description: "In this blog post, I’ll share my solutions to exercises from *An Introduction to Statistical Learning* by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani. Additionally, I’ll try to provide brief summary of each chapter to help contextualize the exercises and key concepts covered in the book."
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
@@ -19,15 +19,12 @@ engine: knitr
 
 ## Summary
 
-The association between predictors ($X = X_1, X_2,...,X_p$) and a quantitative response (Y) can be expressed as $Y = f(X) + \epsilon$. Where $f$ is some fixed unknown function, and $\epsilon$ is a random error term with a zero mean. Statistical learning refers to a large collection of tools for estimating $f$. These tools can be classified either supervised or unsupervised. Supervised learning involves estimating an output based on one or more inputs. In contrast, unsupervised learning involves inputs but no supervising outputs. There are two primary reasons for predicting $f$:
+Statistical learning aims to estimate the relationship between predictors ($X = X_1, X_2, ..., X_p$) and a quantitative response ($Y$, expressed as $Y = f(X) + \epsilon$, where $f$ is an unknown function and $\epsilon$ represents random error. This estimation is categorized as supervised (predicting outputs from inputs) or unsupervised (analyzing inputs without corresponding outputs). Supervised learning serves two primary purposes: prediction, where the goal is to accurately estimate  $f$ when it's unavailable, and inference, where the focus is on understanding the nature of the relationship between  $f$ and $X$. Prediction accuracy is limited by reducible error (which can be minimized through better estimation of $f$) and irreducible error (inherent randomness and unmeasured influences).
 
--   *Prediction*: This applies to situations were inputs (X) are readily available, but the output (Y) can not be easily obtained. $Y$ can be estimated using $\hat{Y} = \hat{f}(X)$ where $\hat{f}$ is our estimate for the true function $f$. In this setting, one is not typically concerned with the exact form of $\hat{f}$ given it yields accurate predictions for $Y$. The accuracy of $\hat{f}$ depends on two quantities known as *reducible error* and *Irreducible error*. The reducible error can be improved by using an appropriate statistical learning method to estimate $f$. The Irreducible error is the variability associated with the error term ($Var(\epsilon)$). Since $Y$ also depends on $\epsilon$, it is impossible to achieve a perfect estimate of $Y$. The irreducible error will always be greater than zero, as it may include unmeasured variables or unmeasurable variations influencing $Y$.
+Methods for estimating $f$ are either parametric (assuming a specific form for $f$, resulting in less flexible but more interpretable models) or non-parametric (making no assumptions about $f$, leading to more flexible but less interpretable models). Problems are classified as regression (quantitative response) or classification (qualitative response). In regression, model accuracy is assessed by minimizing test mean squared error (MSE), which involves balancing the bias and variance of the estimate. Generally, more flexible methods increase variance and decrease bias, and finding the optimal balance minimizes test MSE.
 
--   *Inference:* In this setting we're interested in the association between $Y$ and $X$ hence the exact form of $\hat{f}$ is very important. One may be interested in answering the following questions: Which predictors are associated with the response? What is the relationship between the response and each predictor? Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated?
+In classification, model performance is evaluated using the test error rate. The Bayes classifier, a theoretical benchmark, minimizes this rate by assigning observations to the class with the highest conditional probability. The k-Nearest Neighbors (KNN) algorithm provides a practical approach by estimating these probabilities based on the K nearest training points. The flexibility of KNN is controlled by the value of K: small K leads to high variance and low bias, while large K results in low variance and high bias. Balancing this trade-off is crucial to avoid overfitting (high variance) or underfitting (high bias).
 
-$f$ can be estimated using either *parametric* or *non-parametric* methods. parametric methods involve first assuming the shape of $f$ (e.g., linear) and then using training data to fit or train the model. These methods are less flexible but more interpretable. Non-parametric methods do not make assumptions about the shape of $f$, allowing for a wider range of possible forms. However, they tend to be less interpretable. Variables can be characterized as either quantitative or qualitative (also known as categorical). Problems with a quantitative response are often referred to as regression problems, while those involving a qualitative response are often referred to as classification problems. In regression settings the measure for the accuracy of a model is given by the *mean squared error* (MSE) . We choose a statistical learning method that gives the lowest *test MSE*. The *test MSE* depends on *variance* of $\hat{f}(x_0)$, the squared *bias* of $\hat{f}(x_0)$, and var($\epsilon$). To achieve a low *test MSE*, one needs to choose a model that simultaneously results in *low variance* and *low bias*. As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases.
-
-In classification settings, model accuracy is evaluated by the proportion of incorrect predictions made when applying the estimated function $\hat{f}$ to a set of test observations. This proportion is referred to as the *test error rate*. A good classifier minimizes the test error rate, achieving the highest possible accuracy on unseen data. The *Bayes classifier* is an approach in classification that minimizes the test error rate by assigning each observation to the class with the highest conditional probability, $\Pr(Y = j | X = x_0)$. The decision boundary separating classes is called the *Bayes decision boundary*. This classifier achieves the lowest possible error rate, known as the *Bayes error rate*, which arises due to overlapping classes in the data. However, because the true conditional probabilities are generally unknown, the Bayes classifier serves as a theoretical benchmark. In practice, methods like *k-Nearest Neighbors (KNN)* estimate these probabilities by considering the closest $K$ training points to a test observation. KNN assigns the class with the majority vote among these neighbors. The flexibility of KNN depends on $K$; small $K$ values result in high variance but low bias, while large $K$ values lead to high bias but low variance. The right balance is important, as overly flexible models overfit the training data, and less flexible ones underfit. The tradeoff is illustrated by the characteristic U-shape of the test error as flexibility increases.
 
 ## Exercises
 
@@ -348,7 +345,9 @@ str(data)
 
 a.  Which of the predictors are quantitative, and which are qualitative?
 
-> Quantitative: mpg,cylinders,displacement,horsepower, weight, acceleration, year. Qualitative: name, origin.
+> Quantitative: mpg, cylinders, displacement, horsepower, weight, acceleration.
+>
+> Qualitative: name, year, origin.
 
 b.  What is the range of each quantitative predictor? You can answer this using the `range()` function.
 
@@ -754,9 +753,12 @@ They should agree everytime (i.e, pridictions and log odd between any pair of cl
 > a.  Produce some numerical and graphical summaries of the `Weekly` data. Do there appear to be any patterns?
 
 ```{r, message = FALSE, warning = FALSE}
-library(ISLR2)
+library(ISLR2) # data sets
 library(tidyverse)
-library(psych)
+library(psych) # for correlation plots
+library(MASS) # for lda() and qda()
+library(class) # for knn()
+library(e1071) # for naiveBayes()
 data("Weekly")
 attach(Weekly)
 
@@ -766,21 +768,12 @@ attach(Weekly)
 str(Weekly)
 Weekly$Year <- as.factor(Weekly$Year)
 
-pairs.panels(Weekly[1:8], cex.labels = 1)
+pairs.panels(Weekly[1:8], cex.labels = 1, ellipses = FALSE)
 
 # total number of times the market had a positive or negative return
 table(Weekly$Direction)
 
-# Distribution of the 'Lag' variables
-Weekly_long <- Weekly |>
-  select("Lag1","Lag2","Lag3","Lag4","Lag5") |>
-  pivot_longer(cols = everything(), names_to = "Lag", values_to = "Value")
 
-ggplot(Weekly_long, aes(x = Value)) +
-  geom_histogram(fill = "blue", color = "black", bins = 30) +
-  facet_wrap(~Lag, scales = "free_x") +
-  theme_minimal() +
-  labs(x = "Value", y = "Frequency")
 ```
 
 There is a strong positive correlation between the volume of shares traded and the year. From 2005 to 2010, the volume of shares began increasing exponentially. Additionally, between 1990 and 2010, the market had a total of 605 positive returns and 484 negative returns, respectively.
@@ -789,51 +782,122 @@ There is a strong positive correlation between the volume of shares traded and t
 
 ```{r}
 glm.fit <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
-               data = data,
                family = binomial)
 
 summary(glm.fit)$coef
 ```
 
-Among all the predictors, only `Lag2` is statistically significant. 
+Among all the predictors, only `Lag2` is statistically significant.
 
-c. Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
-
-```{r}
-
-```
-
-> d.  Now fit the logistic regression model using a training data period from 1990 to 2008, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).
+c.  Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.
 
 ```{r}
+glm.prob <- predict(glm.fit, type = "response")
+glm.pred <- ifelse(glm.prob > 0.5, "Up", "Down")
 
+table(glm.pred, Direction)
+
+# fraction of predictions which the prediction was correct
+mean(glm.pred == Direction)
+
+# training error rate:
+mean(glm.pred != Direction)
 ```
+
+The logistic regression model have an error rate of 43.8%. The logistic regression model have underwhelming p-values and perhaps removing variables that are not significant (useful) may improve the model. The model is also overly optimistic because the model was train and tested on the same data. \> d. Now fit the logistic regression model using a training data period from 1990 to 2008, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).
+
+```{r}
+train.data <- Weekly[Year < 2009, ]
+test.data <- Weekly[Year > 2008, ]
+
+glm.fit <- glm(Direction ~ Lag2, family = binomial,
+               data = train.data)
+
+summary(glm.fit)$coef
+
+glm.prob <- predict(glm.fit, newdata = test.data, type = "response")
+glm.pred <- ifelse(glm.prob > 0.5, "Up", "Down")
+
+table(glm.pred, test.data$Direction)
+
+mean(glm.pred == test.data$Direction)
+
+# Test error rate
+mean(glm.pred != test.data$Direction)
+```
+
+The model improved with `Lag2` as the only the predictor. Test error rate is 37.5% which is better than random guessing.
 
 > e.  Repeat (d) using LDA.
 
 ```{r}
+# lda() is part of the MASS library
+lda.fit <- lda(Direction ~ Lag2, data = train.data)
 
+plot(lda.fit)
+
+lda.pred <- predict(lda.fit, newdata = test.data)
+
+names(lda.pred)
+
+table(lda.pred$class, test.data$Direction)
+
+# test error rate
+mean(lda.pred$class != test.data$Direction)
 ```
 
 > f.  Repeat (d) using QDA.
 
 ```{r}
+qda.fit <- qda(Direction ~ Lag2, data = train.data)
 
+qda.pred <- predict(qda.fit, newdata = test.data)
+
+table(qda.pred$class, test.data$Direction)
+
+# test error rate
+mean(qda.pred$class != test.data$Direction)
 ```
 
 > g.  Repeat (d) using KNN with $K = 1$.
 
 ```{r}
+train <- (Year < 2009) 
 
+train.Direction <- Weekly$Direction[train] # vector for the train class labels
+test.Direction <- Weekly$Direction[!train] 
+
+# knn() is part of the 'Class' library
+set.seed(1)
+knn.pred <- knn(Weekly[train, "Lag2", drop = FALSE],
+                Weekly[!train, "Lag2", drop = FALSE], 
+                train.Direction, k = 1)
+
+
+table(knn.pred, test.Direction)
+
+# test error rate
+mean(knn.pred != test.Direction)
 ```
 
 > h.  Repeat (d) using naive Bayes.
 
 ```{r}
 
+
+nb.fit <- naiveBayes(Direction ~ Lag1 + Lag2, data = train.data)
+
+nb.pred <- predict(nb.fit, test.data)
+
+table(nb.pred, test.data$Direction)
+
+# test error rate
+mean(nb.pred != test.data$Direction)
 ```
 
 > i.  Which of these methods appears to provide the best results on this data?
+
+Logistic regression and linear discreminant analyisis methods provide the best results on the `Weekly` data.
 
 > j.  Experiment with different combinations of predictors, including possible transformations and interactions, for each of the methods. Report the variables, method, and associated confusion matrix that appears to provide the best results on the held out data. Note that you should also experiment with values for $K$ in the KNN classifier.
 
