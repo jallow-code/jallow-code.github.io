@@ -20,7 +20,17 @@ engine: knitr
 
 # Background
 
-This template is based on the [Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)](https://www.latextemplates.com/template/masters-doctoral-thesis), which [Eli Holmes](https://github.com/nmfs-opensci/quarto-thesis) updated for Quarto. I further modified the Quarto template to fulfill JKU's formal criteria for diploma theses. Using Quarto was motivated by the difficulties I had when writing my first bachelor thesis in Microsoft Word. The main difficulties were ensuring consistent citation formatting, text alignment, and maintaining a tidy version-controlled workflow. Quarto effectively addresses these challenges. Above all, it combines data analysis and documentation into one platform thereby improving reproducibility.
+This template is based on the [Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)](https://www.latextemplates.com/template/masters-doctoral-thesis), which [Eli Holmes](https://github.com/eeholmes) adapted for Quarto. I further modified the Quarto template to fulfill JKU's formal criteria for diploma theses.
+
+Quarto offers several advantages over traditional word processors like Microsoft Word for writing long-form documents such as theses.
+
+-   Enhanced Reproducibility: Quarto seamlessly integrates data analysis and documentation. This allows for transparent and reproducible research, as readers can easily understand the data and methods used to generate the results.
+
+-   Consistent Formatting: Quarto ensures consistent formatting throughout the document, from citations and bibliographies to headings and figures. This eliminates the manual effort and potential errors associated with maintaining consistent styles in Word.
+
+-   Improved Workflow: Quarto supports version control systems like Git, enabling efficient collaboration and tracking of changes. This provides a more organized and streamlined workflow compared to managing multiple versions of a Word document.
+
+Therefore, you can focus on the content of your research while the Quarto template handles the technical requirements of formatting and organization.
 
 # Installing the Template
 
@@ -136,7 +146,7 @@ csl: your-preferred-style.csl
 
 -   For detailed usage instructions, refer to the rendered sample PDF file below.
 
--   Explore the [Quarto technical writing documentation](https://quarto.org/docs/visual-editor/technical.html), especially if you are new to Quarto.
+-   Explore the [Quarto technical writing documentation](https://quarto.org/docs/visual-editor/technical.html), especially if you are new to Quarto or Markdown.
 
 -   Watch Eli Holmes's [Youtube channel](https://www.youtube.com/@eeholmes-datascience4849) for insights into data science workflows and Quarto.
 
