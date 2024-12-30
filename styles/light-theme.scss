@@ -229,7 +229,7 @@ div.tippy-content a:hover {
 
 // navbar
 .navbar-title {
-  font-size: $font-size-base * 1.75;
+  font-size: $font-size-base * 1.9; // default value was 1.75
 }
 
 // the line in the navbar logo
@@ -308,7 +308,7 @@ the color that matches the card
     background-color: $primary;
     width: 0%;
     content: "";
-    height: 4px;
+    height: 5px;
     transition: all 0.3s;
   }
   
@@ -455,6 +455,13 @@ iframe.slide-deck {
 .third-color-link:hover {
   color: $third-color;
   border-color: $third-color;
+}
+
+/* Custom styles for navbar links */
+.navbar-nav .nav-link {
+  font-size: 1.2rem; /* Adjust the size as needed */
+   /* Makes the text bold */
+  
 }
 
 

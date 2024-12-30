@@ -597,7 +597,7 @@ $$
 
 <!-- -->
 
-a.   If the bayes decision boundary is linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+a.  If the bayes decision boundary is linear, do we expect LDA or QDA to perform better on the training set? On the test set?
 
 > QDA been the more flexible model will perform better on the training set, but worse on the test set. On the test set, QDA will overfit the data because the true decision boundary is linear.
 
