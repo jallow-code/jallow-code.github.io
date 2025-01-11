@@ -885,12 +885,12 @@ mean(knn.pred != test.Direction)
 h.  Repeat (d) using naive Bayes.
 
 ```{r}
-
-
 nb.fit <- naiveBayes(Direction ~ Lag2, data = train.data)
 
 nb.pred <- predict(nb.fit, test.data)
+```
 
+```{r}
 table(nb.pred, test.data$Direction)
 
 # test error rate
@@ -952,7 +952,6 @@ best_k <- which.min(error_rates)
 table(knn.pred, Weekly$Direction[!train])
 # Print the result
 cat("The best k is:", best_k, "with an error rate of:", min_error_rate, "\n")
-
 
 ```
 
