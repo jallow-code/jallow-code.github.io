@@ -1,5 +1,10 @@
 ---
 title: "Abdoulie Jallow"
+format: 
+  html:
+    toc: false
+    resources:
+      - particles.json
 image: media/picture.jpg
 toc: false
 about:
@@ -15,4 +20,53 @@ about:
       href: mailto:abdouliejallow10@gmail.com
 ---
 
-Hello! I'm Abdoulie, although most people call me Jallow. I have a bachelor's degree in biological chemistry and am deeply interested in science, epistemology, and lifelong learning. Some of my favorite thinkers include Karl Popper, David Deutsch, and Nick Lane. I created this website to document and share my learning journey. Feel free to explore and see what I’m working on!
+```{=html}
+<style>
+/* Styles for particle sections */
+#particles-left,
+#particles-right {
+  position: absolute;
+  width: 25%; /* Adjust width as needed */
+  height: 100%;
+  top: 0;
+  z-index: -1;
+  background-color: transparent; /* No background color */
+}
+
+#particles-left {
+  left: 0;
+}
+
+#particles-right {
+  right: 0;
+}
+
+#profile-section {
+  position: relative;
+  z-index: 1; /* Ensure profile content stays above the particles */
+  text-align: center;
+  margin: auto;
+}
+</style>
+
+<div id="particles-left"></div>
+<div id="particles-right"></div>
+
+<div id="profile-section">
+  <p>
+    Hello! I’m Abdoulie, although most people call me Jallow. I have a bachelor’s degree in biological chemistry and am deeply interested in science, epistemology, and lifelong learning. Some of my favorite thinkers include Karl Popper, David Deutsch, and Nick Lane. I created this website to document and share my learning journey. Feel free to explore and see what I’m working on!
+  </p>
+</div>
+
+<!-- Particle.js script loaded from a CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
+<!-- Configure particles for left and right sections -->
+<script>
+  particlesJS.load("particles-left", "./particles.json");
+  particlesJS.load("particles-right", "./particles.json");
+</script>
+
+```
+
+
