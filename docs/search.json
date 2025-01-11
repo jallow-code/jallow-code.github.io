@@ -46,7 +46,7 @@
     "href": "posts/Breast_cancer/index_cancer.html#conclusion",
     "title": "A Hands-On Exercise: Exploring the Breast Cancer Dataset",
     "section": "Conclusion",
-    "text": "Conclusion\nIn conclusion, the AUC-ROC curve provided a comprehensive view of the classification models’ performance. Logistic Regression consistently outperformed other models, achieving perfect scores across AUC and accuracy metrics. Therefore, Logistic Regression emerges as the preferred model for this breast cancer dataset."
+    "text": "Conclusion\nIn conclusion, the AUC-ROC curve provided a comprehensive view of the classification models’ performance. Logistic Regression consistently outperformed other models, achieving perfect scores across AUC and accuracy metrics. Therefore, logistic regression emerges as the preferred model for this breast cancer dataset."
   },
   {
     "objectID": "index.html",

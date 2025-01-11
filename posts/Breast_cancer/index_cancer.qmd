@@ -457,4 +457,4 @@ Accuracy complements AUC by providing a direct measure of model performance on c
 
 ## Conclusion
 
-In conclusion, the AUC-ROC curve provided a comprehensive view of the classification models' performance. Logistic Regression consistently outperformed other models, achieving perfect scores across AUC and accuracy metrics. Therefore, Logistic Regression emerges as the preferred model for this breast cancer dataset.
+In conclusion, the AUC-ROC curve provided a comprehensive view of the classification models' performance. Logistic Regression consistently outperformed other models, achieving perfect scores across AUC and accuracy metrics. Therefore, logistic regression emerges as the preferred model for this breast cancer dataset.
