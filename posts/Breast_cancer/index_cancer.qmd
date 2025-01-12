@@ -17,6 +17,8 @@ library(psych)
 library(corrplot)
 library(caret)
 library(pROC)
+library(PRROC)
+library(RColorBrewer)
 
 set.seed(12)
 ```
@@ -370,40 +372,79 @@ auc_nb <- round(auc(roc_nb), 2)
 par(pty = "s") # Set square aspect ratio
 
 # Plot ROC Curves
-plot(roc_glm, col = "blue", lwd = 3, percent = TRUE,
+plot(roc_glm, col = "#1B9E77", lwd = 3, percent = TRUE,
      main = "ROC Curve Comparison",
      xlab = "False Positive rate", 
      ylab = "True Positive rate", 
      legacy.axes = TRUE)
 
-plot(roc_knn, col = "green", lwd = 3, percent = TRUE, add = T)
+plot(roc_knn, col = "#D95F02", lwd = 3, percent = TRUE, add = T)
 
-plot(roc_lda, col = "#d7191c", lwd = 3, percent = TRUE, add = T)
+plot(roc_lda, col = "#7570B3", lwd = 3, percent = TRUE, add = T)
 
-plot(roc_qda, col = "#fdae61", lwd = 3, percent = TRUE, add = T)
+plot(roc_qda, col = "#E7298A", lwd = 3, percent = TRUE, add = T)
 
-plot(roc_nb, col = "purple", lwd = 3, percent = TRUE, add = T)
+plot(roc_nb, col = "#66A61E", lwd = 3, percent = TRUE, add = T)
 
 # Add Legend with AUC values
 legend("bottomright", 
        legend = c(
-         paste("Logistic Regression (AUC =", auc_glm, ")"),
+         paste("Logistic (AUC =", auc_glm, ")"),
          paste("KNN (AUC =", auc_knn, ")"),
          paste("LDA (AUC =", auc_lda, ")"),
          paste("QDA (AUC =", auc_qda, ")"),
          paste("Naive Bayes (AUC =", auc_nb, ")")
        ), 
-       col = c("blue", "green", "#d7191c", "#fdae61", "purple"), 
+       col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E"), 
        lwd = 2)
 
 # Reset par() variables
 par(pty = "m")
 
 ```
+The AUC-ROC curves show how well each model can discriminate between malignant and benign at all classification thresholds. An AUC of 1.0 indicates a perfect classifier that can distinguish between the two classes without error. Logistic regression and KNN achieved an AUC of 1, indicating perfect classification performance. LDA, QDA, and Naive Bayes also performed well with AUC values close to 1.
 
-The ROC curve shows the trade-off between sensitivity and specificity across varying classification thresholds. Logistic Regression and KNN achieved an AUC of 1, indicating perfect classification performance. LDA, QDA, and Naive Bayes also performed strongly with AUC values close to 1.
 
-For imbalanced datasets, where the minority class is of primary importance, additional metrics such as Precision-Recall curves might be helpful. However, in this dataset, the AUC-ROC curve effectively captures the models' discrimination abilities.
+### Precision Recall Curve
+
+```{r}
+#| code-fold: true
+
+# Correct Precision-Recall Curve Plotting with PRROC
+plot_pr_curve <- function(model, test_data, true_labels, positive_class, add = FALSE, color = "blue") {
+  # Generate predicted probabilities for the positive class
+  pred_probs <- predict(model, newdata = test_data, type = "prob")[, positive_class]
+  
+  # Generate PR curve
+  pr <- pr.curve(scores.class0 = pred_probs, 
+                 weights.class0 = ifelse(true_labels == positive_class, 1, 0), 
+                 curve = TRUE)
+  
+  # Plot PR curve
+  plot(pr, main = "Precision-Recall Curve ", add = add, col = color, auc.main = FALSE, legend = FALSE)
+  
+  # Return AUC value
+  return(pr$auc.integral)
+}
+
+# Generate PR Curves for All Models
+pr_aucs <- c(
+  Logistic = plot_pr_curve(glm.fit, data.tst, data.tst$Class, "malignant", color = "#1B9E77"),
+  KNN = plot_pr_curve(knn.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#D95F02"),
+  LDA = plot_pr_curve(lda.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#7570B3"),
+  QDA = plot_pr_curve(qda.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#E7298A"),
+  NaiveBayes = plot_pr_curve(nb.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#66A61E")
+)
+
+# Add Legend with AUC
+legend("bottomleft", 
+       legend = paste(names(pr_aucs), "(AUC =", round(pr_aucs, 2), ")"), 
+       col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E"), 
+       lty = 1, cex = 0.8, lwd = 2)
+
+```
+
+Since the dataset is imbalanced, the false positive rate in the ROC-AUC curve is often replaced with precision to better evaluate model performance. In this context, the minority class (malignant) is important, so we prioritize models that effectively minimize false negatives. Logistic regression, KNN, and LDA all have AUC of 0.99 while QDA and Naive bayes performs slightly lower.
 
 ### Accuracy
 
@@ -453,8 +494,8 @@ ggplot(model_data, aes(x = accuracy, y = Model)) +
 
 ```
 
-Accuracy complements AUC by providing a direct measure of model performance on correctly classified instances. Logistic Regression emerged as the most accurate model. KNN and LDA followed closely, with QDA and Naive Bayes showing slightly lower accuracy.
+Accuracy provides a direct (baseline) measure of model performance on correctly classified instances. All the models performed well on this metric.
 
 ## Conclusion
 
-In conclusion, the AUC-ROC curve provided a comprehensive view of the classification models' performance. Logistic Regression consistently outperformed other models, achieving perfect scores across AUC and accuracy metrics. Therefore, logistic regression emerges as the preferred model for this breast cancer dataset.
+Logistic Regression consistently outperformed other models across all metrics, hence emerges as the preferred model for this dataset.

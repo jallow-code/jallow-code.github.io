@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abdoulie Jallow">
-<meta name="dcterms.date" content="2025-01-11">
+<meta name="dcterms.date" content="2025-01-12">
 
 <title>A Hands-On Exercise: Exploring the Breast Cancer Dataset – Abdoulie Jallow</title>
 <style>
@@ -189,7 +189,7 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 11, 2025</p>
+        <p class="date">January 12, 2025</p>
       </div>
     </div>
     
@@ -225,6 +225,7 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
   <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance">Performance</a>
   <ul>
   <li><a href="#auc-roc-curve-analysis" id="toc-auc-roc-curve-analysis" class="nav-link" data-scroll-target="#auc-roc-curve-analysis">AUC-ROC Curve Analysis</a></li>
+  <li><a href="#precision-recall-curve" id="toc-precision-recall-curve" class="nav-link" data-scroll-target="#precision-recall-curve">Precision Recall Curve</a></li>
   <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy">Accuracy</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -245,8 +246,10 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PRROC)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -789,30 +792,30 @@ Prediction  benign malignant
 <span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">"s"</span>) <span class="co"># Set square aspect ratio</span></span>
 <span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC Curves</span></span>
-<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_glm, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_glm, <span class="at">col =</span> <span class="st">"#1B9E77"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"ROC Curve Comparison"</span>,</span>
 <span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"False Positive rate"</span>, </span>
 <span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"True Positive rate"</span>, </span>
 <span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>     <span class="at">legacy.axes =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_knn, <span class="at">col =</span> <span class="st">"green"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
+<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_knn, <span class="at">col =</span> <span class="st">"#D95F02"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
 <span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_lda, <span class="at">col =</span> <span class="st">"#d7191c"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_lda, <span class="at">col =</span> <span class="st">"#7570B3"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
 <span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_qda, <span class="at">col =</span> <span class="st">"#fdae61"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
+<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_qda, <span class="at">col =</span> <span class="st">"#E7298A"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
 <span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_nb, <span class="at">col =</span> <span class="st">"purple"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
+<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_nb, <span class="at">col =</span> <span class="st">"#66A61E"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">percent =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> T)</span>
 <span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Legend with AUC values</span></span>
 <span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, </span>
 <span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(</span>
-<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>         <span class="fu">paste</span>(<span class="st">"Logistic Regression (AUC ="</span>, auc_glm, <span class="st">")"</span>),</span>
+<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>         <span class="fu">paste</span>(<span class="st">"Logistic (AUC ="</span>, auc_glm, <span class="st">")"</span>),</span>
 <span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>         <span class="fu">paste</span>(<span class="st">"KNN (AUC ="</span>, auc_knn, <span class="st">")"</span>),</span>
 <span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>         <span class="fu">paste</span>(<span class="st">"LDA (AUC ="</span>, auc_lda, <span class="st">")"</span>),</span>
 <span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>         <span class="fu">paste</span>(<span class="st">"QDA (AUC ="</span>, auc_qda, <span class="st">")"</span>),</span>
 <span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a>         <span class="fu">paste</span>(<span class="st">"Naive Bayes (AUC ="</span>, auc_nb, <span class="st">")"</span>)</span>
 <span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>       ), </span>
-<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"#d7191c"</span>, <span class="st">"#fdae61"</span>, <span class="st">"purple"</span>), </span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#1B9E77"</span>, <span class="st">"#D95F02"</span>, <span class="st">"#7570B3"</span>, <span class="st">"#E7298A"</span>, <span class="st">"#66A61E"</span>), </span>
 <span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -828,53 +831,44 @@ Prediction  benign malignant
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">"m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The ROC curve shows the trade-off between sensitivity and specificity across varying classification thresholds. Logistic Regression and KNN achieved an AUC of 1, indicating perfect classification performance. LDA, QDA, and Naive Bayes also performed strongly with AUC values close to 1.</p>
-<p>For imbalanced datasets, where the minority class is of primary importance, additional metrics such as Precision-Recall curves might be helpful. However, in this dataset, the AUC-ROC curve effectively captures the models’ discrimination abilities.</p>
+<p>The AUC-ROC curves show how well each model can discriminate between malignant and benign at all classification thresholds. An AUC of 1.0 indicates a perfect classifier that can distinguish between the two classes without error. Logistic regression and KNN achieved an AUC of 1, indicating perfect classification performance. LDA, QDA, and Naive Bayes also performed well with AUC values close to 1.</p>
 </section>
-<section id="accuracy" class="level3">
-<h3 class="anchored" data-anchor-id="accuracy">Accuracy</h3>
+<section id="precision-recall-curve" class="level3">
+<h3 class="anchored" data-anchor-id="precision-recall-curve">Precision Recall Curve</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>        <span class="co">#----- Data frame of model performance metrics --------</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">"Logistic Regression"</span>, <span class="st">"KNN"</span>, <span class="st">"LDA"</span>, <span class="st">"QDA"</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Naive Bayes"</span>),</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>   <span class="co"># accuracy values</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">accuracy =</span> <span class="fu">c</span>(logistic_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>               knn_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>               lda_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>               qda_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>               nb_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>]),</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Lower confidence interval</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lower =</span> <span class="fu">c</span>(logistic_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>            knn_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>            lda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>            qda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>            nb_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>]),</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Upper confidence interval</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Upper =</span> <span class="fu">c</span>(logistic_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>            knn_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>            lda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>            qda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>            nb_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>]))</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>                <span class="co">#----- plot -----</span></span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_data, <span class="fu">aes</span>(<span class="at">x =</span> accuracy, <span class="at">y =</span> Model)) <span class="sc">+</span></span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> Lower, <span class="at">xmax =</span> Upper), <span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">""</span>,</span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Accuracy"</span>,</span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correct Precision-Recall Curve Plotting with PRROC</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plot_pr_curve <span class="ot">&lt;-</span> <span class="cf">function</span>(model, test_data, true_labels, positive_class, <span class="at">add =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"blue"</span>) {</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate predicted probabilities for the positive class</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  pred_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> test_data, <span class="at">type =</span> <span class="st">"prob"</span>)[, positive_class]</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate PR curve</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  pr <span class="ot">&lt;-</span> <span class="fu">pr.curve</span>(<span class="at">scores.class0 =</span> pred_probs, </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">weights.class0 =</span> <span class="fu">ifelse</span>(true_labels <span class="sc">==</span> positive_class, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">curve =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot PR curve</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(pr, <span class="at">main =</span> <span class="st">"Precision-Recall Curve "</span>, <span class="at">add =</span> add, <span class="at">col =</span> color, <span class="at">auc.main =</span> <span class="cn">FALSE</span>, <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return AUC value</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pr<span class="sc">$</span>auc.integral)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate PR Curves for All Models</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>pr_aucs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">Logistic =</span> <span class="fu">plot_pr_curve</span>(glm.fit, data.tst, data.tst<span class="sc">$</span>Class, <span class="st">"malignant"</span>, <span class="at">color =</span> <span class="st">"#1B9E77"</span>),</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">KNN =</span> <span class="fu">plot_pr_curve</span>(knn.fit, data.tst, data.tst<span class="sc">$</span>Class, <span class="st">"malignant"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#D95F02"</span>),</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">LDA =</span> <span class="fu">plot_pr_curve</span>(lda.fit, data.tst, data.tst<span class="sc">$</span>Class, <span class="st">"malignant"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#7570B3"</span>),</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">QDA =</span> <span class="fu">plot_pr_curve</span>(qda.fit, data.tst, data.tst<span class="sc">$</span>Class, <span class="st">"malignant"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#E7298A"</span>),</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">NaiveBayes =</span> <span class="fu">plot_pr_curve</span>(nb.fit, data.tst, data.tst<span class="sc">$</span>Class, <span class="st">"malignant"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#66A61E"</span>)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Legend with AUC</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, </span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">paste</span>(<span class="fu">names</span>(pr_aucs), <span class="st">"(AUC ="</span>, <span class="fu">round</span>(pr_aucs, <span class="dv">2</span>), <span class="st">")"</span>), </span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#1B9E77"</span>, <span class="st">"#D95F02"</span>, <span class="st">"#7570B3"</span>, <span class="st">"#E7298A"</span>, <span class="st">"#66A61E"</span>), </span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -884,12 +878,67 @@ Prediction  benign malignant
 </div>
 </div>
 </div>
-<p>Accuracy complements AUC by providing a direct measure of model performance on correctly classified instances. Logistic Regression emerged as the most accurate model. KNN and LDA followed closely, with QDA and Naive Bayes showing slightly lower accuracy.</p>
+<p>Since the dataset is imbalanced, the false positive rate in the ROC-AUC curve is often replaced with precision to better evaluate model performance. In this context, the minority class (malignant) is important, so we prioritize models that effectively minimize false negatives. Logistic regression, KNN, and LDA all have AUC of 0.99 while QDA and Naive bayes performs slightly lower.</p>
+</section>
+<section id="accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy">Accuracy</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>        <span class="co">#----- Data frame of model performance metrics --------</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">"Logistic Regression"</span>, <span class="st">"KNN"</span>, <span class="st">"LDA"</span>, <span class="st">"QDA"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Naive Bayes"</span>),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>   <span class="co"># accuracy values</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">accuracy =</span> <span class="fu">c</span>(logistic_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>               knn_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>               lda_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>               qda_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>],</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>               nb_cm<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>]),</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Lower confidence interval</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lower =</span> <span class="fu">c</span>(logistic_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>            knn_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>            lda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>            qda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>],</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>            nb_cm<span class="sc">$</span>overall[<span class="st">"AccuracyLower"</span>]),</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Upper confidence interval</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Upper =</span> <span class="fu">c</span>(logistic_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>            knn_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>            lda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>            qda_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>],</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>            nb_cm<span class="sc">$</span>overall[<span class="st">"AccuracyUpper"</span>]))</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>                <span class="co">#----- plot -----</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_data, <span class="fu">aes</span>(<span class="at">x =</span> accuracy, <span class="at">y =</span> Model)) <span class="sc">+</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> Lower, <span class="at">xmax =</span> Upper), <span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">""</span>,</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Accuracy"</span>,</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_cancer_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Accuracy provides a direct (baseline) measure of model performance on correctly classified instances. All the models performed well on this metric.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In conclusion, the AUC-ROC curve provided a comprehensive view of the classification models’ performance. Logistic Regression consistently outperformed other models, achieving perfect scores across AUC and accuracy metrics. Therefore, logistic regression emerges as the preferred model for this breast cancer dataset.</p>
+<p>Logistic Regression consistently outperformed other models across all metrics, hence emerges as the preferred model for this dataset.</p>
 
 
 </section>
