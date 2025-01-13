@@ -3,7 +3,7 @@ title: "A Hands-On Exercise: Exploring the Breast Cancer Dataset"
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-date: last-modified
+date: 12 01 2025
 categories: [Learn, R] # self-defined categories
 ---
 
@@ -235,7 +235,7 @@ lda.fit <- train(Class ~ .,
 lda.pred <- predict(lda.fit, newdata = data.tst, type = "prob")
 lda.class <- ifelse(lda.pred[, "malignant"] > 0.5, "malignant", "benign")
 
-# Evaluate model performance
+
 lda_cm <- confusionMatrix(data = as.factor(lda.class),
                           reference = as.factor(data.tst$Class),
                           positive = "malignant")
@@ -258,7 +258,7 @@ qda.fit <- train(Class ~ .,
 qda.pred <- predict(qda.fit, newdata = data.tst, type = "prob")
 qda.class <- ifelse(qda.pred[, "malignant"] > 0.5, "malignant", "benign")
 
-# Evaluate model performance
+
 qda_cm <- confusionMatrix(data = as.factor(qda.class),
                           reference = as.factor(data.tst$Class),
                           positive = "malignant")
@@ -285,7 +285,7 @@ nb.pred <- predict(nb.fit, newdata = data.tst, type = "prob")
 # Extract predicted class based on the highest probability
 nb.class <- ifelse(nb.pred[, "malignant"] > 0.5, "malignant", "benign")
 
-# Evaluate model performance
+
 nb_cm <- confusionMatrix(data = as.factor(nb.class),
                          reference = as.factor(data.tst$Class),
                          positive = "malignant")

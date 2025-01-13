@@ -573,7 +573,7 @@ Prediction  benign malignant
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>lda.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lda.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>lda.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(lda.pred[, <span class="st">"malignant"</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate model performance</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>lda_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(lda.class),</span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                          <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
@@ -623,7 +623,7 @@ Prediction  benign malignant
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>qda.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(qda.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>qda.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(qda.pred[, <span class="st">"malignant"</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate model performance</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>qda_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(qda.class),</span>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                          <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
@@ -676,7 +676,7 @@ Prediction  benign malignant
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract predicted class based on the highest probability</span></span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>nb.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(nb.pred[, <span class="st">"malignant"</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate model performance</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>nb_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(nb.class),</span>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
