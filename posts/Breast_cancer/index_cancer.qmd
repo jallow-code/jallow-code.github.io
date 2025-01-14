@@ -1,5 +1,5 @@
 ---
-title: "A Hands-On Exercise: Exploring the Breast Cancer Dataset"
+title: "Exploring the Breast Cancer Dataset"
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
@@ -29,7 +29,7 @@ This blog is a hands-on exercise on classification methods using the Breast Canc
 
 ## Exploratory Analysis and Preprocessing
 
-Exploratory analysis and preprocessing are essential steps in any data science project. They ensure that the dataset is clean, well-structured, and ready for analysis. Some steps, such as identifying outliers or interpreting specific variables, may require domain knowledge. Reading the dataset documentation, if available, is always recommended as it provides valuable insights into the data's structure.
+Exploratory analysis and preprocessing are essential steps in any data science project. Some steps in exploratory analysis, such as identifying outliers or interpreting specific variables, may require domain knowledge. Reading the dataset documentation, if available, is always recommended as it provides valuable insights into the data's structure.
 
 Below are the key steps I followed for this dataset:
 
