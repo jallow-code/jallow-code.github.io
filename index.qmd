@@ -1,5 +1,5 @@
 ---
-title: "Abdoulie Jallow"
+title: "Hello! I'm Jallow"
 format: 
   html:
     toc: false
@@ -54,7 +54,7 @@ about:
 
 <div id="profile-section">
   <p>
-    Hello! I’m Abdoulie, although most people call me Jallow. I have a bachelor’s degree in biological chemistry and am deeply interested in science, epistemology, and lifelong learning. Some of my favorite thinkers include Karl Popper, David Deutsch, and Nick Lane. I created this website to document and share my learning journey. Feel free to explore and see what I’m working on!
+  I have a bachelor’s degree in biological chemistry. I am passionate about science and epistemology. Some of my favorite thinkers include Karl Popper, David Deutsch, Jacob Bronowski and Nick Lane. Welcome to my learning journey!
   </p>
 </div>
 

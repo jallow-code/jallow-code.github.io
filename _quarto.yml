@@ -20,7 +20,7 @@ website:
         href: https://github.com/jallow-code
         target: _blank
   page-footer:
-    left: © 2024 Abdoulie Jallow
+    left: © 2025 Abdoulie Jallow
     right: This website is build with [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/jallow-code/jallow-code.github.io){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
 
 format:
