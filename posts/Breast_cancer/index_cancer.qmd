@@ -25,13 +25,11 @@ set.seed(12)
 
 ## Introduction
 
-This blog is a hands-on exercise on classification methods using the Breast Cancer dataset sourced from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original). The dataset contains various features used to classify tumors as benign or malignant.
+This blog is an exercise on classification methods using the Breast Cancer dataset which is sourced from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original). This dataset contains different variables used to classify tumors as either benign or malignant.
 
 ## Exploratory Analysis and Preprocessing
 
-Exploratory analysis and preprocessing are essential steps in any data science project. Some steps in exploratory analysis, such as identifying outliers or interpreting specific variables, may require domain knowledge. Reading the dataset documentation, if available, is always recommended as it provides valuable insights into the data's structure.
-
-Below are the key steps I followed for this dataset:
+We will start by reading the documentation that comes with the dataset. This is crucial as it will allow us to understand its structure. For example, it may provide information on the number of variables or observations, how to interpret certain variables, how missing values are encoded, etc. Next, we will check for possible outliers, class imbalance, and the presence of redundant continuous variables.
 
 ### Importing the Dataset
 
@@ -39,20 +37,16 @@ The first step is to load the dataset and assign appropriate column names to mak
 
 ```{r}
 
-# Set the path to your extracted file
 path <- "dataset/breast-cancer-wisconsin.data"
 
-# Read the data
 data <- read.table(path, sep = ",")
 
-# Add column names
 colnames(data) <- c("Sample_code_number", "Clump_thickness",
                     "Uniformity_of_cell_size", "Uniformity_of_cell_shape",
                     "Marginal_adhesion", "Single_epithelial_cell_size",
                     "Bare_nuclei", "Bland_chromatin", "Mitoses",
                     "Normal_nucleoli", "Class")
 
-# Check the updated dataset structure
 str(data)
 
 ```
@@ -62,17 +56,13 @@ str(data)
 This dataset uses `"?"` to represent missing values. These need to be replaced with `NA` for proper handling in R. We then remove rows containing missing values. Additionally, some variables are encoded incorrectly and need to be transformed into their appropriate data types.
 
 ```{r}
-# Handle missing values and encode variables
-data[data == "?"] <- NA # Replace "?" with NA
-data <- na.omit(data)   # Remove rows with missing values
+data[data == "?"] <- NA 
+data <- na.omit(data)   
 
-# Drop uninformative column
 data$Sample_code_number <- NULL
 
-# Encode 'Class' as a factor with descriptive labels
 data$Class <- as.factor(ifelse(data$Class == 2, "benign", "malignant"))
 
-# Convert 'Bare_nuclei' to an integer
 data$Bare_nuclei <- as.integer(data$Bare_nuclei)
 
 
@@ -100,13 +90,11 @@ The variables `Uniformity_of_cell_size` and `Uniformity_of_cell_shape` are highl
 
 ```{r}
 
-# Combine correlated variables into a single column
 data$Cell_Morphology <- apply(data[, c("Uniformity_of_cell_size", "Uniformity_of_cell_shape")],
                               MARGIN = 1, 
                               FUN = sample,
                               size = 1)
 
-# Remove redundant variables
 data$Uniformity_of_cell_size <- NULL
 data$Uniformity_of_cell_shape <- NULL
 
@@ -120,7 +108,6 @@ str(data)
 Class imbalance is a common issue in classification tasks. Here, we analyze the distribution of the target variable (`Class`) to assess the extent of imbalance.
 
 ```{r}
-# Count and calculate class percentages
 data |>
   count(Class) |>
   mutate(Percentage = round((n / nrow(data)) * 100, 2))
@@ -135,15 +122,12 @@ To prepare for model training, we split the dataset into training, validation, a
 ```{r}
 
 
-# Split the data into training and testing sets
 train <- createDataPartition(data$Class, p = 0.7, list = FALSE)
 
-# Create training and testing subsets
 data.trn <- data[train, ]
 data.tst <- data[-train, ]
 
 
-# Define control parameters for model training
 ctrl <- trainControl(method = "cv",         # K-Fold cross-validation
                      number = 10,           # 10 folds
                      returnResamp = 'none',
@@ -153,9 +137,9 @@ ctrl <- trainControl(method = "cv",         # K-Fold cross-validation
 
 ```
 
-## Modelling
+## Modeling
 
-Next, we fit various classification models to predict whether a tumor is malignant or benign based on the provided features. We will evaluate the models using their respective confusion matrices and other performance metrics.
+Next, we fit different classification models to predict whether a tumor is malignant or benign based on the variables. Finally, we will evaluate the models using their respective confusion matrices and other performance metrics.
 
 ### Logistic regression
 
@@ -169,16 +153,12 @@ glm.fit <- train(Class ~ .,
                  trControl = ctrl,              
                  metric = "ROC")                 
 
-# Generate class probability predictions for the test data
 glm.pred <- predict(glm.fit, newdata = data.tst, type = "prob")
 
-# Extract probabilities for the "malignant" class
 glm.pred <- glm.pred[, 2]
 
-# Classify observations as "malignant" if probability > 0.5, otherwise "benign"
 glm.class <- ifelse(glm.pred > 0.5, "malignant", "benign")
 
-# Evaluate model performance
 logistic_cm <- confusionMatrix(data = as.factor(glm.class),
                                reference = as.factor(data.tst$Class),
                                positive = "malignant")
@@ -196,7 +176,7 @@ varImp(glm.fit)
 
 ### K-Nearest Neighbors (KNN)
 
-KNN is a simple, non-parametric algorithm that predicts the class of a sample based on the majority class of its nearest neighbors.
+KNN is a simple non-parametric method that predicts the class of a sample based on the majority class of its nearest neighbors.
 
 ```{r}
 
@@ -254,7 +234,7 @@ qda.fit <- train(Class ~ .,
                  trControl = ctrl, 
                  metric = "ROC")
 
-# Generate probabilities for QDA
+
 qda.pred <- predict(qda.fit, newdata = data.tst, type = "prob")
 qda.class <- ifelse(qda.pred[, "malignant"] > 0.5, "malignant", "benign")
 
@@ -272,17 +252,17 @@ Naive Bayes is a probabilistic classifier based on Bayes' theorem, assuming inde
 
 ```{r}
 
-# Fit Naive Bayes model
+
 nb.fit <- train(Class ~ ., 
                 data = data.trn, 
                 method = "naive_bayes", 
                 trControl = ctrl, 
                 metric = "ROC")
 
-# Generate probabilities for Naive Bayes
+
 nb.pred <- predict(nb.fit, newdata = data.tst, type = "prob")
 
-# Extract predicted class based on the highest probability
+
 nb.class <- ifelse(nb.pred[, "malignant"] > 0.5, "malignant", "benign")
 
 

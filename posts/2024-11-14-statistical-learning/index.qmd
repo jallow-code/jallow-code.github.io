@@ -1,6 +1,6 @@
 ---
 title: "An Introduction to Statistical Learning"
-description: "In this blog post, I’ll share my solutions to exercises from *An Introduction to Statistical Learning* by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani. Additionally, I’ll try to provide brief summary of each chapter to help contextualize the exercises and key concepts covered in the book."
+description: "In this blog post, I’ll share my solutions to exercises from *An Introduction to Statistical Learning* by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani."
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
@@ -14,7 +14,7 @@ draft: false # setting this to `true` will prevent your post from appearing on y
 toc-title: Table of Contents
 engine: knitr
 ---
-
+<!--
 # Statistical Learning
 
 ## Summary
@@ -263,8 +263,6 @@ View(college)
 Now you should see that the first data column is `Private`. Note that another column labeled `row.names` now appears before the `Private` column. However, this is not a data column but rather the name that R is giving to each row.
 
 c.  
-
-<!-- -->
 
 i.  Use the `summary()` function to produce a numerical summary of the variables in the data set.
 
@@ -518,7 +516,12 @@ ggplot(data_long, aes(x = Predictor, y = Value, fill = Predictor)) +
 
 ### Applied
 
+
+<!-- -->
+
+
 # Classification
+
 
 ## Exercises
 

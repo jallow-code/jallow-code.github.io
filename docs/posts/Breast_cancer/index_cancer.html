@@ -214,7 +214,7 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
   <li><a href="#checking-for-class-imbalance" id="toc-checking-for-class-imbalance" class="nav-link" data-scroll-target="#checking-for-class-imbalance">Checking for Class Imbalance</a></li>
   <li><a href="#splitting-the-dataset" id="toc-splitting-the-dataset" class="nav-link" data-scroll-target="#splitting-the-dataset">Splitting the Dataset</a></li>
   </ul></li>
-  <li><a href="#modelling" id="toc-modelling" class="nav-link" data-scroll-target="#modelling">Modelling</a>
+  <li><a href="#modeling" id="toc-modeling" class="nav-link" data-scroll-target="#modeling">Modeling</a>
   <ul>
   <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic regression</a></li>
   <li><a href="#k-nearest-neighbors-knn" id="toc-k-nearest-neighbors-knn" class="nav-link" data-scroll-target="#k-nearest-neighbors-knn">K-Nearest Neighbors (KNN)</a></li>
@@ -253,31 +253,26 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 </div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This blog is a hands-on exercise on classification methods using the Breast Cancer dataset sourced from the <a href="https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original">UCI Machine Learning Repository</a>. The dataset contains various features used to classify tumors as benign or malignant.</p>
+<p>This blog is an exercise on classification methods using the Breast Cancer dataset which is sourced from the <a href="https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original">UCI Machine Learning Repository</a>. This dataset contains different variables used to classify tumors as either benign or malignant.</p>
 </section>
 <section id="exploratory-analysis-and-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="exploratory-analysis-and-preprocessing">Exploratory Analysis and Preprocessing</h2>
-<p>Exploratory analysis and preprocessing are essential steps in any data science project. Some steps in exploratory analysis, such as identifying outliers or interpreting specific variables, may require domain knowledge. Reading the dataset documentation, if available, is always recommended as it provides valuable insights into the data’s structure.</p>
-<p>Below are the key steps I followed for this dataset:</p>
+<p>We will start by reading the documentation that comes with the dataset. This is crucial as it will allow us to understand its structure. For example, it may provide information on the number of variables or observations, how to interpret certain variables, how missing values are encoded, etc. Next, we will check for possible outliers, class imbalance, and the presence of redundant continuous variables.</p>
 <section id="importing-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="importing-the-dataset">Importing the Dataset</h3>
 <p>The first step is to load the dataset and assign appropriate column names to make the data easier to interpret.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the path to your extracted file</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"dataset/breast-cancer-wisconsin.data"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the data</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(path, <span class="at">sep =</span> <span class="st">","</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column names</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sample_code_number"</span>, <span class="st">"Clump_thickness"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Uniformity_of_cell_size"</span>, <span class="st">"Uniformity_of_cell_shape"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Marginal_adhesion"</span>, <span class="st">"Single_epithelial_cell_size"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Bare_nuclei"</span>, <span class="st">"Bland_chromatin"</span>, <span class="st">"Mitoses"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Normal_nucleoli"</span>, <span class="st">"Class"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the updated dataset structure</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"dataset/breast-cancer-wisconsin.data"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(path, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sample_code_number"</span>, <span class="st">"Clump_thickness"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Uniformity_of_cell_size"</span>, <span class="st">"Uniformity_of_cell_shape"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Marginal_adhesion"</span>, <span class="st">"Single_epithelial_cell_size"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Bare_nuclei"</span>, <span class="st">"Bland_chromatin"</span>, <span class="st">"Mitoses"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Normal_nucleoli"</span>, <span class="st">"Class"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   699 obs. of  11 variables:
  $ Sample_code_number         : int  1000025 1002945 1015425 1016277 1017023 1017122 1018099 1018561 1033078 1033078 ...
@@ -298,21 +293,17 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 <h3 class="anchored" data-anchor-id="missing-values-and-variable-encoding">Missing Values and Variable Encoding</h3>
 <p>This dataset uses <code>"?"</code> to represent missing values. These need to be replaced with <code>NA</code> for proper handling in R. We then remove rows containing missing values. Additionally, some variables are encoded incorrectly and need to be transformed into their appropriate data types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Handle missing values and encode variables</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">"?"</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># Replace "?" with NA</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data)   <span class="co"># Remove rows with missing values</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop uninformative column</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Sample_code_number <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">"?"</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data)   </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Sample_code_number <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data<span class="sc">$</span>Class <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"benign"</span>, <span class="st">"malignant"</span>))</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode 'Class' as a factor with descriptive labels</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data<span class="sc">$</span>Class <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"benign"</span>, <span class="st">"malignant"</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Bare_nuclei <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(data<span class="sc">$</span>Bare_nuclei)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'Bare_nuclei' to an integer</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Bare_nuclei <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(data<span class="sc">$</span>Bare_nuclei)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   683 obs. of  10 variables:
  $ Clump_thickness            : int  5 5 3 6 4 8 1 2 2 4 ...
@@ -360,18 +351,16 @@ Tip
 </div>
 <p>The variables <code>Uniformity_of_cell_size</code> and <code>Uniformity_of_cell_shape</code> are highly correlated. To reduce redundancy, we create a new variable, <code>Cell_morphology</code>, by randomly sampling values from these two columns row-wise.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine correlated variables into a single column</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Cell_Morphology <span class="ot">&lt;-</span> <span class="fu">apply</span>(data[, <span class="fu">c</span>(<span class="st">"Uniformity_of_cell_size"</span>, <span class="st">"Uniformity_of_cell_shape"</span>)],</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">MARGIN =</span> <span class="dv">1</span>, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">FUN =</span> sample,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove redundant variables</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Uniformity_of_cell_size <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Uniformity_of_cell_shape <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Cell_Morphology <span class="ot">&lt;-</span> <span class="fu">apply</span>(data[, <span class="fu">c</span>(<span class="st">"Uniformity_of_cell_size"</span>, <span class="st">"Uniformity_of_cell_shape"</span>)],</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">MARGIN =</span> <span class="dv">1</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">FUN =</span> sample,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Uniformity_of_cell_size <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Uniformity_of_cell_shape <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   683 obs. of  9 variables:
  $ Clump_thickness            : int  5 5 3 6 4 8 1 2 2 4 ...
@@ -392,10 +381,9 @@ Tip
 <h3 class="anchored" data-anchor-id="checking-for-class-imbalance">Checking for Class Imbalance</h3>
 <p>Class imbalance is a common issue in classification tasks. Here, we analyze the distribution of the target variable (<code>Class</code>) to assess the extent of imbalance.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count and calculate class percentages</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Class) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percentage =</span> <span class="fu">round</span>((n <span class="sc">/</span> <span class="fu">nrow</span>(data)) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Class) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percentage =</span> <span class="fu">round</span>((n <span class="sc">/</span> <span class="fu">nrow</span>(data)) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Class   n Percentage
 1    benign 444      65.01
@@ -408,27 +396,24 @@ Tip
 <h3 class="anchored" data-anchor-id="splitting-the-dataset">Splitting the Dataset</h3>
 <p>To prepare for model training, we split the dataset into training, validation, and test sets, allocating 70% of the data for training. We use cross-validation to ensure robust evaluation during model development.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(data<span class="sc">$</span>Class, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create training and testing subsets</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>data.trn <span class="ot">&lt;-</span> data[train, ]</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>data.tst <span class="ot">&lt;-</span> data[<span class="sc">-</span>train, ]</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define control parameters for model training</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"cv"</span>,         <span class="co"># K-Fold cross-validation</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">number =</span> <span class="dv">10</span>,           <span class="co"># 10 folds</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">returnResamp =</span> <span class="st">'none'</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">classProbs =</span> <span class="cn">TRUE</span>,   </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">savePredictions =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">summaryFunction =</span> twoClassSummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(data<span class="sc">$</span>Class, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>data.trn <span class="ot">&lt;-</span> data[train, ]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>data.tst <span class="ot">&lt;-</span> data[<span class="sc">-</span>train, ]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"cv"</span>,         <span class="co"># K-Fold cross-validation</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">number =</span> <span class="dv">10</span>,           <span class="co"># 10 folds</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">returnResamp =</span> <span class="st">'none'</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">classProbs =</span> <span class="cn">TRUE</span>,   </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">savePredictions =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">summaryFunction =</span> twoClassSummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="modelling" class="level2">
-<h2 class="anchored" data-anchor-id="modelling">Modelling</h2>
-<p>Next, we fit various classification models to predict whether a tumor is malignant or benign based on the provided features. We will evaluate the models using their respective confusion matrices and other performance metrics.</p>
+<section id="modeling" class="level2">
+<h2 class="anchored" data-anchor-id="modeling">Modeling</h2>
+<p>Next, we fit different classification models to predict whether a tumor is malignant or benign based on the variables. Finally, we will evaluate the models using their respective confusion matrices and other performance metrics.</p>
 <section id="logistic-regression" class="level3">
 <h3 class="anchored" data-anchor-id="logistic-regression">Logistic regression</h3>
 <p>Logistic regression is one of the simplest and most interpretable classification algorithms. We train the model using cross-validation and evaluate its performance on the test set.</p>
@@ -440,20 +425,16 @@ Tip
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl =</span> ctrl,              </span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">metric =</span> <span class="st">"ROC"</span>)                 </span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate class probability predictions for the test data</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract probabilities for the "malignant" class</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> glm.pred[, <span class="dv">2</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>glm.pred <span class="ot">&lt;-</span> glm.pred[, <span class="dv">2</span>]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>glm.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(glm.pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Classify observations as "malignant" if probability &gt; 0.5, otherwise "benign"</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>glm.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(glm.pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate model performance</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>logistic_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(glm.class),</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                               <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                               <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>logistic_cm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>logistic_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(glm.class),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                               <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                               <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>logistic_cm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix and Statistics
 
@@ -505,7 +486,7 @@ Marginal_adhesion              0.00</code></pre>
 </section>
 <section id="k-nearest-neighbors-knn" class="level3">
 <h3 class="anchored" data-anchor-id="k-nearest-neighbors-knn">K-Nearest Neighbors (KNN)</h3>
-<p>KNN is a simple, non-parametric algorithm that predicts the class of a sample based on the majority class of its nearest neighbors.</p>
+<p>KNN is a simple non-parametric method that predicts the class of a sample based on the majority class of its nearest neighbors.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>knn.fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> data.trn, <span class="at">method =</span> <span class="st">"knn"</span>,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl, </span>
@@ -619,7 +600,7 @@ Prediction  benign malignant
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl =</span> ctrl, </span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">metric =</span> <span class="st">"ROC"</span>)</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate probabilities for QDA</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>qda.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(qda.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>qda.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(qda.pred[, <span class="st">"malignant"</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -663,24 +644,23 @@ Prediction  benign malignant
 <h3 class="anchored" data-anchor-id="naive-bayes">Naive Bayes</h3>
 <p>Naive Bayes is a probabilistic classifier based on Bayes’ theorem, assuming independence among predictors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Naive Bayes model</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>nb.fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> data.trn, </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">"naive_bayes"</span>, </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">trControl =</span> ctrl, </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">"ROC"</span>)</span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>nb.fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> data.trn, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">"naive_bayes"</span>, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">trControl =</span> ctrl, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">"ROC"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate probabilities for Naive Bayes</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>nb.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>nb.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb.fit, <span class="at">newdata =</span> data.tst, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract predicted class based on the highest probability</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>nb.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(nb.pred[, <span class="st">"malignant"</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>nb.class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(nb.pred[, <span class="st">"malignant"</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"malignant"</span>, <span class="st">"benign"</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>nb_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(nb.class),</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>nb_cm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>nb_cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">as.factor</span>(nb.class),</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">reference =</span> <span class="fu">as.factor</span>(data.tst<span class="sc">$</span>Class),</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">positive =</span> <span class="st">"malignant"</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>nb_cm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix and Statistics
 

@@ -54,7 +54,9 @@ about:
 
 <div id="profile-section">
   <p>
-  I have a bachelor’s degree in biological chemistry. I am passionate about science and epistemology. Some of my favorite thinkers include Karl Popper, David Deutsch, Jacob Bronowski and Nick Lane. Welcome to my learning journey!
+  I hold a bachelor’s degree in biological chemistry. I am passionate about science and epistemology. I created this website to share what I’m learning and topics that captivate me. Welcome to my learning journey!
+
+
   </p>
 </div>
 
