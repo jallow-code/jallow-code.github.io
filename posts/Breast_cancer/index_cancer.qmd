@@ -29,12 +29,11 @@ This blog is an exercise on classification methods using the Breast Cancer datas
 
 ## Exploratory Analysis and Preprocessing
 
-We will start by reading the documentation that comes with the dataset. This is crucial as it will allow us to understand its structure. For example, it may provide information on the number of variables or observations, how to interpret certain variables, how missing values are encoded, etc. Next, we will check for possible outliers, class imbalance, and the presence of redundant continuous variables.
+We will start by reading the documentation of the dataset, which will tell us how the data is organized. For example, it may provide information on the number of variables and observations, how to interpret certain variables, how missing values are encoded, etc. We will then proceed to check for possible outliers, class imbalance, and the presence of redundant continuous variables.
 
 ### Importing the Dataset
 
-The first step is to load the dataset and assign appropriate column names to make the data easier to interpret.
-
+After reading the documentation, we'll load the dataset into R and assign appropriate column names.
 ```{r}
 
 path <- "dataset/breast-cancer-wisconsin.data"
@@ -76,7 +75,7 @@ Reading the dataset documentation is important for understanding how missing val
 
 ### Analyze the continuous variables
 
-To identify redundant features, we analyze correlations among continuous variables. High collinearity can negatively impact model performance, so we address this by combining highly correlated features.
+To identify redundant variables, we analyze correlations among continuous variables. High collinearity can negatively impact model performance. Hence, we can address this either by removing one of the variables or combind them into a new variable. 
 
 ```{r}
 data_corr <- cor(data[, -10]) 
@@ -86,7 +85,7 @@ pairs.panels(data_corr, cex.labels = 0.6, ellipses = FALSE)
 
 ```
 
-The variables `Uniformity_of_cell_size` and `Uniformity_of_cell_shape` are highly correlated. To reduce redundancy, we create a new variable, `Cell_morphology`, by randomly sampling values from these two columns row-wise.
+The variables `Uniformity_of_cell_size` and `Uniformity_of_cell_shape` are highly correlated. Here, we'll create a new variable, `Cell_morphology`, by randomly sampling values from these two columns row-wise.
 
 ```{r}
 
@@ -105,7 +104,7 @@ str(data)
 
 ### Checking for Class Imbalance
 
-Class imbalance is a common issue in classification tasks. Here, we analyze the distribution of the target variable (`Class`) to assess the extent of imbalance.
+Class imbalance is a common issue in classification tasks. we analyze the distribution of the target variable (`Class`) to assess the extent of imbalance.
 
 ```{r}
 data |>
@@ -113,7 +112,7 @@ data |>
   mutate(Percentage = round((n / nrow(data)) * 100, 2))
 ```
 
-The dataset shows a mildly imbalanced distribution, with the minority class representing approximately 35% of the data. This level of imbalance typically does not pose significant challenges, and models can often be trained directly on the original data. If the imbalance were severe, techniques such as upsampling or downsampling could be applied.
+The dataset shows a mildly imbalanced distribution, with the minority class representing approximately 35% of the data. This level of imbalance typically does not significantly affect model performance, and models can often be trained directly on the original data. If the imbalance were severe, techniques such as upsampling or downsampling could be applied.
 
 ### Splitting the Dataset
 

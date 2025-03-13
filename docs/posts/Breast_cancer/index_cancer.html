@@ -257,10 +257,10 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 </section>
 <section id="exploratory-analysis-and-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="exploratory-analysis-and-preprocessing">Exploratory Analysis and Preprocessing</h2>
-<p>We will start by reading the documentation that comes with the dataset. This is crucial as it will allow us to understand its structure. For example, it may provide information on the number of variables or observations, how to interpret certain variables, how missing values are encoded, etc. Next, we will check for possible outliers, class imbalance, and the presence of redundant continuous variables.</p>
+<p>We will start by reading the documentation of the dataset, which will tell us how the data is organized. For example, it may provide information on the number of variables and observations, how to interpret certain variables, how missing values are encoded, etc. We will then proceed to check for possible outliers, class imbalance, and the presence of redundant continuous variables.</p>
 <section id="importing-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="importing-the-dataset">Importing the Dataset</h3>
-<p>The first step is to load the dataset and assign appropriate column names to make the data easier to interpret.</p>
+<p>After reading the documentation, we’ll load the dataset into R and assign appropriate column names.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"dataset/breast-cancer-wisconsin.data"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -336,7 +336,7 @@ Tip
 </section>
 <section id="analyze-the-continuous-variables" class="level3">
 <h3 class="anchored" data-anchor-id="analyze-the-continuous-variables">Analyze the continuous variables</h3>
-<p>To identify redundant features, we analyze correlations among continuous variables. High collinearity can negatively impact model performance, so we address this by combining highly correlated features.</p>
+<p>To identify redundant variables, we analyze correlations among continuous variables. High collinearity can negatively impact model performance. Hence, we can address this either by removing one of the variables or combind them into a new variable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data_corr <span class="ot">&lt;-</span> <span class="fu">cor</span>(data[, <span class="sc">-</span><span class="dv">10</span>]) </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -349,7 +349,7 @@ Tip
 </div>
 </div>
 </div>
-<p>The variables <code>Uniformity_of_cell_size</code> and <code>Uniformity_of_cell_shape</code> are highly correlated. To reduce redundancy, we create a new variable, <code>Cell_morphology</code>, by randomly sampling values from these two columns row-wise.</p>
+<p>The variables <code>Uniformity_of_cell_size</code> and <code>Uniformity_of_cell_shape</code> are highly correlated. Here, we’ll create a new variable, <code>Cell_morphology</code>, by randomly sampling values from these two columns row-wise.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Cell_Morphology <span class="ot">&lt;-</span> <span class="fu">apply</span>(data[, <span class="fu">c</span>(<span class="st">"Uniformity_of_cell_size"</span>, <span class="st">"Uniformity_of_cell_shape"</span>)],</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">MARGIN =</span> <span class="dv">1</span>, </span>
@@ -379,7 +379,7 @@ Tip
 </section>
 <section id="checking-for-class-imbalance" class="level3">
 <h3 class="anchored" data-anchor-id="checking-for-class-imbalance">Checking for Class Imbalance</h3>
-<p>Class imbalance is a common issue in classification tasks. Here, we analyze the distribution of the target variable (<code>Class</code>) to assess the extent of imbalance.</p>
+<p>Class imbalance is a common issue in classification tasks. we analyze the distribution of the target variable (<code>Class</code>) to assess the extent of imbalance.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Class) <span class="sc">|&gt;</span></span>
@@ -390,7 +390,7 @@ Tip
 2 malignant 239      34.99</code></pre>
 </div>
 </div>
-<p>The dataset shows a mildly imbalanced distribution, with the minority class representing approximately 35% of the data. This level of imbalance typically does not pose significant challenges, and models can often be trained directly on the original data. If the imbalance were severe, techniques such as upsampling or downsampling could be applied.</p>
+<p>The dataset shows a mildly imbalanced distribution, with the minority class representing approximately 35% of the data. This level of imbalance typically does not significantly affect model performance, and models can often be trained directly on the original data. If the imbalance were severe, techniques such as upsampling or downsampling could be applied.</p>
 </section>
 <section id="splitting-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="splitting-the-dataset">Splitting the Dataset</h3>
