@@ -27,8 +27,8 @@ about:
 #particles-right {
   position: absolute;
   width: 25%; /* Adjust width as needed */
-  height: 100%;
-  top: 0;
+  height: 60%;
+  top: -15%; /* Adjust top as needed */
   z-index: -1;
   background-color: transparent; /* No background color */
 }
