@@ -396,7 +396,7 @@ Tip
 <h3 class="anchored" data-anchor-id="splitting-the-dataset">Splitting the Dataset</h3>
 <p>To prepare for model training, we split the dataset into training, validation, and test sets, allocating 70% of the data for training. We use cross-validation to ensure robust evaluation during model development.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(data<span class="sc">$</span>Class, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(data<span class="sc">$</span>Class, <span class="at">p =</span> <span class="fl">0.6</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>data.trn <span class="ot">&lt;-</span> data[train, ]</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>data.tst <span class="ot">&lt;-</span> data[<span class="sc">-</span>train, ]</span>
@@ -440,26 +440,26 @@ Tip
 
            Reference
 Prediction  benign malignant
-  benign       130         3
-  malignant      3        68
+  benign       172         2
+  malignant      5        93
                                           
-               Accuracy : 0.9706          
-                 95% CI : (0.9371, 0.9891)
-    No Information Rate : 0.652           
+               Accuracy : 0.9743          
+                 95% CI : (0.9477, 0.9896)
+    No Information Rate : 0.6507          
     P-Value [Acc &gt; NIR] : &lt;2e-16          
                                           
-                  Kappa : 0.9352          
+                  Kappa : 0.9438          
                                           
- Mcnemar's Test P-Value : 1               
+ Mcnemar's Test P-Value : 0.4497          
                                           
-            Sensitivity : 0.9577          
-            Specificity : 0.9774          
-         Pos Pred Value : 0.9577          
-         Neg Pred Value : 0.9774          
-             Prevalence : 0.3480          
-         Detection Rate : 0.3333          
-   Detection Prevalence : 0.3480          
-      Balanced Accuracy : 0.9676          
+            Sensitivity : 0.9789          
+            Specificity : 0.9718          
+         Pos Pred Value : 0.9490          
+         Neg Pred Value : 0.9885          
+             Prevalence : 0.3493          
+         Detection Rate : 0.3419          
+   Detection Prevalence : 0.3603          
+      Balanced Accuracy : 0.9753          
                                           
        'Positive' Class : malignant       
                                           </code></pre>
@@ -473,14 +473,14 @@ Prediction  benign malignant
 <pre><code>glm variable importance
 
                             Overall
-Bare_nuclei                  100.00
-Clump_thickness               78.57
-Cell_Morphology               28.26
-Bland_chromatin               27.03
-Single_epithelial_cell_size   24.21
-Mitoses                       16.35
-Normal_nucleoli               10.58
-Marginal_adhesion              0.00</code></pre>
+Clump_thickness             100.000
+Bare_nuclei                  92.415
+Cell_Morphology              39.447
+Bland_chromatin              24.627
+Marginal_adhesion            20.132
+Mitoses                      18.008
+Normal_nucleoli               3.992
+Single_epithelial_cell_size   0.000</code></pre>
 </div>
 </div>
 </section>
@@ -506,26 +506,26 @@ Marginal_adhesion              0.00</code></pre>
 
            Reference
 Prediction  benign malignant
-  benign       130         6
-  malignant      3        65
+  benign       174        10
+  malignant      3        85
                                           
-               Accuracy : 0.9559          
-                 95% CI : (0.9179, 0.9796)
-    No Information Rate : 0.652           
-    P-Value [Acc &gt; NIR] : &lt;2e-16          
+               Accuracy : 0.9522          
+                 95% CI : (0.9197, 0.9743)
+    No Information Rate : 0.6507          
+    P-Value [Acc &gt; NIR] : &lt; 2e-16         
                                           
-                  Kappa : 0.9018          
+                  Kappa : 0.893           
                                           
- Mcnemar's Test P-Value : 0.505           
+ Mcnemar's Test P-Value : 0.09609         
                                           
-            Sensitivity : 0.9155          
-            Specificity : 0.9774          
-         Pos Pred Value : 0.9559          
-         Neg Pred Value : 0.9559          
-             Prevalence : 0.3480          
-         Detection Rate : 0.3186          
-   Detection Prevalence : 0.3333          
-      Balanced Accuracy : 0.9465          
+            Sensitivity : 0.8947          
+            Specificity : 0.9831          
+         Pos Pred Value : 0.9659          
+         Neg Pred Value : 0.9457          
+             Prevalence : 0.3493          
+         Detection Rate : 0.3125          
+   Detection Prevalence : 0.3235          
+      Balanced Accuracy : 0.9389          
                                           
        'Positive' Class : malignant       
                                           </code></pre>
@@ -564,26 +564,26 @@ Prediction  benign malignant
 
            Reference
 Prediction  benign malignant
-  benign       130         5
-  malignant      3        66
+  benign       174         5
+  malignant      3        90
                                           
-               Accuracy : 0.9608          
-                 95% CI : (0.9242, 0.9829)
-    No Information Rate : 0.652           
+               Accuracy : 0.9706          
+                 95% CI : (0.9429, 0.9872)
+    No Information Rate : 0.6507          
     P-Value [Acc &gt; NIR] : &lt;2e-16          
                                           
-                  Kappa : 0.913           
+                  Kappa : 0.935           
                                           
  Mcnemar's Test P-Value : 0.7237          
                                           
-            Sensitivity : 0.9296          
-            Specificity : 0.9774          
-         Pos Pred Value : 0.9565          
-         Neg Pred Value : 0.9630          
-             Prevalence : 0.3480          
-         Detection Rate : 0.3235          
-   Detection Prevalence : 0.3382          
-      Balanced Accuracy : 0.9535          
+            Sensitivity : 0.9474          
+            Specificity : 0.9831          
+         Pos Pred Value : 0.9677          
+         Neg Pred Value : 0.9721          
+             Prevalence : 0.3493          
+         Detection Rate : 0.3309          
+   Detection Prevalence : 0.3419          
+      Balanced Accuracy : 0.9652          
                                           
        'Positive' Class : malignant       
                                           </code></pre>
@@ -614,26 +614,26 @@ Prediction  benign malignant
 
            Reference
 Prediction  benign malignant
-  benign       122         0
-  malignant     11        71
+  benign       164         2
+  malignant     13        93
                                           
-               Accuracy : 0.9461          
-                 95% CI : (0.9056, 0.9728)
-    No Information Rate : 0.652           
+               Accuracy : 0.9449          
+                 95% CI : (0.9107, 0.9688)
+    No Information Rate : 0.6507          
     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
                                           
-                  Kappa : 0.8853          
+                  Kappa : 0.8818          
                                           
- Mcnemar's Test P-Value : 0.002569        
+ Mcnemar's Test P-Value : 0.009823        
                                           
-            Sensitivity : 1.0000          
-            Specificity : 0.9173          
-         Pos Pred Value : 0.8659          
-         Neg Pred Value : 1.0000          
-             Prevalence : 0.3480          
-         Detection Rate : 0.3480          
-   Detection Prevalence : 0.4020          
-      Balanced Accuracy : 0.9586          
+            Sensitivity : 0.9789          
+            Specificity : 0.9266          
+         Pos Pred Value : 0.8774          
+         Neg Pred Value : 0.9880          
+             Prevalence : 0.3493          
+         Detection Rate : 0.3419          
+   Detection Prevalence : 0.3897          
+      Balanced Accuracy : 0.9528          
                                           
        'Positive' Class : malignant       
                                           </code></pre>
@@ -666,29 +666,29 @@ Prediction  benign malignant
 
            Reference
 Prediction  benign malignant
-  benign       124         0
-  malignant      9        71
-                                          
-               Accuracy : 0.9559          
-                 95% CI : (0.9179, 0.9796)
-    No Information Rate : 0.652           
-    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-                                          
-                  Kappa : 0.9056          
-                                          
- Mcnemar's Test P-Value : 0.007661        
-                                          
-            Sensitivity : 1.0000          
-            Specificity : 0.9323          
-         Pos Pred Value : 0.8875          
-         Neg Pred Value : 1.0000          
-             Prevalence : 0.3480          
-         Detection Rate : 0.3480          
-   Detection Prevalence : 0.3922          
-      Balanced Accuracy : 0.9662          
-                                          
-       'Positive' Class : malignant       
-                                          </code></pre>
+  benign       167         2
+  malignant     10        93
+                                         
+               Accuracy : 0.9559         
+                 95% CI : (0.9242, 0.977)
+    No Information Rate : 0.6507         
+    P-Value [Acc &gt; NIR] : &lt; 2e-16        
+                                         
+                  Kappa : 0.9048         
+                                         
+ Mcnemar's Test P-Value : 0.04331        
+                                         
+            Sensitivity : 0.9789         
+            Specificity : 0.9435         
+         Pos Pred Value : 0.9029         
+         Neg Pred Value : 0.9882         
+             Prevalence : 0.3493         
+         Detection Rate : 0.3419         
+   Detection Prevalence : 0.3787         
+      Balanced Accuracy : 0.9612         
+                                         
+       'Positive' Class : malignant      
+                                         </code></pre>
 </div>
 </div>
 </section>

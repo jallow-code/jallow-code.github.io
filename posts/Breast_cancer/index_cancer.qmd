@@ -121,7 +121,7 @@ To prepare for model training, we split the dataset into training, validation, a
 ```{r}
 
 
-train <- createDataPartition(data$Class, p = 0.7, list = FALSE)
+train <- createDataPartition(data$Class, p = 0.6, list = FALSE)
 
 data.trn <- data[train, ]
 data.tst <- data[-train, ]
