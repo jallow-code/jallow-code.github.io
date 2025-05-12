@@ -1,480 +1,548 @@
 ---
-title: "Exploring the Breast Cancer Dataset"
+title: "Classifying Breast Cancer: A Machine Learning Approach in R" # More specific title
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-date: 12 01 2025
-categories: [Learn, R] # self-defined categories
+date: "2025-01-12" # Standard date format
+categories: [Learn, R, Machine Learning, Classification, Healthcare Data] # More specific categories
 ---
 
-```{r}
-#| warning: False
-#| message: False
+```{r setup, include=FALSE}
+#| warning: FALSE
+#| message: FALSE
 
-library(data.table)
-library(tidyverse)
-library(psych)
-library(corrplot)
-library(caret)
-library(pROC)
-library(PRROC)
-library(RColorBrewer)
+# Load necessary libraries
+library(data.table)   # Efficient data handling (though tidyverse is mostly used)
+library(tidyverse)    # Core data manipulation, visualization (ggplot2, dplyr, etc.)
+library(psych)        # For pairs.panels
+library(corrplot)     # For better correlation visualization
+library(caret)        # Comprehensive package for model training and evaluation
+library(pROC)         # For ROC curve analysis
+library(PRROC)        # For Precision-Recall curve analysis
+library(RColorBrewer) # For color palettes
 
+# Set seed for reproducibility of random processes like data splitting and model training
 set.seed(12)
 ```
 
 ## Introduction
 
-This blog is an exercise on classification methods using the Breast Cancer dataset which is sourced from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original). This dataset contains different variables used to classify tumors as either benign or malignant.
+Breast cancer remains a significant health concern globally. Early and accurate diagnosis is crucial for effective treatment and improving patient outcomes. Machine learning offers powerful tools to aid in this process by analyzing complex patterns in patient data.
+
+This blog post walks through a practical exercise in building and evaluating machine learning classification models using R. We'll use the well-known Breast Cancer Wisconsin (Original) dataset from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original) to classify tumors as either benign (non-cancerous) or malignant (cancerous) based on microscopic characteristics of cell nuclei.
+
+We will cover the following steps:
+
+1.  Loading and exploring the dataset.
+2.  Preprocessing the data (handling missing values, encoding variables).
+3.  Analyzing feature relationships and addressing collinearity.
+4.  Splitting the dataset into training and testing sets.
+5.  Training various classification algorithms (Logistic Regression, KNN, LDA, QDA, Naive Bayes).
+6.  Evaluating model performance using metrics such as accuracy, AUC-ROC, and precision-recall curves.
+
+Let's dive in!
 
 ## Exploratory Analysis and Preprocessing
 
-We will start by reading the documentation of the dataset, which will tell us how the data is organized. For example, it may provide information on the number of variables and observations, how to interpret certain variables, how missing values are encoded, etc. We will then proceed to check for possible outliers, class imbalance, and the presence of redundant continuous variables.
+Before building any models, understanding and preparing the data is essential. This involves inspecting the data structure, identifying and handling missing values, correcting data types, and exploring relationships between variables.
+
+### Understanding the Data Source
+
+The first step is always to consult the dataset's documentation. It provides vital information about the variables, their meaning, potential issues like missing value codes, and the number of instances. For this dataset, the documentation tells us about the features measured from digitized images of fine needle aspirates (FNAs) of breast masses.
 
 ### Importing the Dataset
 
-After reading the documentation, we'll load the dataset into R and assign appropriate column names.
+We load the data, which is provided as a comma-separated file without headers. Based on the documentation, we assign meaningful column names
+
 ```{r}
 
+# Define the path to the dataset
 path <- "dataset/breast-cancer-wisconsin.data"
 
+# Read the data using read.table as it's a simple CSV without headers
 data <- read.table(path, sep = ",")
 
+# Assign column names based on the dataset documentation
 colnames(data) <- c("Sample_code_number", "Clump_thickness",
                     "Uniformity_of_cell_size", "Uniformity_of_cell_shape",
                     "Marginal_adhesion", "Single_epithelial_cell_size",
-                    "Bare_nuclei", "Bland_chromatin", "Mitoses",
-                    "Normal_nucleoli", "Class")
+                    "Bare_nuclei", "Bland_chromatin", "Normal_nucleoli", 
+                    "Mitoses", "Class")
 
+# Display the structure of the data
 str(data)
+
+# Display the first few rows
+head(data)
 
 ```
 
 ### Missing Values and Variable Encoding
 
-This dataset uses `"?"` to represent missing values. These need to be replaced with `NA` for proper handling in R. We then remove rows containing missing values. Additionally, some variables are encoded incorrectly and need to be transformed into their appropriate data types.
+The documentation reveals that missing values are coded as `"?"`. We need to replace these with R's standard `NA` representation. We also need to handle variables encoded incorrectly
 
 ```{r}
-data[data == "?"] <- NA 
-data <- na.omit(data)   
 
+# Replace "?" with NA
+data[data == "?"] <- NA
+
+# Check how many missing values per column
+colSums(is.na(data))
+
+# For simplicity in this example, we remove rows with any missing values.
+# In a real-world scenario, imputation might be considered.
+data <- na.omit(data)
+cat("Dimensions after removing NAs:", dim(data), "\n")
+
+# The 'Sample_code_number' is an identifier and not useful for classification.
 data$Sample_code_number <- NULL
 
-data$Class <- as.factor(ifelse(data$Class == 2, "benign", "malignant"))
+# The 'Class' variable is coded as 2 for benign and 4 for malignant.
+# Convert it to a factor with meaningful labels.
+data$Class <- factor(ifelse(data$Class == 2, "benign", "malignant"),
+                     levels = c("benign", "malignant")) # Explicitly set levels
 
+# The 'Bare_nuclei' column was read as character due to the "?" values.
+# Now that NAs are handled, convert it to integer.
 data$Bare_nuclei <- as.integer(data$Bare_nuclei)
 
-
+# Verify the structure again
 str(data)
+
+# Check the distribution of the target variable
+summary(data$Class)
 
 ```
 
 ::: callout-tip
-Reading the dataset documentation is important for understanding how missing values and variables are encoded. For example, missing values in this dataset are not labeled as `NA` by default, and variables such as `Bare_nuclei` and `Class` needed to be converted to the appropriate data types (integer and factor, respectively).
+Always check the documentation! As seen here, understanding how missing values (`"?"`) and the target variable (`Class`) were encoded was crucial for correct preprocessing. Failing to do this can lead to errors or incorrect model results.
 :::
 
-### Analyze the continuous variables
+### Exploring Variable Distributions and Relationships
 
-To identify redundant variables, we analyze correlations among continuous variables. High collinearity can negatively impact model performance. Hence, we can address this either by removing one of the variables or combind them into a new variable. 
+Let's examine the predictor variables. Since they are all numerical (ratings from 1-10), we can look at their distributions and correlations.
 
 ```{r}
-data_corr <- cor(data[, -10]) 
+# Summary statistics for numerical predictors
+summary(data[, -which(names(data) == "Class")]) # Exclude the Class variable
 
-pairs.panels(data_corr, cex.labels = 0.6, ellipses = FALSE)
+# Visualize distributions
+ data %>%
+  select(-Class) %>%
+  pivot_longer(everything(), names_to = "variable", values_to = "value") %>%
+  ggplot(aes(x = value)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black") +
+  facet_wrap(~variable, scales = "free_y") +
+  labs(title = "Distribution of Predictor Variables", x = "Value (1-10)", y = "Frequency") +
+  theme_minimal()
+
+# Analyze correlations among continuous variables
+# Select only numeric predictors for correlation analysis
+numeric_predictors <- data %>% select(-Class) %>% names()
+data_corr <- cor(data[, numeric_predictors])
+
+# Visualize the correlation matrix
+corrplot(data_corr, method = "circle", type = "upper", tl.col = "black", tl.srt = 45, order = "hclust")
+
+# Use pairs.panels for scatter plots and correlation values (optional, can be busy)
+# pairs.panels(data[, numeric_predictors], cex.labels = 0.7, ellipses = FALSE, lm=TRUE)
 
 
 ```
 
-The variables `Uniformity_of_cell_size` and `Uniformity_of_cell_shape` are highly correlated. Here, we'll create a new variable, `Cell_morphology`, by randomly sampling values from these two columns row-wise.
+We observe strong positive correlations between several variables, particularly `Uniformity_of_cell_size` and `Uniformity_of_cell_shape` (correlation coefficient often > 0.9). High collinearity can sometimes destabilize model coefficients (especially in linear models) and make interpretation harder.
+
+A common strategy is to remove one of the highly correlated variables. Let's remove Uniformity_of_cell_shape as it's highly correlated with Uniformity_of_cell_size.
 
 ```{r}
 
-data$Cell_Morphology <- apply(data[, c("Uniformity_of_cell_size", "Uniformity_of_cell_shape")],
-                              MARGIN = 1, 
-                              FUN = sample,
-                              size = 1)
-
-data$Uniformity_of_cell_size <- NULL
+# Remove 'Uniformity_of_cell_shape' due to high correlation with 'Uniformity_of_cell_size'
 data$Uniformity_of_cell_shape <- NULL
 
-
+# Check the structure again
 str(data)
 
 ```
 
 ### Checking for Class Imbalance
 
-Class imbalance is a common issue in classification tasks. we analyze the distribution of the target variable (`Class`) to assess the extent of imbalance.
+Class imbalance occurs when one class is much more frequent than the other. This can bias models towards the majority class. Let's check our target variable `Class`.
 
 ```{r}
-data |>
+# Calculate class proportions
+imbalance_summary <- data |>
   count(Class) |>
-  mutate(Percentage = round((n / nrow(data)) * 100, 2))
+  mutate(Percentage = round((n / sum(n)) * 100, 1)) # Use sum(n) instead of nrow(data) just in case
+
+print(imbalance_summary)
+
+# Visualize class distribution
+ggplot(imbalance_summary, aes(x = Class, y = n, fill = Class)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = paste0(n, "\n(", Percentage, "%)"))) +
+  labs(title = "Distribution of Target Variable (Class)", x = "Tumor Class", y = "Number of Samples") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Paired")
 ```
 
-The dataset shows a mildly imbalanced distribution, with the minority class representing approximately 35% of the data. This level of imbalance typically does not significantly affect model performance, and models can often be trained directly on the original data. If the imbalance were severe, techniques such as upsampling or downsampling could be applied.
+The dataset shows a moderate imbalance: approximately 65% benign and 35% malignant. While not extreme, this is something to keep in mind during evaluation. Metrics like the Area Under the Precision-Recall Curve (AUC-PR) can be more informative than ROC-AUC in such cases. For this analysis, we'll proceed without specific resampling techniques (like SMOTE, upsampling, or downsampling), but they could be considered if performance on the minority class (malignant) is poor.
 
 ### Splitting the Dataset
 
-To prepare for model training, we split the dataset into training, validation, and test sets, allocating 70% of the data for training. We use cross-validation to ensure robust evaluation during model development.
+To evaluate our models' generalization ability, we split the data into a training set (used to build the models) and a test set (used for final, unbiased evaluation). We'll use a 70% / 30% split, stratified by the Class variable to maintain the class proportions in both sets.
+
+We will also set up cross-validation (CV) within the training process. CV provides a more robust estimate of performance by repeatedly splitting the training data into smaller train/validation folds.
 
 ```{r}
 
+# Create a stratified split (70% train, 30% test)
+trainIndex <- createDataPartition(data$Class, p = 0.7, list = FALSE, times = 1)
 
-train <- createDataPartition(data$Class, p = 0.6, list = FALSE)
+data.trn <- data[trainIndex, ]
+data.tst <- data[-trainIndex, ]
 
-data.trn <- data[train, ]
-data.tst <- data[-train, ]
+cat("Training set dimensions:", dim(data.trn), "\n")
+cat("Test set dimensions:", dim(data.tst), "\n")
+cat("Training set class proportions:\n")
+print(prop.table(table(data.trn$Class)))
+cat("Test set class proportions:\n")
+print(prop.table(table(data.tst$Class)))
 
-
-ctrl <- trainControl(method = "cv",         # K-Fold cross-validation
-                     number = 10,           # 10 folds
-                     returnResamp = 'none',
-                     classProbs = TRUE,   
-                     savePredictions = TRUE,
-                     summaryFunction = twoClassSummary)
-
+# Set up control parameters for cross-validation within caret::train
+# We use 10-fold cross-validation
+ctrl <- trainControl(method = "cv",
+                     number = 10,
+                     classProbs = TRUE, # Calculate class probabilities needed for ROC/PR
+                     savePredictions = "final", # Save predictions from CV folds
+                     summaryFunction = twoClassSummary) # Use metrics like ROC AUC
 ```
 
 ## Modeling
 
-Next, we fit different classification models to predict whether a tumor is malignant or benign based on the variables. Finally, we will evaluate the models using their respective confusion matrices and other performance metrics.
+Now, we'll train several different classification algorithms on the training data. caret provides a unified interface for this. We'll evaluate them using the cross-validation strategy defined above and then assess their final performance on the held-out test set.
+
+Our goal is to predict the `Class` variable based on the other features.
 
 ### Logistic regression
 
-Logistic regression is one of the simplest and most interpretable classification algorithms. We train the model using cross-validation and evaluate its performance on the test set.
+Logistic regression is one of the simplest and most interpretable classification algorithms. It models the probability of an instance belonging to a class.
 
 ```{r}
-glm.fit <- train(Class ~ .,         
-                 data = data.trn,               
-                 method = "glm",          # Generalized linear model
-                 family = "binomial",     # Logistic regression
-                 trControl = ctrl,              
-                 metric = "ROC")                 
+# Train the Logistic Regression model
+glm.fit <- train(Class ~ .,
+                 data = data.trn,
+                 method = "glm",          # Generalized Linear Model
+                 family = "binomial",     # Specifies logistic regression
+                 trControl = ctrl,
+                 metric = "ROC")          # Optimize based on ROC AUC during CV
 
-glm.pred <- predict(glm.fit, newdata = data.tst, type = "prob")
+# Print the best model summary (based on CV)
+print(glm.fit)
 
-glm.pred <- glm.pred[, 2]
-
-glm.class <- ifelse(glm.pred > 0.5, "malignant", "benign")
-
-logistic_cm <- confusionMatrix(data = as.factor(glm.class),
-                               reference = as.factor(data.tst$Class),
-                               positive = "malignant")
-logistic_cm
-
-
-```
-
-To understand which features contribute most to the model, we use the `varImp()` function.
-
-```{r}
-# Identify and rank the most important variables
+# Variable Importance for Logistic Regression
 varImp(glm.fit)
+
+# --- Evaluation on Test Set ---
+# Predict probabilities on the test set
+glm.pred.prob <- predict(glm.fit, newdata = data.tst, type = "prob")
+
+# Predict class based on a 0.5 probability threshold
+glm.pred.class <- ifelse(glm.pred.prob[, "malignant"] > 0.5, "malignant", "benign")
+glm.pred.class <- factor(glm.pred.class, levels = levels(data.tst$Class)) # Ensure factor levels match
+
+# Create confusion matrix
+logistic_cm <- confusionMatrix(data = glm.pred.class,
+                               reference = data.tst$Class,
+                               positive = "malignant") # Specify the "positive" class
+print(logistic_cm)
 ```
 
 ### K-Nearest Neighbors (KNN)
 
-KNN is a simple non-parametric method that predicts the class of a sample based on the majority class of its nearest neighbors.
+KNN is a non-parametric, instance-based learner. It classifies a new sample based on the majority class of its `'K'` nearest neighbors in the feature space. KNN requires features to be scaled. caret handles this automatically using the `preProcess` argument. We will also tune the hyperparameter `k` (number of neighbors).
 
 ```{r}
 
+# Train the KNN model
+# caret will automatically test different values of 'k' specified in tuneGrid
+knn.fit <- train(Class ~ .,
+                 data = data.trn,
+                 method = "knn",
+                 trControl = ctrl,
+                 preProcess = c("center", "scale"), # Crucial for KNN
+                 tuneGrid = data.frame(k = seq(3, 21, by = 2)), # Tune k (odd values often preferred)
+                 metric = "ROC")
 
-knn.fit <- train(Class ~ ., data = data.trn, method = "knn",
-  trControl = ctrl, 
-  preProcess = c("center","scale"), 
-  tuneGrid =data.frame(k=seq(5,100,by=5)),
-  metric = "ROC")
-  
+# Print the best tuning parameter found during CV
+print(knn.fit)
 
-knn.pred <- predict(knn.fit, data.tst)
-
-knn_cm <- confusionMatrix(as.factor(knn.pred),
-                          reference =as.factor(data.tst$Class),
-                          positive = "malignant")
-knn_cm
-
+# Plot the tuning results (ROC vs. k)
 plot(knn.fit)
+
+# --- Evaluation on Test Set ---
+# Predict classes directly on the test set (KNN in caret often defaults to class)
+knn.pred.class <- predict(knn.fit, newdata = data.tst)
+
+# Create confusion matrix
+knn_cm <- confusionMatrix(data = knn.pred.class,
+                          reference = data.tst$Class,
+                          positive = "malignant")
+print(knn_cm)
 
 ```
 
 ### Linear Discriminant Analysis
 
-LDA assumes that the predictors follow a normal distribution and aims to maximize the separation between classes.
+LDA is a linear classifier that assumes features are normally distributed within each class and have equal covariance matrices. It finds a linear combination of features that maximizes separability between classes.
 
 ```{r}
 
-lda.fit <- train(Class ~ ., 
-                 data = data.trn, 
-                 method = "lda", 
-                 trControl = ctrl, 
+# Train the LDA model
+lda.fit <- train(Class ~ .,
+                 data = data.trn,
+                 method = "lda",
+                 trControl = ctrl,
                  metric = "ROC")
 
-# Generate probabilities for LDA
-lda.pred <- predict(lda.fit, newdata = data.tst, type = "prob")
-lda.class <- ifelse(lda.pred[, "malignant"] > 0.5, "malignant", "benign")
+print(lda.fit) # LDA doesn't have hyperparameters to tune in this basic form
 
+# --- Evaluation on Test Set ---
+# Predict probabilities
+lda.pred.prob <- predict(lda.fit, newdata = data.tst, type = "prob")
+# Predict class
+lda.pred.class <- ifelse(lda.pred.prob[, "malignant"] > 0.5, "malignant", "benign")
+lda.pred.class <- factor(lda.pred.class, levels = levels(data.tst$Class))
 
-lda_cm <- confusionMatrix(data = as.factor(lda.class),
-                          reference = as.factor(data.tst$Class),
+# Create confusion matrix
+lda_cm <- confusionMatrix(data = lda.pred.class,
+                          reference = data.tst$Class,
                           positive = "malignant")
-lda_cm
+print(lda_cm)
 
 ```
 
 ### Quadradic Discriminant Analysis
 
-QDA is similar to LDA but allows for each class to have its own covariance matrix, making it more flexible for non-linear boundaries.
+QDA is similar to LDA but more flexible. It does not assume equal covariance matrices across classes, allowing for quadratic decision boundaries.
 
 ```{r}
-qda.fit <- train(Class ~ ., 
-                 data = data.trn, 
-                 method = "qda", 
-                 trControl = ctrl, 
+
+# Train the QDA model
+qda.fit <- train(Class ~ .,
+                 data = data.trn,
+                 method = "qda",
+                 trControl = ctrl,
                  metric = "ROC")
 
+print(qda.fit) # QDA also has no hyperparameters to tune here
 
-qda.pred <- predict(qda.fit, newdata = data.tst, type = "prob")
-qda.class <- ifelse(qda.pred[, "malignant"] > 0.5, "malignant", "benign")
+# --- Evaluation on Test Set ---
+# Predict probabilities
+qda.pred.prob <- predict(qda.fit, newdata = data.tst, type = "prob")
+# Predict class
+qda.pred.class <- ifelse(qda.pred.prob[, "malignant"] > 0.5, "malignant", "benign")
+qda.pred.class <- factor(qda.pred.class, levels = levels(data.tst$Class))
 
-
-qda_cm <- confusionMatrix(data = as.factor(qda.class),
-                          reference = as.factor(data.tst$Class),
+# Create confusion matrix
+qda_cm <- confusionMatrix(data = qda.pred.class,
+                          reference = data.tst$Class,
                           positive = "malignant")
-qda_cm
+print(qda_cm)
 
 ```
 
 ### Naive Bayes
 
-Naive Bayes is a probabilistic classifier based on Bayes' theorem, assuming independence among predictors.
+Naive Bayes is a probabilistic classifier based on Bayes' theorem. It makes a "naive" assumption that all predictor variables are independent given the class. Despite this simplification, it often works well in practice.
 
 ```{r}
 
 
-nb.fit <- train(Class ~ ., 
-                data = data.trn, 
-                method = "naive_bayes", 
-                trControl = ctrl, 
+# Train the Naive Bayes model
+# Note: Need to install e1071 or klaR package if not already installed for method='naive_bayes'
+# install.packages("e1071")
+nb.fit <- train(Class ~ .,
+                data = data.trn,
+                method = "naive_bayes", # Uses e1071::naiveBayes implementation
+                trControl = ctrl,
                 metric = "ROC")
 
+print(nb.fit) # Might show tuning parameters if the implementation supports them (e.g., Laplace correction)
 
-nb.pred <- predict(nb.fit, newdata = data.tst, type = "prob")
+# --- Evaluation on Test Set ---
+# Predict probabilities
+nb.pred.prob <- predict(nb.fit, newdata = data.tst, type = "prob")
+# Predict class
+nb.pred.class <- ifelse(nb.pred.prob[, "malignant"] > 0.5, "malignant", "benign")
+nb.pred.class <- factor(nb.pred.class, levels = levels(data.tst$Class))
 
-
-nb.class <- ifelse(nb.pred[, "malignant"] > 0.5, "malignant", "benign")
-
-
-nb_cm <- confusionMatrix(data = as.factor(nb.class),
-                         reference = as.factor(data.tst$Class),
+# Create confusion matrix
+nb_cm <- confusionMatrix(data = nb.pred.class,
+                         reference = data.tst$Class,
                          positive = "malignant")
-nb_cm
+print(nb_cm)
 ```
 
-## Performance
+## Performance Comparison
+
+We've trained five different models. Let's compare their performance on the test set using standard evaluation metrics and visualizations. We'll focus on ROC curves, Precision-Recall curves, and overall Accuracy.
 
 ### AUC-ROC Curve Analysis
 
+The Receiver Operating Characteristic (ROC) curve plots the True Positive Rate (Sensitivity) against the False Positive Rate (1 - Specificity) at various classification thresholds. The Area Under the Curve (AUC-ROC) summarizes the model's ability to discriminate between the positive (malignant) and negative (benign) classes across all thresholds. An AUC of 1 indicates perfect discrimination, while 0.5 suggests random guessing.
+
+
 ```{r}
 #| code-fold: true
+#| fig-cap: "ROC Curves for all models on the test set. Higher curves (closer to top-left) and larger AUC values indicate better discrimination."
 
-
-# ---- Function to calculate and return the ROC curves for a given mode -------
-calculate_roc <- function(model, test_data, response_var, positive_class, predictor_type = "prob") {
-  
-  # Generate predicted probabilities
-  pred_probs <- predict(model, newdata = test_data, type = predictor_type)
-  
-  # Ensure the response variable is a factor with correct levels
+# Function to calculate ROC curve using pROC
+calculate_roc <- function(model, test_data, response_var, positive_class) {
+  pred_probs <- predict(model, newdata = test_data, type = "prob")
   response <- test_data[[response_var]]
-  
-  # Calculate ROC curve
-  roc_curve <- roc(
-    response = response,
-    predictor = pred_probs[, positive_class], # Probability for the positive class
-    levels = levels(response),
-    direction = "<"  # Higher values indicate the positive class
-  )
-  
+  roc_curve <- roc(response = response,
+                   predictor = pred_probs[, positive_class],
+                   levels = levels(response),
+                   direction = "<", # Ensure correct direction based on probability meaning
+                   quiet = TRUE) # Suppress messages
   return(roc_curve)
 }
 
-# ---- Calculate ROC curves for all models -------
-# Logistic Regression
-roc_glm <- calculate_roc(
-  model = glm.fit,
-  test_data = data.tst,
-  response_var = "Class",
-  positive_class = "malignant"
-)
-
-# KNN
-roc_knn <- calculate_roc(
-  model = knn.fit,
-  test_data = data.tst,
-  response_var = "Class",
-  positive_class = "malignant"
-)
-
-# LDA
-roc_lda <- calculate_roc(
-  model = lda.fit,
-  test_data = data.tst,
-  response_var = "Class",
-  positive_class = "malignant")
-
-
-# QDA
-roc_qda <- calculate_roc(
-  model = qda.fit,
-  test_data = data.tst,
-  response_var = "Class",
-  positive_class = "malignant"
-)
-
-# Naive Bayes
-roc_nb <- calculate_roc(
-  model = nb.fit,
-  test_data = data.tst,
-  response_var = "Class",
-  positive_class = "malignant"
-)
+# Calculate ROC for each model
+roc_glm <- calculate_roc(glm.fit, data.tst, "Class", "malignant")
+roc_knn <- calculate_roc(knn.fit, data.tst, "Class", "malignant")
+roc_lda <- calculate_roc(lda.fit, data.tst, "Class", "malignant")
+roc_qda <- calculate_roc(qda.fit, data.tst, "Class", "malignant")
+roc_nb <- calculate_roc(nb.fit, data.tst, "Class", "malignant")
 
 # Extract AUC values
-auc_glm <- round(auc(roc_glm), 2)
-auc_knn <- round(auc(roc_knn), 2)
-auc_lda <- round(auc(roc_lda), 2)
-auc_qda <- round(auc(roc_qda), 2)
-auc_nb <- round(auc(roc_nb), 2)
+auc_values <- c(
+  Logistic = auc(roc_glm),
+  KNN = auc(roc_knn),
+  LDA = auc(roc_lda),
+  QDA = auc(roc_qda),
+  `Naive Bayes` = auc(roc_nb)
+)
 
-# ------ Graph --------
+# Plot ROC Curves using base R plotting and pROC integration
 par(pty = "s") # Set square aspect ratio
 
-# Plot ROC Curves
-plot(roc_glm, col = "#1B9E77", lwd = 3, percent = TRUE,
-     main = "ROC Curve Comparison",
-     xlab = "False Positive rate", 
-     ylab = "True Positive rate", 
-     legacy.axes = TRUE)
+plot(roc_glm, col = "#1B9E77", lwd = 2, print.auc = FALSE, legacy.axes = TRUE, main = "Comparison of ROC Curves") # Start plot
+plot(roc_knn, col = "#D95F02", lwd = 2, add = TRUE, print.auc = FALSE)
+plot(roc_lda, col = "#7570B3", lwd = 2, add = TRUE, print.auc = FALSE)
+plot(roc_qda, col = "#E7298A", lwd = 2, add = TRUE, print.auc = FALSE)
+plot(roc_nb, col = "#66A61E", lwd = 2, add = TRUE, print.auc = FALSE)
 
-plot(roc_knn, col = "#D95F02", lwd = 3, percent = TRUE, add = T)
+# Add Legend
+legend("bottomright",
+       legend = paste(names(auc_values), "(AUC =", round(auc_values, 3), ")"),
+       col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E"),
+       lwd = 2, cex = 0.8)
 
-plot(roc_lda, col = "#7570B3", lwd = 3, percent = TRUE, add = T)
 
-plot(roc_qda, col = "#E7298A", lwd = 3, percent = TRUE, add = T)
-
-plot(roc_nb, col = "#66A61E", lwd = 3, percent = TRUE, add = T)
-
-# Add Legend with AUC values
-legend("bottomright", 
-       legend = c(
-         paste("Logistic (AUC =", auc_glm, ")"),
-         paste("KNN (AUC =", auc_knn, ")"),
-         paste("LDA (AUC =", auc_lda, ")"),
-         paste("QDA (AUC =", auc_qda, ")"),
-         paste("Naive Bayes (AUC =", auc_nb, ")")
-       ), 
-       col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E"), 
-       lwd = 2)
-
-# Reset par() variables
-par(pty = "m")
 
 ```
-The AUC-ROC curves show how well each model can discriminate between malignant and benign at all classification thresholds. An AUC of 1.0 indicates a perfect classifier that can distinguish between the two classes without error. Logistic regression and KNN achieved an AUC of 1, indicating perfect classification performance. LDA, QDA, and Naive Bayes also performed well with AUC values close to 1.
 
+All models achieve extremely high AUC-ROC values (close to 1.0) on the test set. This suggests that the classes in this dataset are highly separable using the given features. While excellent performance is encouraging, AUCs this high can sometimes warrant double-checking for potential data leakage or indicate that the dataset might not fully represent the complexity of real-world scenarios. However, given the standard preprocessing steps, it likely reflects the relatively clear separation in this classic dataset. Logistic Regression, KNN, and LDA show near-perfect discrimination.
 
 ### Precision Recall Curve
 
+The Precision-Recall (PR) curve plots Precision (Positive Predictive Value) against Recall (Sensitivity or True Positive Rate). It is particularly informative when dealing with imbalanced datasets, as it focuses on the performance for the positive class (malignant, in our case) without involving True Negatives. The Area Under the PR Curve (AUC-PR) summarizes this performance.
+
 ```{r}
 #| code-fold: true
+#| fig-cap: "Precision-Recall Curves for all models on the test set. Curves closer to the top-right indicate better performance."
 
-# Correct Precision-Recall Curve Plotting with PRROC
-plot_pr_curve <- function(model, test_data, true_labels, positive_class, add = FALSE, color = "blue") {
-  # Generate predicted probabilities for the positive class
+# Function to calculate PR curve data using PRROC
+calculate_pr <- function(model, test_data, true_labels, positive_class) {
   pred_probs <- predict(model, newdata = test_data, type = "prob")[, positive_class]
-  
-  # Generate PR curve
-  pr <- pr.curve(scores.class0 = pred_probs, 
-                 weights.class0 = ifelse(true_labels == positive_class, 1, 0), 
-                 curve = TRUE)
-  
-  # Plot PR curve
-  plot(pr, main = "Precision-Recall Curve ", add = add, col = color, auc.main = FALSE, legend = FALSE)
-  
-  # Return AUC value
-  return(pr$auc.integral)
+  true_binary <- ifelse(true_labels == positive_class, 1, 0)
+  pr <- pr.curve(scores.class0 = pred_probs, weights.class0 = true_binary, curve = TRUE)
+  return(pr)
 }
 
-# Generate PR Curves for All Models
-pr_aucs <- c(
-  Logistic = plot_pr_curve(glm.fit, data.tst, data.tst$Class, "malignant", color = "#1B9E77"),
-  KNN = plot_pr_curve(knn.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#D95F02"),
-  LDA = plot_pr_curve(lda.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#7570B3"),
-  QDA = plot_pr_curve(qda.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#E7298A"),
-  NaiveBayes = plot_pr_curve(nb.fit, data.tst, data.tst$Class, "malignant", add = TRUE, color = "#66A61E")
+# Calculate PR curves
+pr_glm <- calculate_pr(glm.fit, data.tst, data.tst$Class, "malignant")
+pr_knn <- calculate_pr(knn.fit, data.tst, data.tst$Class, "malignant")
+pr_lda <- calculate_pr(lda.fit, data.tst, data.tst$Class, "malignant")
+pr_qda <- calculate_pr(qda.fit, data.tst, data.tst$Class, "malignant")
+pr_nb <- calculate_pr(nb.fit, data.tst, data.tst$Class, "malignant")
+
+# Extract AUC-PR values
+auc_pr_values <- c(
+  Logistic = pr_glm$auc.integral,
+  KNN = pr_knn$auc.integral,
+  LDA = pr_lda$auc.integral,
+  QDA = pr_qda$auc.integral,
+  `Naive Bayes` = pr_nb$auc.integral
 )
 
-# Add Legend with AUC
-legend("bottomleft", 
-       legend = paste(names(pr_aucs), "(AUC =", round(pr_aucs, 2), ")"), 
-       col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E"), 
-       lty = 1, cex = 0.8, lwd = 2)
+# Plot PR curves using PRROC's plot function
+plot(pr_glm, main = "Comparison of Precision-Recall Curves", col = "#1B9E77", lwd = 2, auc.main = FALSE, legend = FALSE)
+plot(pr_knn, add = TRUE, col = "#D95F02", lwd = 2, auc.main = FALSE, legend = FALSE)
+plot(pr_lda, add = TRUE, col = "#7570B3", lwd = 2, auc.main = FALSE, legend = FALSE)
+plot(pr_qda, add = TRUE, col = "#E7298A", lwd = 2, auc.main = FALSE, legend = FALSE)
+plot(pr_nb, add = TRUE, col = "#66A61E", lwd = 2, auc.main = FALSE, legend = FALSE)
+
+# Add Legend
+legend("bottomleft",
+       legend = paste(names(auc_pr_values), "(AUC-PR =", round(auc_pr_values, 3), ")"),
+       col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E"),
+       lwd = 2, cex = 0.8, bty = "n") # bty="n" removes legend box
 
 ```
 
-Since the dataset is imbalanced, the false positive rate in the ROC-AUC curve is often replaced with precision to better evaluate model performance. In this context, the minority class (malignant) is important, so we prioritize models that effectively minimize false negatives. Logistic regression, KNN, and LDA all have AUC of 0.99 while QDA and Naive bayes performs slightly lower.
+Similar to the ROC curves, the AUC-PR values are very high for all models, indicating excellent precision and recall for identifying malignant cases. Logistic Regression, KNN, and LDA again show top-tier performance with AUC-PR values very close to 1.0.
 
 ### Accuracy
 
+Accuracy is the overall proportion of correctly classified instances. While useful, it can be misleading on imbalanced datasets if a model simply predicts the majority class well. However, since both Sensitivity and Specificity were high for most models (as seen in the confusion matrices), accuracy here provides a reasonable summary.
+
 ```{r}
 #| code-fold: true
+#| fig-cap: "Accuracy of models on the test set with 95% confidence intervals."
 
-        #----- Data frame of model performance metrics --------
-
-model_data <- data.frame(
-  Model = c("Logistic Regression", "KNN", "LDA", "QDA",
-            "Naive Bayes"),
-   # accuracy values
-  accuracy = c(logistic_cm$overall["Accuracy"],
+# Consolidate model performance metrics from confusion matrices
+model_performance <- data.frame(
+  Model = c("Logistic", "KNN", "LDA", "QDA", "Naive Bayes"),
+  Accuracy = c(logistic_cm$overall["Accuracy"],
                knn_cm$overall["Accuracy"],
                lda_cm$overall["Accuracy"],
                qda_cm$overall["Accuracy"],
                nb_cm$overall["Accuracy"]),
-   # Lower confidence interval
-  Lower = c(logistic_cm$overall["AccuracyLower"],
-            knn_cm$overall["AccuracyLower"],
-            lda_cm$overall["AccuracyLower"],
-            qda_cm$overall["AccuracyLower"],
-            nb_cm$overall["AccuracyLower"]),
-  # Upper confidence interval
-  Upper = c(logistic_cm$overall["AccuracyUpper"],
-            knn_cm$overall["AccuracyUpper"],
-            lda_cm$overall["AccuracyUpper"],
-            qda_cm$overall["AccuracyUpper"],
-            nb_cm$overall["AccuracyUpper"]))
-  
+  LowerCI = c(logistic_cm$overall["AccuracyLower"],
+              knn_cm$overall["AccuracyLower"],
+              lda_cm$overall["AccuracyLower"],
+              qda_cm$overall["AccuracyLower"],
+              nb_cm$overall["AccuracyLower"]),
+  UpperCI = c(logistic_cm$overall["AccuracyUpper"],
+              knn_cm$overall["AccuracyUpper"],
+              lda_cm$overall["AccuracyUpper"],
+              qda_cm$overall["AccuracyUpper"],
+              nb_cm$overall["AccuracyUpper"])
+)
 
-                #----- plot -----
-
-ggplot(model_data, aes(x = accuracy, y = Model)) +
-  geom_point(size = 3, color = "blue") +
-  geom_errorbarh(aes(xmin = Lower, xmax = Upper), height = 0.2, color = "blue") +
-  labs(title = "",
+# Plot using ggplot2
+ggplot(model_performance, aes(x = Accuracy, y = reorder(Model, Accuracy))) + # Reorder models by accuracy
+  geom_point(size = 3, color = "steelblue") +
+  geom_errorbarh(aes(xmin = LowerCI, xmax = UpperCI), height = 0.2, color = "steelblue") +
+  labs(title = "Model Accuracy Comparison (with 95% CI)",
        x = "Accuracy",
-       y = "") +
-  scale_x_continuous(limits = c(0.88, 1)) + 
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.text.y = element_text(size = 12),
-        plot.title = element_text(hjust = 0.5))
-
-
+       y = "Model") +
+  scale_x_continuous(limits = c(0.85, 1.0)) + # Adjust limits based on observed values
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.major.y = element_blank())
 ```
 
-Accuracy provides a direct (baseline) measure of model performance on correctly classified instances. All the models performed well on this metric.
+The accuracy plot confirms the high performance across all models, with most achieving accuracy above 95%. Logistic Regression, KNN, and LDA appear slightly superior, consistent with the AUC metrics. The confidence intervals are relatively tight, indicating stable performance estimates.
 
 ## Conclusion
 
-Logistic Regression consistently outperformed other models across all metrics, hence emerges as the preferred model for this dataset.
+In this analysis, we successfully applied several machine learning classification techniques to the Breast Cancer Wisconsin dataset using R. After careful preprocessing, which included handling missing values and addressing collinearity, we trained and evaluated Logistic Regression, KNN, LDA, QDA, and Naive Bayes models.
+
+Key findings:
+
+- All models performed exceptionally well on this dataset, achieving high accuracy, AUC-ROC, and AUC-PR values, indicating strong predictive power for distinguishing between benign and malignant tumors based on the provided cell characteristics.
+- The high performance likely reflects the relatively clear separability of classes within this specific, well-studied dataset. Real-world medical datasets often present greater challenges.
+
+Based on these results, Logistic Regression or LDA could be considered excellent choices due to their high performance and relative simplicity/interpretability compared to KNN. KNN also performed exceptionally well after tuning.
