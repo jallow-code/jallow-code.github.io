@@ -1,74 +1,74 @@
 ---
 title: "A Quarto Thesis Template for Bachelor and Diploma Projects at JKU"
-description: "I’m sharing a Quarto template I customized for my bachelor’s thesis at Johannes Kepler University Linz."
+description: "Simplify your JKU Bachelor's or Diploma thesis writing with this customized Quarto template. Focus on your content, let the template handle the formatting."
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
-date: 17 11 2024
-date-format: medium
-categories: [Resources] # self-defined categories
-citation: 
-  url: https://jallow-code.github.io/posts/jku-thesis-template/ 
-image: thesis_image.png
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
-
+date: "2024-11-17" # Standard YYYY-MM-DD format is often preferred
+date-format: "medium"
+categories:
+  - Resources
+  - Quarto
+  - JKU
+  - Thesis
+citation:
+  url: https://jallow-code.github.io/posts/jku-thesis-template/
+image: thesis_image.png # Consider an image that visually represents a thesis or the JKU/Quarto logos subtly
+draft: false
 doc:
-  pdf: "thesis_template.pdf"
-  
+  pdf: "thesis_template.pdf" # Link to the sample rendered PDF
 engine: knitr
 ---
 
-# Background
+## Introduction
 
-This template is based on the [Masters/Doctoral Thesis, LaTeX Template, Version 2.5 (27 Aug 2017)](https://www.latextemplates.com/template/masters-doctoral-thesis), which [Eli Holmes](https://github.com/eeholmes) adapted for Quarto. I further modified the Quarto template to fulfill JKU's formal criteria for diploma theses.
+Writing a Bachelor's or Diploma thesis at JKU involves not only research but also formatting requirements. Managing citations, ensuring consistent layout, and integrating code or data analysis can quickly become overwhelming, especially using traditional tools like Microsoft Word.
 
-Quarto offers several advantages over traditional word processors like Microsoft Word for writing long-form documents such as theses. For example, Quarto enhances reproducibility by seamlessly integrating data analysis and documentation. It ensures consistent formatting throughout the document and supports version control tools like Git. This allows you to focus entirely on the content of your thesis while the template takes care of the technical requirements of formatting and organization.
+To help streamline this process, I've adapted a Quarto thesis template specifically tailored to meet JKU's formal criteria for diploma and bachelor theses. This template lets you focus purely on your research and writing, while Quarto handles the complexities of formatting, citation management, and document structure.
+
+This template builds upon the excellent [Masters/Doctoral Thesis, LaTeX Template, Version 2.5](https://www.latextemplates.com/template/masters-doctoral-thesis), which was first adapted for Quarto by [Eli Holmes](https://github.com/eeholmes).
+
+**Why use Quarto for your thesis?**
+
+-   Reproducibility: Seamlessly integrate R or Python code and data analysis directly into your document.
+-   Consistency: Ensure uniform formatting for headings, figures, tables, and citations throughout.
+-   Version Control: Works perfectly with tools like Git, making collaboration and tracking changes easy.
+-   Focus: Spend less time wrestling with layout and more time on your content.
 
 
-# Installing the Template
+## Getting Started
 
-The GitHub repository for the Quarto thesis template can be found [here](https://github.com/jallow-code/jku-quarto-thesis). Follow these steps to install and use the template:
+Ready to use the template? You'll need Quarto installed first. Then, follow these steps:
 
-## 1. Clone the Template
-
-Navigate to the directory where you want to create your thesis files. Run the following command in a terminal to download the template and its associated folders:
+1.  Open your Terminal or Command Prompt. Navigate to the directory where you want to create your thesis project folder.
+2.  Use the Quarto Template: Run the following command. Quarto will download the template and ask you to provide a name for your new thesis directory.
 
 ```{bash}
 #| eval: false
-#| echo: true
+
 quarto use template jallow-code/jku-quarto-thesis
-
 ```
-
-You will be prompted to specify an empty directory name for the template files. Provide a name for the new directory, which will store your thesis files.
-
-## 2. Render the Template
-
-Once the template is installed, change into the new directory:
+3.  Enter Your Project Directory: Once the download is complete, change into the newly created directory:
 
 ```{bash}
 #| eval: false
-#| echo: true
-cd <new-directory-name>
 
+cd <your-new-thesis-directory-name>
 ```
-
-To generate the document, use the command:
+4.  Render the Example: To generate the sample PDF document and check if everything is working, run:
 
 ```{bash}
 #| eval: false
-#| echo: true
 quarto render
-
 ```
+This will create a PDF file based on the example content included in the template.
 
-### Troubleshooting Errors
+## Troubleshooting Common Rendering Errors
 
-If you encounter the following error during rendering:
+If you encounter an error message like this during rendering:
 
-``` vbnet
-
-ERROR: 
+```text {}
+ERROR:
 compilation failed - missing packages (automatic install disabled)
 LaTeX Error: Something's wrong--perhaps a missing \item.
 
@@ -77,73 +77,92 @@ Type  H <return>  for immediate help.
  ...
 l.872 \end{CSLReferences}
 ```
+This usually indicates issues with your LaTeX distribution or Quarto version. Try these steps:
 
-This error is likely due to outdated versions of Quarto or TinyTeX. To resolve it:
+-   Update TinyTeX: Ensure your LaTeX distribution is up-to-date. If using TinyTeX (common with RStudio/Quarto), update it via your R console (`tinytex::tlmgr_update()`) or follow instructions on the [TinyTeX website](https://yihui.org/tinytex/).
 
--   Update your [TinyTex installation](https://yihui.org/tinytex/).
+-   Update Quarto: Make sure you have the latest version of Quarto installed from the official Quarto website.
 
--   Ensure you are using the latest version of Quarto.
+## Using the Template with an Existing Quarto Project
 
-# Using the Template with an Existing Document
+If you've already started writing your thesis in a Quarto document (.qmd) and want to apply this template's formatting and structure:
 
-To use this template with an existing Quarto project, make sure you have all the required LaTeX folders as described above. Then, run:
+1.  Ensure you are inside your existing project directory in the terminal.
+2.  Run the following command to add the template's resources (like LaTeX settings and front matter files) to your project:
 
 ```{bash}
 #| eval: false
-#| echo: true
 quarto install extension jallow-code/jku-quarto-thesis
 ```
+3.  You will likely need to manually copy or adjust settings from the template's `_quarto.yml` file into your own project's `_quarto.yml` file.
 
-# Basic Usage and Customization
+## Customizing Your Thesis
 
-## Thesis Type and Frontmatter
+The template is designed to be easily customized through the _quarto.yml configuration file located in the main directory.
 
-The template is configured for a Bachelor’s thesis by default. To change this, edit the `_quarto.yml` file. For example:
+## Thesis Details (_quarto.yml)
+
+Open `_quarto.yml` in a text editor. You'll find a thesis: block where you can set crucial information:
 
 ``` yaml
 
 thesis:
-  type: Bachelor Thesis # Or "Master Thesis", "Doctoral Dissertation", etc.
-  degree-name: Bachelor of Science
-  group: Biological Chemistry # name of your study program
+  type: Bachelor Thesis # Change to "Master Thesis", "Diploma Thesis", etc.
+  degree-name: Bachelor of Science # e.g., Master of Science, Diplom-Ingenieur
+  group: Biological Chemistry # Your specific JKU study program
   supervisor:
-    primary: "Assoz. Univ.-Prof. Dr. Ian Teasdale"
-    co: "Dipl.-Ing. Michael Kneidinger"
+    primary: "Assoz. Univ.-Prof. Dr. Ian Teasdale" # Primary supervisor's full title and name
+    co: "Dipl.-Ing. Michael Kneidinger" # Co-supervisor (optional, remove if not needed)
   university: Johannes Kepler Universität Linz
-  department: Institute of Polymer Chemistry
-  faculty: Faculty of Engineering and Natural Sciences
+  department: Institute of Polymer Chemistry # Your institute
+  faculty: Faculty of Engineering and Natural Sciences # Your faculty (TNF, SOWI, MED)
 ```
 
-You can also customize elements of the front matter (e.g., acknowledgments, dedication) by commenting out or modifying the respective sections in`_quarto.yml`. For instance, to exclude the dedication page:
+## Front Matter Customization
+
+The `_quarto.yml` file also links to LaTeX files (`.tex`) located in the Frontmatter/ sub-directory for sections like the Abstract, Acknowledgements, and Dedication.
+
+-  To modify content: Edit the corresponding .tex file (e.g., `Frontmatter/acknowledgements.tex`).
+-  To exclude a section: Comment out the line in `_quarto.yml` by adding a `#` at the beginning. For example, to remove the dedication:
 
 ``` yaml
 
 # dedication: "Frontmatter/dedication.tex"
 ```
 
-## Adding Symbols or Abbreviations
+## Adding Lists of Symbols or Abbreviations
 
-The `Frontmatter` folder contains LaTeX files for abbreviations, symbols, and other sections. If needed, search online for LaTeX code examples to add symbols or format abbreviations.
+The Frontmatter/ directory contains templates for abbreviations (`abbreviations.tex`) and symbols (`symbols.tex`).
 
-# Citation Styling
+-   Edit these files directly using standard LaTeX syntax.
+-   If you're unsure about specific LaTeX commands (e.g., for mathematical symbols), searching online for "LaTeX [your need]" (e.g., "LaTeX degree symbol", "LaTeX align equations") is usually very helpful.
 
-The default citation style is `nature-chemistry.csl`. If you prefer another style, download it from the [Zotero Style Repository](https://www.zotero.org/styles?fields=chemistry) and update the `_quarto.yml` file:
+## Citation Styling
 
-``` yml
+The template defaults to the `nature-chemistry.csl` citation style. To use a different style (e.g., APA, IEEE, or another chemistry journal):
 
-bibliography: [example.bib]
-csl: your-preferred-style.csl
+1.  Find and download the desired `.csl` file from the [Zotero Style Repository](https://www.zotero.org/styles?fields=chemistry).
+2.  Place the downloaded  `.csl` file in the same directory as your `_quarto.yml` file.
+3.  Update the `_quarto.yml` file to point to your new style:
+
+``` yaml
+bibliography: [references.bib] # Make sure this points to your bibliography file
+csl: your-preferred-style.csl # Update this line
 ```
 
-# Additional Resources
 
--   For detailed usage instructions, refer to the rendered sample PDF file below.
+## Additional Resources & Final Tips
 
--   Explore the [Quarto technical writing documentation](https://quarto.org/docs/visual-editor/technical.html), especially if you are new to Quarto or Markdown.
+-  The best way to understand the structure is to look at the included example .qmd files and the rendered `thesis_template.pdf` (linked at the bottom of this post or generated when you run quarto render).
+-  Check out Eli Holmes's [Youtube channel](https://www.youtube.com/@eeholmes-datascience4849) for practical data science and Quarto tutorials.
+-  Always double-check the latest official JKU guidelines for thesis formatting to ensure this template still meets all requirements.
 
--   Watch Eli Holmes's [Youtube channel](https://www.youtube.com/@eeholmes-datascience4849) for insights into data science workflows and Quarto.
+## Additional Resources
 
-# Sample Document
+I hope this template proves useful for your thesis writing journey at JKU! Feel free to raise issues or suggest improvements on the [GitHub repository](https://github.com/jallow-code/jku-quarto-thesis).
+
+
+## Sample Document
 
 ```{css echo=FALSE}
 .embed-container {
