@@ -9,9 +9,10 @@ website:
   title: "Abdoulie Jallow"
   navbar:
     right:
+      - href: posts.qmd
+        text: Posts
       - href: index.qmd
         text: Home
-      - posts.qmd # Add listing page to the navbar
       # - projects.qmd
       #- href: CV/AJallow_CV.pdf
        # text: CV
@@ -38,7 +39,5 @@ highlight-style:
   light: styles/syntax-light.theme
   dark: styles/syntax-dark.theme
 code-block-border-left: "#31BAE9"
-
-
-
+# Set posts.qmd as the landing page
 

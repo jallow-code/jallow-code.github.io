@@ -9,7 +9,7 @@
 <meta name="author" content="Abdoulie Jallow">
 <meta name="dcterms.date" content="2025-01-12">
 
-<title>Classifying Breast Cancer: A Machine Learning Approach in R – Abdoulie Jallow</title>
+<title>Predicting Breast Cancer with R and Machine Learning – Abdoulie Jallow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -310,12 +310,12 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html"> 
-<span class="menu-text">POSTS</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/jallow-code" target="_blank"> <i class="bi bi-github" role="img">
@@ -334,7 +334,7 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Classifying Breast Cancer: A Machine Learning Approach in R</h1>
+      <h1 class="title">Predicting Breast Cancer with R and Machine Learning</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Learn</div>
                 <div class="quarto-category">R</div>
@@ -412,7 +412,6 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Breast cancer remains a significant health concern globally. Early and accurate diagnosis is crucial for effective treatment and improving patient outcomes. Machine learning offers powerful tools to aid in this process by analyzing complex patterns in patient data.</p>
 <p>This blog post walks through a practical exercise in building and evaluating machine learning classification models using R. We’ll use the well-known Breast Cancer Wisconsin (Original) dataset from the <a href="https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original">UCI Machine Learning Repository</a> to classify tumors as either benign (non-cancerous) or malignant (cancerous) based on microscopic characteristics of cell nuclei.</p>
 <p>We will cover the following steps:</p>
 <ol type="1">
@@ -1316,9 +1315,9 @@ Prediction  benign malignant
 <p>Key findings:</p>
 <ul>
 <li>All models performed exceptionally well on this dataset, achieving high accuracy, AUC-ROC, and AUC-PR values, indicating strong predictive power for distinguishing between benign and malignant tumors based on the provided cell characteristics.</li>
-<li>The high performance likely reflects the relatively clear separability of classes within this specific, well-studied dataset. Real-world medical datasets often present greater challenges.</li>
+<li>The high performance likely reflects the relatively clear separability of classes within this specific dataset. Real-world medical datasets often present greater challenges.</li>
 </ul>
-<p>Based on these results, Logistic Regression or LDA could be considered excellent choices due to their high performance and relative simplicity/interpretability compared to KNN. KNN also performed exceptionally well after tuning.</p>
+<p>Based on these results, Logistic Regression or LDA could be considered excellent choices due to their relative simplicity/interpretability compared to the other models.</p>
 
 
 </section>

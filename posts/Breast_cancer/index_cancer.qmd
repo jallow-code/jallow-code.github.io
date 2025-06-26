@@ -1,9 +1,10 @@
 ---
-title: "Classifying Breast Cancer: A Machine Learning Approach in R" # More specific title
+title: "Predicting Breast Cancer with R and Machine Learning" # More specific title
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
 date: "2025-01-12" # Standard date format
+image: "http://127.0.0.1:9879/chunk_output/s/4CC9C5AB/cbvnp2maaje1x/00001a.png"
 categories: [Learn, R, Machine Learning, Classification, Healthcare Data] # More specific categories
 ---
 
@@ -26,8 +27,6 @@ set.seed(12)
 ```
 
 ## Introduction
-
-Breast cancer remains a significant health concern globally. Early and accurate diagnosis is crucial for effective treatment and improving patient outcomes. Machine learning offers powerful tools to aid in this process by analyzing complex patterns in patient data.
 
 This blog post walks through a practical exercise in building and evaluating machine learning classification models using R. We'll use the well-known Breast Cancer Wisconsin (Original) dataset from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original) to classify tumors as either benign (non-cancerous) or malignant (cancerous) based on microscopic characteristics of cell nuclei.
 
@@ -543,6 +542,6 @@ In this analysis, we successfully applied several machine learning classificatio
 Key findings:
 
 - All models performed exceptionally well on this dataset, achieving high accuracy, AUC-ROC, and AUC-PR values, indicating strong predictive power for distinguishing between benign and malignant tumors based on the provided cell characteristics.
-- The high performance likely reflects the relatively clear separability of classes within this specific, well-studied dataset. Real-world medical datasets often present greater challenges.
+- The high performance likely reflects the relatively clear separability of classes within this specific dataset. Real-world medical datasets often present greater challenges.
 
-Based on these results, Logistic Regression or LDA could be considered excellent choices due to their high performance and relative simplicity/interpretability compared to KNN. KNN also performed exceptionally well after tuning.
+Based on these results, Logistic Regression or LDA could be considered excellent choices due to their relative simplicity/interpretability compared to the other models.
