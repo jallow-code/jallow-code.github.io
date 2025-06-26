@@ -4,7 +4,7 @@ author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
 date: "2025-01-12" # Standard date format
-image: "http://127.0.0.1:9879/chunk_output/s/4CC9C5AB/cbvnp2maaje1x/00001a.png"
+image: "00001a.png"
 categories: [Learn, R, Machine Learning, Classification, Healthcare Data] # More specific categories
 ---
 
