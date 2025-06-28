@@ -1,19 +1,18 @@
 ---
 title: "An Introduction to Statistical Learning"
-description: "In this blog post, I’ll share my solutions to exercises from *An Introduction to Statistical Learning* by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani."
+description: "I'm continuing my journey through the classic textbook An Introduction to Statistical Learning. In this post, I'll walk through my solutions for the Chapter 4 exercises, which cover the topic of Classification. This book is the work of Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani."
 author:
   - name: Abdoulie Jallow
     url: https://jallow-code.github.io/
 date: 14 11 2024
-date-modified: last-modified
 categories: [Learn, R] # self-defined categories
-citation: 
-  url: https://jallow-code.github.io/posts/2024-11-14-statistical-learning/ 
 image: stat_image.jpg
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 toc-title: Table of Contents
 engine: knitr
 ---
+
+````{=html}
 <!--
 # Statistical Learning
 
@@ -518,10 +517,9 @@ ggplot(data_long, aes(x = Predictor, y = Value, fill = Predictor)) +
 
 
 <!-- -->
-
+````
 
 # Classification
-
 
 ## Exercises
 
@@ -535,18 +533,19 @@ $$
 p(X) = \frac{e^{\beta_o + \beta_1X}}{1\;+ e^{\beta_o + \beta_1X}}\\
 $$ {#eq-4.2}
 
-Rearranging terms,
+Rearranging terms, $$p(X) = \frac{e^{(β₀ + β₁X)}} {1 + e^{(β₀ + β₁X)}}$$ Let $L = e^{(β₀ + β₁X)}$. Then $p(X) = \frac{L}{1 + L}$.
 
 \begin{gather*}
-e^{\beta_o + \beta_1X} = p(X) + p(X)\cdot{ e^{\beta_o + \beta_1X}}\\
 
-p(X) = e^{\beta_o + \beta_1X} - p(X) \cdot e^{\beta_o + \beta_1X}\\
-
-e^{\beta_o + \beta_1X} \cdot [1 - p(X)] = p(X)\\
+p(X) \cdot{} (1 + L) = L\\
+p(X) + p(X) \cdot{} L = L\\
+p(X) = L - p(X) \cdot{} L\\
+p(X) = L \cdot{} (1 - p(X))\\
+\frac{p(X)}{(1 - p(X)} = L\\
 
 \end{gather*}
 
-Therefore the logit is representated as
+Substituting $L$ back gives the logit representation:
 
 $$
 \frac{p(X)}{1 - p(X)} = e^{\beta_o + \beta_1X}
@@ -594,7 +593,55 @@ $$
 \log(\pi_k) + \frac{x\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}
 $$
 
-4.  To Do
+3.  This problem relates to the QDA model, in which the observations within each class are drawn from a normal distribution with a class-specific mean vector and a class specific covariance matrix. We consider the simple case where p = 1; i.e. there is only one feature.
+
+Prove that in this case, the Bayes classifier is not linear. Argue that it is in fact quadratic.
+
+To classify an observation, the Bayes classifier assigns it to the class $k$ for which the posterior probability $p_k(x)$ is largest. This is equivalent to assigning the observation to the class that maximizes the discriminant function, $δ_k(x)$. For a one-dimensional QDA model, we do not assume the variances are equal across classes.
+
+The discriminant function for class $k$ is derived from the posterior probability: $$δ_k(x) = log(p_k(x)) = log(π_k \cdot{} f_k(x)) - log(C)$$ where $f_k(x)$ is the normal density $N(μ_k, σ_k^2)$ and $C$ is the denominator $Σ P(Y=l)f_l(x)$, which doesn't depend on $k$. To maximize over $k$, we can ignore $C$.
+
+Let's expand the function: $$δ_k(x) ∝ log(π_k) + log(f_k(x))$$ $$δ_k(x) = log(π_k) - log(√(2πσ_k^2)) - (\frac{1}{2σ_k^2}) \cdot{} (x - μ_k)^2$$
+
+Expanding the squared term: $$δ_k(x) = log(π_k) - (\frac{1}{2})\;log\;(2πσ_k^2) - (\frac{1}{2σ_k^2}) \cdot{} (x^2 - 2xμ_k + μ_k^2)$$
+
+Rearranging the terms to see the structure as a function of $x$: $$δ_k(x) = - (\frac{1}{2σ_k^2})x^2 + (\frac{μ_k}{σ_k^2})x + [log(π_k) - (\frac{1}{2})log(2πσ_k^2) - (\frac{μ_k^2}{2σ_k^2})]$$
+
+This discriminant function $δ_k(x)$ is a quadratic function of $x$. The coefficient of the $x^2$ term is $\frac{1}{2σ_k^2}$. Since QDA assumes that $σ_k^2$ is different for each class $k$, this quadratic term does not cancel out when comparing the discriminant functions of two different classes (i.e., when finding the decision boundary where $δ_k(x) = δ_j(x))$.
+
+Therefore, the resulting decision boundary is quadratic, and the Bayes classifier is not linear.
+
+4.  When the number of features $p$ is large, there tends to be a deterioration in the performance of KNN and other local approaches... This phenomenon is known as the curse of dimensionality... We will now investigate this curse.
+
+<!-- -->
+
+(a) Suppose that we have a set of observations, each with measurements on $p = 1$ feature, $X$... On average, what fraction of the available observations will we use to make the prediction?
+
+Since $X$ is uniformly distributed on $[0,1]$, its range is $1$. The prediction for a test observation $X=0.6$ uses training observations in the range $[0.55, 0.65]$. The length of this interval is $0.65 - 0.55 = 0.1$. Because the data is uniform, the fraction of observations that fall into an interval is equal to the length of that interval. Therefore, on average, we will use $10\%$ of the available observations.
+
+(b) Now suppose that we have... $p = 2$ features... On average, what fraction of the available observations will we use?
+
+We are now in two dimensions, and we form a neighborhood by taking a $10\%$ range for each feature. This creates a square (a 2-D hypercube) centered on the test point. The side length for this square is 0.1 for each dimension. Since the features are uniformly distributed on \[0,1\] x \[0,1\], the fraction of observations we use is the area of this square, which is $0.1 \cdot{} 0.1 = 0.01$. So, on average, we will use only $1%$ of the observations.
+
+(c) Now suppose that we have... $p = 100$ features... What fraction of the available observations will we use?
+
+Following the pattern, for $p=100$ dimensions, our neighborhood is a 100-dimensional hypercube where each side has length $0.1$. The volume of this hypercube is $0.1^{100}$. This is an infinitesimally small number, meaning we expect to use virtually zero fraction of the available observations.
+
+(d) Using your answers... argue that a drawback of KNN when p is large is that there are very few training observations "near" any given test observation.
+
+The answers to parts (a)-(c) show that the fraction of training data available in a local neighborhood of a fixed size ($10\%$ of the range of each feature) decreases exponentially as the number of dimensions p increases $(0.1^p)$. For a large $p$, this fraction is so small that the neighborhood is effectively empty. This means there are no "nearby" neighbors to average for a prediction, which undermines the entire principle of KNN and other local methods. This is the curse of dimensionality.
+
+(e) Now suppose that we wish to make a prediction... by creating a p-dimensional hypercube... that contains, on average, $10\%$ of the training observations. For $p$ = 1, 2, and 100, what is the length of each side of the hypercube? Comment on your answer.
+
+Let $l$ be the side length of the p-dimensional hypercube. The volume is $l^p$. We want this volume to be $0.1$ (to capture $10\%$ of the uniform data). So, we solve $l^p = 0.1$ for $l$, which gives $l = (0.1)^{(1/p)}$.
+
+-   For $p = 1: l = (0.1)^{(1/1)} = 0.1$
+-   For $p = 2: l = (0.1)^{(1/2)} ≈ 0.316$
+-   For $p = 100: l = (0.1)^{(1/100)} ≈ 0.977$
+
+::: callout-note
+As the dimension $p$ increases, the side length $l$ of the hypercube needed to capture just $10\%$ of the data rapidly approaches $1$. For $p=100$, each side of the "local" neighborhood must span over $97\%$ of the total range of its corresponding feature. This means the points within this hypercube are no longer truly "local" or "near" the test observation. The method loses its local character, and the predictions are based on points that are far away, which leads to poor performance.
+:::
 
 5.  We now examine the differences between LDA and QDA.
 
@@ -702,11 +749,29 @@ p(x)  = \frac{0.37}{1 + 0.37} = 0.27
 
 b.  Suppose that an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?
 
-$$0.16 / (1 - 0.16)  = 0.19$$
+$$\frac{0.16}{1 - 0.16}  = 0.19$$
 
-10. To Do
+10. In the setting with p = 1, (4.32) takes a simpler form...repeat the calculation in (4.32), and provide expressions for $a_k$ and $b_{kj}$ in terms of $πk$, $πK$, $μk$, $μK$, and $σ2$.
 
-11. To Do
+The goal is to find the log-odds between class $k$ and a baseline class $K$ for an LDA model with $p=1$. This is given by $log(\frac{P(Y=k|X=x)}{P(Y=K|X=x)})$. This is equivalent to $δ_k(x) - δ_K(x)$.
+
+The discriminant function for LDA is: $$δ_k(x) = x \cdot{} (\frac{μ_k}{σ^2}) - (\frac{μ_k^2}{2σ^2}) + log(π_k)$$
+
+The log-odds are: $$δ_k(x) - δ_K(x) = [x \cdot{} (\frac{μ_k}{σ^2}) - (\frac{μ_k^2}{2σ^2}) + log(π_k)] - [x \cdot{} (\frac{μ_K}{σ^2}) - (\frac{μ_K^2}{2σ^2}) + log(π_K)]$$
+
+Now, group the terms that are constant and those that are coefficients of $x$: $$= x \cdot{} (\frac{μ_k}{σ^2} - \frac{μ_K}{σ^2}) + [log(π_k) - log(π_K) - \frac{μ_k^2}{2σ^2} + \frac{μ_K^2}{2σ^2}]$$
+
+This has the form $a_k + b_{k1} \cdot{} x$. The coefficients are: $$a_k = log(\frac{π_k}{π_K}) - \frac{μ_k^2 - μ_K^2}{2σ^2}$$ $$b_k1 = \frac{μ_k - μ_K}{σ^2}$$ 11. Work out the detailed forms of $a_k$, $b_{kj}$, and $b_{kjl}$ in (4.33). Your answer should involve $πk$, $μk$, $Σk$. (Assuming (4.33) refers to the general quadratic form of the QDA discriminant function).
+
+The QDA discriminant function is: $$δ_k(x) = -\frac{1}{2} \cdot{} log(det(Σ_k)) -\frac{1}{2} \cdot{} (x-μ_k)^T \cdot{} Σ_k^{-1} \cdot{} (x-μ_k) + log(π_k)$$ Expanding the quadratic term $(x-μ_k)^T \cdot{} Σ_k^{-1} \cdot{} (x-μ_k)$: $$= x^TΣ_k^{-1}x - x^TΣ_k^{-1}μ_k - μ_k^TΣ_k^{-1}x + μ_k^TΣ_k^{-1}μ_k$$ Since $x^TΣ_k^{-1}μ_k$ is a scalar, it's equal to its transpose $$μ_k^TΣ_k^{-1T}x = μ_k^TΣ_k^{-1}x$$.
+
+So the expression is $$x^TΣ_k^{-1}x - 2x^TΣ_k^{A-1}μ_k + μ_k^TΣ_k^{-1}μ_k$$.
+
+Substituting this back into $δ_k(x)$: $$δ_k(x) = -\frac{1}{2} \cdot{} x^TΣ_k^{-1}x + x^TΣ_k^{-1}μ_k - \frac{1}{2} \cdot{} μ_k^TΣ_k^{-1}μ_k - \frac{1}{2} \cdot{} log(det(Σ_k)) + log(π_k)$$ This is a quadratic function of $x$. We can identify the constant, linear, and quadratic parts.
+
+The constant term is $a_k$: $$a_k = log(π_k) - \frac{1}{2} \cdot{} log(det(Σ_k)) - \frac{1}{2} \cdot{} μ_k^TΣ_k^{-1}μ_k$$ The linear part is $x^T(Σ_k^{-1}μ_k)$. The vector of coefficients for the linear terms is $b_k = Σ_k^{-1}μ_k$. The coefficient for the j-th variable, $x_j$, is: $b_{kj} = (Σ_k^{-1}μ_k)_j$
+
+The quadratic part is $-\frac{1}{2} \cdot{} x^TΣ_k^{-1}x$. The matrix of coefficients for the quadratic terms $x_j \cdot{} x_l$ is $-\frac{1}{2} \cdot{} Σ_k^{-1}$. The coefficient $b_{kjl}$ is: $$b_{kjl} = (\frac{1}{2} \cdot Σ_k^{-1})_{jl}$$
 
 12. Suppose that you wish to classify an observation $X \in \mathbb{R}$ into `apples` and `oranges`. You fit a logistic regression model and find that
 
@@ -807,7 +872,7 @@ table(glm.pred, Direction)
 mean(glm.pred != Direction)
 ```
 
-> The logistic regression model have an error rate of 43.8%. The logistic regression model have underwhelming p-values and perhaps removing variables that are not significant (useful) may improve the model. The model is also overly optimistic because the model was train and tested on the same data.
+> The 43.8% error rate is the training error. This is likely an optimistic estimate of how the model would perform on new, unseen data, as the model was evaluated on the same data it was trained on.
 
 d.  Now fit the logistic regression model using a training data period from 1990 to 2008, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).
 
@@ -958,4 +1023,4 @@ cat("The best k is:", best_k, "with an error rate of:", min_error_rate, "\n")
 
 ```
 
-> After trying different classification methods, KNN with a $k = 26$ has the lowest test error rate.
+> After experimenting with several models and predictor combinations, the methods that provided the best results were logistic regression, LDA, and Naive Bayes using only `Lag2` as a predictor. These models all achieved a test error rate of $37.5\%$. The more complex models, including those with more predictors or the optimized KNN classifier, did not outperform this simpler baseline.
