@@ -3,17 +3,14 @@ project:
   output-dir: docs
 
 website:
-  google-analytics:
-    tracking-id: "G-PHB4NVQ87D"
-    storage: none
   title: "Abdoulie Jallow"
   navbar:
     right:
-      - href: posts.qmd
-        text: Posts
-      - href: index.qmd
+      - href: index.qmd # landing page (index.qmd for the posts folder).
         text: Home
-      # - projects.qmd
+      - href: about.qmd
+        text: About
+      # - projects.qmda
       #- href: CV/AJallow_CV.pdf
        # text: CV
        # target: _blank # opens link (or page) in a new browser tab
@@ -39,5 +36,4 @@ highlight-style:
   light: styles/syntax-light.theme
   dark: styles/syntax-dark.theme
 code-block-border-left: "#31BAE9"
-# Set posts.qmd as the landing page
 
