@@ -8,7 +8,7 @@
 
 <meta name="author" content="Abdoulie Jallow">
 <meta name="dcterms.date" content="2024-11-14">
-<meta name="description" content="In this blog post, I’ll share my solutions to exercises from An Introduction to Statistical Learning by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.">
+<meta name="description" content="I’m continuing my journey through the classic textbook An Introduction to Statistical Learning. In this post, I’ll walk through my solutions for the Chapter 4 exercises, which cover the topic of Classification. This book is the work of Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.">
 
 <title>An Introduction to Statistical Learning – Abdoulie Jallow</title>
 <style>
@@ -111,20 +111,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PHB4NVQ87D"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
-</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -340,12 +326,12 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html"> 
-<span class="menu-text">Posts</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/jallow-code" target="_blank"> <i class="bi bi-github" role="img">
@@ -367,7 +353,7 @@ window.Quarto = {
       <h1 class="title">An Introduction to Statistical Learning</h1>
                   <div>
         <div class="description">
-          In this blog post, I’ll share my solutions to exercises from <em>An Introduction to Statistical Learning</em> by Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
+          I’m continuing my journey through the classic textbook An Introduction to Statistical Learning. In this post, I’ll walk through my solutions for the Chapter 4 exercises, which cover the topic of Classification. This book is the work of Gareth M. James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -394,12 +380,6 @@ window.Quarto = {
       </div>
     </div>
     
-      <div>
-      <div class="quarto-title-meta-heading">Modified</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 4, 2025</p>
-      </div>
-    </div>
       
     </div>
     
@@ -584,7 +564,6 @@ a.  Compute the Euclidean distance between each observation and the test point, 
     $$
 
 
-
 ::: {.cell}
 ::: {.cell-output .cell-output-stdout}
 
@@ -603,7 +582,6 @@ a.  Compute the Euclidean distance between each observation and the test point, 
 :::
 
 
-
 b.  What is our prediction with $K = 1$? Why?
 
     > Our prediction will be `Green` because it have the smallest distance (obs. 5)
@@ -619,7 +597,6 @@ d.  If the Bayes decision boundary in this problem is highly non-linear, then wo
 ### Applied
 
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -629,7 +606,6 @@ library(psych)
 library(ISLR2) 
 ```
 :::
-
 
 
 #### Question 8
@@ -660,7 +636,6 @@ Before reading the data into `R`, it can be viewed in Excel or a text editor.
 a.  Use the `read.csv()` function to read the data into `R`. Call the loaded data `college`. Make sure that you have the directory set to the correct location for the data.
 
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -669,9 +644,7 @@ college <- read.csv("College.csv")
 :::
 
 
-
 b.  Look at the data using the `View()` function. You should notice that the first column is just the name of each university. We don't really want `R` to treat this as data. However, it may be handy to have these names for later. Try the following commands:
-
 
 
 ::: {.cell}
@@ -683,9 +656,7 @@ View(college)
 :::
 
 
-
 You should see that there is now a `row.names` column with the name of each university recorded. This means that R has given each row a name corresponding to the appropriate university. `R` will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try
-
 
 
 ::: {.cell}
@@ -695,7 +666,6 @@ college <- college [, -1]
 View(college)
 ```
 :::
-
 
 
 Now you should see that the first data column is `Private`. Note that another column labeled `row.names` now appears before the `Private` column. However, this is not a data column but rather the name that R is giving to each row.
@@ -711,7 +681,6 @@ iii. Use the `plot()` function to produce side-by-side boxplots of `Outstate` ve
 iv. Create a new qualitative variable, called `Elite`, by *binning* the `Top10perc` variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
 
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -723,13 +692,11 @@ college <- data.frame(college, Elite)
 :::
 
 
-
 Use the `summary()` function to see how many elite universities there are. Now use the `plot()` function to produce side-by-side boxplots of `Outstate` versus `Elite`.
 
 v.  Use the `hist()` function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command `par(mfrow=c(2,2))` useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
 
 w.  Continue exploring the data, and provide a brief summary of what you discover.
-
 
 
 ::: {.cell}
@@ -787,11 +754,9 @@ lapply(bin_values, function(n) {
 :::
 
 
-
 #### Question 9
 
 This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.
-
 
 
 ::: {.cell}
@@ -828,7 +793,6 @@ str(data)
 :::
 
 
-
 a.  Which of the predictors are quantitative, and which are qualitative?
 
 > Quantitative: mpg, cylinders, displacement, horsepower, weight, acceleration.
@@ -836,7 +800,6 @@ a.  Which of the predictors are quantitative, and which are qualitative?
 > Qualitative: name, year, origin.
 
 b.  What is the range of each quantitative predictor? You can answer this using the `range()` function.
-
 
 
 ::: {.cell}
@@ -858,9 +821,7 @@ sapply(data[, c(1,3,4,5,6)], range)
 :::
 
 
-
 c.  What is the mean and standard deviation of each quantitative predictor?
-
 
 
 ::: {.cell}
@@ -892,9 +853,7 @@ data[, c(1,3,4,5,6)] |>
 :::
 
 
-
 d.  Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
-
 
 
 ::: {.cell}
@@ -927,9 +886,7 @@ data[-(10:85), c(1,3,4,5,6)] |>
 :::
 
 
-
 e.  Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
-
 
 
 ::: {.cell}
@@ -942,7 +899,6 @@ pairs.panels(data[1:8], ellipses = FALSE)
 ![](index_files/figure-html/unnamed-chunk-12-1.png){width=672}
 :::
 :::
-
 
 
 > There are both positive and negative correlation between the variables.
@@ -960,7 +916,6 @@ a.  To begin, load in the `Boston` data set. The `Boston` data set is part of th
 Now the data set is contained in the object `Boston`.
 
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -969,9 +924,7 @@ View(Boston)
 :::
 
 
-
 Read about the data set:
-
 
 
 ::: {.cell}
@@ -982,9 +935,7 @@ Read about the data set:
 :::
 
 
-
 How many rows are in this data set? How many columns? What do the rows and columns represent?
-
 
 
 ::: {.cell}
@@ -1004,9 +955,7 @@ dim(Boston)
 :::
 
 
-
 b.  Make some pairwise scatterplots of the predictors (columns) in this data set. Describe your findings.
-
 
 
 ::: {.cell}
@@ -1021,9 +970,7 @@ pairs.panels(Boston[1:7], ellipses = FALSE, cex.labels = 1)
 :::
 
 
-
 c.  Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
-
 
 
 ::: {.cell}
@@ -1038,11 +985,9 @@ cor.plot(Boston, xlas = 2, main = "Correlation plot")
 :::
 
 
-
 > Per capita crime shows a moderately positive correlation with both `rad` and `tax`.
 
 d.  Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
-
 
 
 ::: {.cell}
@@ -1089,9 +1034,7 @@ Pupil-teacher ratio: 18
 :::
 
 
-
 e.  How many of the census tracts in this data set bound the Charles river?
-
 
 
 ::: {.cell}
@@ -1111,9 +1054,7 @@ sum(Boston$chas==1)
 :::
 
 
-
 f.  What is the median pupil-teacher ratio among the towns in this data set?
-
 
 
 ::: {.cell}
@@ -1134,9 +1075,7 @@ Median pupil-teacher ratio: 19.05
 :::
 
 
-
 g.  Which census tract of Boston has lowest median value of owner-occupied homes? What are the values of the other predictors for that census tract, and how do those values compare to the overall ranges for those predictors? Comment on your findings.
-
 
 
 ::: {.cell}
@@ -1153,11 +1092,9 @@ range(Boston$crim)
 :::
 
 
-
 > There are two suburbs that have the lowest median property values. crime is negatively correlated with median property value.
 
 h.  In this data set, how many of the census tract average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the census tracts that average more than eight rooms per dwelling.
-
 
 
 ::: {.cell}
@@ -1190,9 +1127,7 @@ More than 8 rooms: 13
 :::
 
 
-
 Making summaries:
-
 
 
 ::: {.cell}
@@ -1222,7 +1157,6 @@ ggplot(data_long, aes(x = Predictor, y = Value, fill = Predictor)) +
 :::
 
 
-
 # Linear Regression
 
 ## Exercises
@@ -1246,16 +1180,17 @@ ggplot(data_long, aes(x = Predictor, y = Value, fill = Predictor)) +
 <p><span id="eq-4.2"><span class="math display">\[
 p(X) = \frac{e^{\beta_o + \beta_1X}}{1\;+ e^{\beta_o + \beta_1X}}\\
 \tag{1}\]</span></span></p>
-<p>Rearranging terms,</p>
+<p>Rearranging terms, <span class="math display">\[p(X) = \frac{e^{(β₀ + β₁X)}} {1 + e^{(β₀ + β₁X)}}\]</span> Let <span class="math inline">\(L = e^{(β₀ + β₁X)}\)</span>. Then <span class="math inline">\(p(X) = \frac{L}{1 + L}\)</span>.</p>
 <p><span class="math display">\[\begin{gather*}
-e^{\beta_o + \beta_1X} = p(X) + p(X)\cdot{ e^{\beta_o + \beta_1X}}\\
 
-p(X) = e^{\beta_o + \beta_1X} - p(X) \cdot e^{\beta_o + \beta_1X}\\
-
-e^{\beta_o + \beta_1X} \cdot [1 - p(X)] = p(X)\\
+p(X) \cdot{} (1 + L) = L\\
+p(X) + p(X) \cdot{} L = L\\
+p(X) = L - p(X) \cdot{} L\\
+p(X) = L \cdot{} (1 - p(X))\\
+\frac{p(X)}{(1 - p(X)} = L\\
 
 \end{gather*}\]</span></p>
-<p>Therefore the logit is representated as</p>
+<p>Substituting <span class="math inline">\(L\)</span> back gives the logit representation:</p>
 <p><span id="eq-4.3"><span class="math display">\[
 \frac{p(X)}{1 - p(X)} = e^{\beta_o + \beta_1X}
 \tag{2}\]</span></span></p>
@@ -1291,9 +1226,61 @@ f &amp;= \log(\pi_k) - \frac{1}{2\sigma^2} (x^2 - 2x\mu_k + \mu_k^2) \\
 <p><span class="math display">\[
 \log(\pi_k) + \frac{x\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}
 \]</span></p>
+<ol start="3" type="1">
+<li>This problem relates to the QDA model, in which the observations within each class are drawn from a normal distribution with a class-specific mean vector and a class specific covariance matrix. We consider the simple case where p = 1; i.e.&nbsp;there is only one feature.</li>
+</ol>
+<p>Prove that in this case, the Bayes classifier is not linear. Argue that it is in fact quadratic.</p>
+<p>To classify an observation, the Bayes classifier assigns it to the class <span class="math inline">\(k\)</span> for which the posterior probability <span class="math inline">\(p_k(x)\)</span> is largest. This is equivalent to assigning the observation to the class that maximizes the discriminant function, <span class="math inline">\(δ_k(x)\)</span>. For a one-dimensional QDA model, we do not assume the variances are equal across classes.</p>
+<p>The discriminant function for class <span class="math inline">\(k\)</span> is derived from the posterior probability: <span class="math display">\[δ_k(x) = log(p_k(x)) = log(π_k \cdot{} f_k(x)) - log(C)\]</span> where <span class="math inline">\(f_k(x)\)</span> is the normal density <span class="math inline">\(N(μ_k, σ_k^2)\)</span> and <span class="math inline">\(C\)</span> is the denominator <span class="math inline">\(Σ P(Y=l)f_l(x)\)</span>, which doesn’t depend on <span class="math inline">\(k\)</span>. To maximize over <span class="math inline">\(k\)</span>, we can ignore <span class="math inline">\(C\)</span>.</p>
+<p>Let’s expand the function: <span class="math display">\[δ_k(x) ∝ log(π_k) + log(f_k(x))\]</span> <span class="math display">\[δ_k(x) = log(π_k) - log(√(2πσ_k^2)) - (\frac{1}{2σ_k^2}) \cdot{} (x - μ_k)^2\]</span></p>
+<p>Expanding the squared term: <span class="math display">\[δ_k(x) = log(π_k) - (\frac{1}{2})\;log\;(2πσ_k^2) - (\frac{1}{2σ_k^2}) \cdot{} (x^2 - 2xμ_k + μ_k^2)\]</span></p>
+<p>Rearranging the terms to see the structure as a function of <span class="math inline">\(x\)</span>: <span class="math display">\[δ_k(x) = - (\frac{1}{2σ_k^2})x^2 + (\frac{μ_k}{σ_k^2})x + [log(π_k) - (\frac{1}{2})log(2πσ_k^2) - (\frac{μ_k^2}{2σ_k^2})]\]</span></p>
+<p>This discriminant function <span class="math inline">\(δ_k(x)\)</span> is a quadratic function of <span class="math inline">\(x\)</span>. The coefficient of the <span class="math inline">\(x^2\)</span> term is <span class="math inline">\(\frac{1}{2σ_k^2}\)</span>. Since QDA assumes that <span class="math inline">\(σ_k^2\)</span> is different for each class <span class="math inline">\(k\)</span>, this quadratic term does not cancel out when comparing the discriminant functions of two different classes (i.e., when finding the decision boundary where <span class="math inline">\(δ_k(x) = δ_j(x))\)</span>.</p>
+<p>Therefore, the resulting decision boundary is quadratic, and the Bayes classifier is not linear.</p>
 <ol start="4" type="1">
-<li><p>To Do</p></li>
-<li><p>We now examine the differences between LDA and QDA.</p></li>
+<li>When the number of features <span class="math inline">\(p\)</span> is large, there tends to be a deterioration in the performance of KNN and other local approaches… This phenomenon is known as the curse of dimensionality… We will now investigate this curse.</li>
+</ol>
+<!-- -->
+<ol type="a">
+<li>Suppose that we have a set of observations, each with measurements on <span class="math inline">\(p = 1\)</span> feature, <span class="math inline">\(X\)</span>… On average, what fraction of the available observations will we use to make the prediction?</li>
+</ol>
+<p>Since <span class="math inline">\(X\)</span> is uniformly distributed on <span class="math inline">\([0,1]\)</span>, its range is <span class="math inline">\(1\)</span>. The prediction for a test observation <span class="math inline">\(X=0.6\)</span> uses training observations in the range <span class="math inline">\([0.55, 0.65]\)</span>. The length of this interval is <span class="math inline">\(0.65 - 0.55 = 0.1\)</span>. Because the data is uniform, the fraction of observations that fall into an interval is equal to the length of that interval. Therefore, on average, we will use <span class="math inline">\(10\%\)</span> of the available observations.</p>
+<ol start="2" type="a">
+<li>Now suppose that we have… <span class="math inline">\(p = 2\)</span> features… On average, what fraction of the available observations will we use?</li>
+</ol>
+<p>We are now in two dimensions, and we form a neighborhood by taking a <span class="math inline">\(10\%\)</span> range for each feature. This creates a square (a 2-D hypercube) centered on the test point. The side length for this square is 0.1 for each dimension. Since the features are uniformly distributed on [0,1] x [0,1], the fraction of observations we use is the area of this square, which is <span class="math inline">\(0.1 \cdot{} 0.1 = 0.01\)</span>. So, on average, we will use only <span class="math inline">\(1%\)</span> of the observations.</p>
+<ol start="3" type="a">
+<li>Now suppose that we have… <span class="math inline">\(p = 100\)</span> features… What fraction of the available observations will we use?</li>
+</ol>
+<p>Following the pattern, for <span class="math inline">\(p=100\)</span> dimensions, our neighborhood is a 100-dimensional hypercube where each side has length <span class="math inline">\(0.1\)</span>. The volume of this hypercube is <span class="math inline">\(0.1^{100}\)</span>. This is an infinitesimally small number, meaning we expect to use virtually zero fraction of the available observations.</p>
+<ol start="4" type="a">
+<li>Using your answers… argue that a drawback of KNN when p is large is that there are very few training observations “near” any given test observation.</li>
+</ol>
+<p>The answers to parts (a)-(c) show that the fraction of training data available in a local neighborhood of a fixed size (<span class="math inline">\(10\%\)</span> of the range of each feature) decreases exponentially as the number of dimensions p increases <span class="math inline">\((0.1^p)\)</span>. For a large <span class="math inline">\(p\)</span>, this fraction is so small that the neighborhood is effectively empty. This means there are no “nearby” neighbors to average for a prediction, which undermines the entire principle of KNN and other local methods. This is the curse of dimensionality.</p>
+<ol start="5" type="a">
+<li>Now suppose that we wish to make a prediction… by creating a p-dimensional hypercube… that contains, on average, <span class="math inline">\(10\%\)</span> of the training observations. For <span class="math inline">\(p\)</span> = 1, 2, and 100, what is the length of each side of the hypercube? Comment on your answer.</li>
+</ol>
+<p>Let <span class="math inline">\(l\)</span> be the side length of the p-dimensional hypercube. The volume is <span class="math inline">\(l^p\)</span>. We want this volume to be <span class="math inline">\(0.1\)</span> (to capture <span class="math inline">\(10\%\)</span> of the uniform data). So, we solve <span class="math inline">\(l^p = 0.1\)</span> for <span class="math inline">\(l\)</span>, which gives <span class="math inline">\(l = (0.1)^{(1/p)}\)</span>.</p>
+<ul>
+<li>For <span class="math inline">\(p = 1: l = (0.1)^{(1/1)} = 0.1\)</span></li>
+<li>For <span class="math inline">\(p = 2: l = (0.1)^{(1/2)} ≈ 0.316\)</span></li>
+<li>For <span class="math inline">\(p = 100: l = (0.1)^{(1/100)} ≈ 0.977\)</span></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As the dimension <span class="math inline">\(p\)</span> increases, the side length <span class="math inline">\(l\)</span> of the hypercube needed to capture just <span class="math inline">\(10\%\)</span> of the data rapidly approaches <span class="math inline">\(1\)</span>. For <span class="math inline">\(p=100\)</span>, each side of the “local” neighborhood must span over <span class="math inline">\(97\%\)</span> of the total range of its corresponding feature. This means the points within this hypercube are no longer truly “local” or “near” the test observation. The method loses its local character, and the predictions are based on points that are far away, which leads to poor performance.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>We now examine the differences between LDA and QDA.</li>
 </ol>
 <!-- -->
 <ol type="a">
@@ -1397,11 +1384,22 @@ p(x)  = \frac{0.37}{1 + 0.37} = 0.27
 <ol start="2" type="a">
 <li>Suppose that an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?</li>
 </ol>
-<p><span class="math display">\[0.16 / (1 - 0.16)  = 0.19\]</span></p>
+<p><span class="math display">\[\frac{0.16}{1 - 0.16}  = 0.19\]</span></p>
 <ol start="10" type="1">
-<li><p>To Do</p></li>
-<li><p>To Do</p></li>
-<li><p>Suppose that you wish to classify an observation <span class="math inline">\(X \in \mathbb{R}\)</span> into <code>apples</code> and <code>oranges</code>. You fit a logistic regression model and find that</p></li>
+<li>In the setting with p = 1, (4.32) takes a simpler form…repeat the calculation in (4.32), and provide expressions for <span class="math inline">\(a_k\)</span> and <span class="math inline">\(b_{kj}\)</span> in terms of <span class="math inline">\(πk\)</span>, <span class="math inline">\(πK\)</span>, <span class="math inline">\(μk\)</span>, <span class="math inline">\(μK\)</span>, and <span class="math inline">\(σ2\)</span>.</li>
+</ol>
+<p>The goal is to find the log-odds between class <span class="math inline">\(k\)</span> and a baseline class <span class="math inline">\(K\)</span> for an LDA model with <span class="math inline">\(p=1\)</span>. This is given by <span class="math inline">\(log(\frac{P(Y=k|X=x)}{P(Y=K|X=x)})\)</span>. This is equivalent to <span class="math inline">\(δ_k(x) - δ_K(x)\)</span>.</p>
+<p>The discriminant function for LDA is: <span class="math display">\[δ_k(x) = x \cdot{} (\frac{μ_k}{σ^2}) - (\frac{μ_k^2}{2σ^2}) + log(π_k)\]</span></p>
+<p>The log-odds are: <span class="math display">\[δ_k(x) - δ_K(x) = [x \cdot{} (\frac{μ_k}{σ^2}) - (\frac{μ_k^2}{2σ^2}) + log(π_k)] - [x \cdot{} (\frac{μ_K}{σ^2}) - (\frac{μ_K^2}{2σ^2}) + log(π_K)]\]</span></p>
+<p>Now, group the terms that are constant and those that are coefficients of <span class="math inline">\(x\)</span>: <span class="math display">\[= x \cdot{} (\frac{μ_k}{σ^2} - \frac{μ_K}{σ^2}) + [log(π_k) - log(π_K) - \frac{μ_k^2}{2σ^2} + \frac{μ_K^2}{2σ^2}]\]</span></p>
+<p>This has the form <span class="math inline">\(a_k + b_{k1} \cdot{} x\)</span>. The coefficients are: <span class="math display">\[a_k = log(\frac{π_k}{π_K}) - \frac{μ_k^2 - μ_K^2}{2σ^2}\]</span> <span class="math display">\[b_k1 = \frac{μ_k - μ_K}{σ^2}\]</span> 11. Work out the detailed forms of <span class="math inline">\(a_k\)</span>, <span class="math inline">\(b_{kj}\)</span>, and <span class="math inline">\(b_{kjl}\)</span> in (4.33). Your answer should involve <span class="math inline">\(πk\)</span>, <span class="math inline">\(μk\)</span>, <span class="math inline">\(Σk\)</span>. (Assuming (4.33) refers to the general quadratic form of the QDA discriminant function).</p>
+<p>The QDA discriminant function is: <span class="math display">\[δ_k(x) = -\frac{1}{2} \cdot{} log(det(Σ_k)) -\frac{1}{2} \cdot{} (x-μ_k)^T \cdot{} Σ_k^{-1} \cdot{} (x-μ_k) + log(π_k)\]</span> Expanding the quadratic term <span class="math inline">\((x-μ_k)^T \cdot{} Σ_k^{-1} \cdot{} (x-μ_k)\)</span>: <span class="math display">\[= x^TΣ_k^{-1}x - x^TΣ_k^{-1}μ_k - μ_k^TΣ_k^{-1}x + μ_k^TΣ_k^{-1}μ_k\]</span> Since <span class="math inline">\(x^TΣ_k^{-1}μ_k\)</span> is a scalar, it’s equal to its transpose <span class="math display">\[μ_k^TΣ_k^{-1T}x = μ_k^TΣ_k^{-1}x\]</span>.</p>
+<p>So the expression is <span class="math display">\[x^TΣ_k^{-1}x - 2x^TΣ_k^{A-1}μ_k + μ_k^TΣ_k^{-1}μ_k\]</span>.</p>
+<p>Substituting this back into <span class="math inline">\(δ_k(x)\)</span>: <span class="math display">\[δ_k(x) = -\frac{1}{2} \cdot{} x^TΣ_k^{-1}x + x^TΣ_k^{-1}μ_k - \frac{1}{2} \cdot{} μ_k^TΣ_k^{-1}μ_k - \frac{1}{2} \cdot{} log(det(Σ_k)) + log(π_k)\]</span> This is a quadratic function of <span class="math inline">\(x\)</span>. We can identify the constant, linear, and quadratic parts.</p>
+<p>The constant term is <span class="math inline">\(a_k\)</span>: <span class="math display">\[a_k = log(π_k) - \frac{1}{2} \cdot{} log(det(Σ_k)) - \frac{1}{2} \cdot{} μ_k^TΣ_k^{-1}μ_k\]</span> The linear part is <span class="math inline">\(x^T(Σ_k^{-1}μ_k)\)</span>. The vector of coefficients for the linear terms is <span class="math inline">\(b_k = Σ_k^{-1}μ_k\)</span>. The coefficient for the j-th variable, <span class="math inline">\(x_j\)</span>, is: <span class="math inline">\(b_{kj} = (Σ_k^{-1}μ_k)_j\)</span></p>
+<p>The quadratic part is <span class="math inline">\(-\frac{1}{2} \cdot{} x^TΣ_k^{-1}x\)</span>. The matrix of coefficients for the quadratic terms <span class="math inline">\(x_j \cdot{} x_l\)</span> is <span class="math inline">\(-\frac{1}{2} \cdot{} Σ_k^{-1}\)</span>. The coefficient <span class="math inline">\(b_{kjl}\)</span> is: <span class="math display">\[b_{kjl} = (\frac{1}{2} \cdot Σ_k^{-1})_{jl}\]</span></p>
+<ol start="12" type="1">
+<li>Suppose that you wish to classify an observation <span class="math inline">\(X \in \mathbb{R}\)</span> into <code>apples</code> and <code>oranges</code>. You fit a logistic regression model and find that</li>
 </ol>
 <p><span class="math display">\[
 \hat{Pr}(Y=orange|X=x) =
@@ -1538,7 +1536,7 @@ glm.pred Down  Up
 </div>
 </div>
 <blockquote class="blockquote">
-<p>The logistic regression model have an error rate of 43.8%. The logistic regression model have underwhelming p-values and perhaps removing variables that are not significant (useful) may improve the model. The model is also overly optimistic because the model was train and tested on the same data.</p>
+<p>The 43.8% error rate is the&nbsp;training error. This is likely an optimistic estimate of how the model would perform on new, unseen data, as the model was evaluated on the same data it was trained on.</p>
 </blockquote>
 <ol start="4" type="a">
 <li>Now fit the logistic regression model using a training data period from 1990 to 2008, with <code>Lag2</code> as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).</li>
@@ -1776,7 +1774,7 @@ knn.pred Down Up
 </div>
 </div>
 <blockquote class="blockquote">
-<p>After trying different classification methods, KNN with a <span class="math inline">\(k = 26\)</span> has the lowest test error rate.</p>
+<p>After experimenting with several models and predictor combinations, the methods that provided the best results were&nbsp;logistic regression, LDA, and Naive Bayes using only <code>Lag2</code> as a predictor. These models all achieved a test error rate of <span class="math inline">\(37.5\%\)</span>. The more complex models, including those with more predictors or the optimized KNN classifier, did not outperform this simpler baseline.</p>
 </blockquote>
 
 
@@ -1784,17 +1782,7 @@ knn.pred Down Up
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jallow2024,
-  author = {Jallow, Abdoulie},
-  title = {An {Introduction} to {Statistical} {Learning}},
-  date = {2024-11-14},
-  url = {https://jallow-code.github.io/posts/2024-11-14-statistical-learning/},
-  langid = {en}
-}
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jallow2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Jallow, Abdoulie. 2024. <span>“An Introduction to Statistical
-Learning.”</span> November 14, 2024. <a href="https://jallow-code.github.io/posts/2024-11-14-statistical-learning/">https://jallow-code.github.io/posts/2024-11-14-statistical-learning/</a>.
-</div></div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Hello! I’m Jallow – Abdoulie Jallow</title>
+<title>POSTS – Abdoulie Jallow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,10 +30,13 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-28125b294cc6f267e2cb8b95abb39dfa.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-26ec11f030f9b24f9f1120e852642fd0.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
@@ -72,22 +75,66 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PHB4NVQ87D"></script>
+<script>
 
-<script type="text/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
   });
-gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
-</script>
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles/ek-styles.css">
 </head>
@@ -272,12 +319,12 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html"> 
-<span class="menu-text">Posts</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/jallow-code" target="_blank"> <i class="bi bi-github" role="img">
@@ -296,71 +343,144 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Q2xhc3NpZmljYXRpb24=">Classification <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SGVhbHRoY2FyZSUyMERhdGE=">Healthcare Data <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SktV">JKU <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGVhcm4=">Learn <span class="quarto-category-count">(2)</span></div><div class="category" data-category="TWFjaGluZSUyMExlYXJuaW5n">Machine Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UXVhcnRv">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UmVzb3VyY2Vz">Resources <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VGhlc2lz">Thesis <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-jolla column-page">
- <header id="title-block-header" class="quarto-title-block default">
+<main class="content column-page-left" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hello! I’m Jallow</h1>
+<h1 class="title">POSTS</h1>
 </div>
-<div class="quarto-title-meta column-page">
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
   </div>
-</header><main class="content column-page" id="quarto-document-content">
-
-<style>
-/* Styles for particle sections */
-#particles-left,
-#particles-right {
-  position: absolute;
-  width: 25%; /* Adjust width as needed */
-  height: 60%;
-  top: -15%; /* Adjust top as needed */
-  z-index: -1;
-  background-color: transparent; /* No background color */
-}
-#particles-left {
-  left: 0;
-}
-#particles-right {
-  right: 0;
-}
-#profile-section {
-  position: relative;
-  z-index: 1; /* Ensure profile content stays above the particles */
-  text-align: center;
-  margin: auto;
-}
-</style>
-<div id="particles-left"></div>
-<div id="particles-right"></div>
-<div id="profile-section">
-  <p>
-  I hold a bachelor’s degree in biological chemistry. I am passionate about science and epistemology. I created this website to share what I’m learning and topics that captivate me. Welcome to my learning journey!
-  </p>
-</div>
-<!-- Particle.js script loaded from a CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-<!-- Configure particles for left and right sections -->
-<script>
-  particlesJS.load("particles-left", "./particles.json");
-  particlesJS.load("particles-right", "./particles.json");
-</script>
+  
 
 
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://github.com/jallow-code" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">GitHub</span>
-  </a>
-  <a href="mailto:abdouliejallow10@gmail.com" class="about-link" rel="" target="">
-    <i class="bi bi-envelope"></i>
-     <span class="about-link-text">Email</span>
-  </a>
+</header>
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="TGVhcm4lMkNSJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDQ2xhc3NpZmljYXRpb24lMkNIZWFsdGhjYXJlJTIwRGF0YQ==" data-listing-date-sort="1736636400000" data-listing-file-modified-sort="1750971374738" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4012">
+<a href="./posts/Breast_cancer/index_cancer.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/Breast_cancer/00001a.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Predicting Breast Cancer with R and Machine Learning
+</h5>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGVhcm4='); return false;">Learn</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWFjaGluZSUyMExlYXJuaW5n'); return false;">Machine Learning</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2xhc3NpZmljYXRpb24='); return false;">Classification</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SGVhbHRoY2FyZSUyMERhdGE='); return false;">Healthcare Data</div>
+
+</div>
+<div class="card-text listing-description delink">
+This blog post walks through a practical exercise in building and evaluating machine learning classification models using R. We’ll use the well-known Breast Cancer Wisconsin…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Abdoulie Jallow
+</div>
+<div class="listing-date">
+Jan 12, 2025
 </div>
 </div>
- <!-- /main -->
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="UmVzb3VyY2VzJTJDUXVhcnRvJTJDSktVJTJDVGhlc2lz" data-listing-date-sort="1731798000000" data-listing-file-modified-sort="1747142585176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="992">
+<a href="./posts/jku-thesis-template/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/jku-thesis-template/thesis_image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+A Quarto Thesis Template for Bachelor and Diploma Projects at JKU
+</h5>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVzb3VyY2Vz'); return false;">Resources</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SktV'); return false;">JKU</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VGhlc2lz'); return false;">Thesis</div>
+
+</div>
+<div class="card-text listing-description delink">
+<p>Simplify your JKU Bachelor’s or Diploma thesis writing with this customized Quarto template. Focus on your content, let the template handle the formatting.</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Abdoulie Jallow
+</div>
+<div class="listing-date">
+Nov 17, 2024
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="TGVhcm4lMkNS" data-listing-date-sort="1731538800000" data-listing-file-modified-sort="1751102684810" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7550">
+<a href="./posts/2024-11-14-statistical-learning/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/2024-11-14-statistical-learning/stat_image.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+An Introduction to Statistical Learning
+</h5>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGVhcm4='); return false;">Learn</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
+
+</div>
+<div class="card-text listing-description delink">
+<p>I’m continuing my journey through the classic textbook An Introduction to Statistical Learning. In this post, I’ll walk through my solutions for the Chapter 4 exercises…</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Abdoulie Jallow
+</div>
+<div class="listing-date">
+Nov 14, 2024
+</div>
+</div>
+</div>
+</div></a>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -376,6 +496,13 @@ gtag('config', 'G-PHB4NVQ87D', { 'anonymize_ip': true});
       window.document.body.appendChild(a);
     }
     setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
