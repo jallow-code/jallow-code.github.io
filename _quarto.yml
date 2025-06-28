@@ -6,11 +6,11 @@ website:
   title: "Abdoulie Jallow"
   navbar:
     right:
-      - href: index.qmd # landing page (index.qmd for the posts folder).
+      - href: index.html # landing page (index.qmd for the posts folder).
         text: Home
-      - href: about.qmd
+      - href: about.html
         text: About
-      # - projects.qmda
+      # - projects.html
       #- href: CV/AJallow_CV.pdf
        # text: CV
        # target: _blank # opens link (or page) in a new browser tab
