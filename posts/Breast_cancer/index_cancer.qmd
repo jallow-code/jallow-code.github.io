@@ -537,11 +537,4 @@ The accuracy plot confirms the high performance across all models, with most ach
 
 ## Conclusion
 
-In this analysis, we successfully applied several machine learning classification techniques to the Breast Cancer Wisconsin dataset using R. After careful preprocessing, which included handling missing values and addressing collinearity, we trained and evaluated Logistic Regression, KNN, LDA, QDA, and Naive Bayes models.
-
-Key findings:
-
-- All models performed exceptionally well on this dataset, achieving high accuracy, AUC-ROC, and AUC-PR values, indicating strong predictive power for distinguishing between benign and malignant tumors based on the provided cell characteristics.
-- The high performance likely reflects the relatively clear separability of classes within this specific dataset. Real-world medical datasets often present greater challenges.
-
-Based on these results, Logistic Regression or LDA could be considered excellent choices due to their relative simplicity/interpretability compared to the other models.
+The uniform high performance across diverse classifiers indicates that the Wisconsin (Original) dataset exhibits strong class separability. Therefore, model choice has limited impact on discrimination performance, and even simple linear classifiers will achieve near-optimal results.
